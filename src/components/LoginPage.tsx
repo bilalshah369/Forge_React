@@ -15,24 +15,24 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       <div className="w-full max-w-6xl flex items-center justify-center gap-8">
         {/* Left side - Warehouse image */}
         <div className="hidden lg:block flex-1 max-w-lg">
           <img
             src={warehouseImage}
             alt="Warehouse inventory management dashboard"
-            className="w-full h-auto object-cover rounded-2xl shadow-card"
+            className="w-full h-auto object-cover rounded-2xl shadow-2xl"
           />
         </div>
 
         {/* Right side - Login form */}
         <div className="flex-1 max-w-md w-full">
-          <Card className="bg-card shadow-card border-0 rounded-2xl overflow-hidden">
+          <Card className="bg-white shadow-2xl border-0 rounded-2xl overflow-hidden">
             <CardContent className="p-8">
               <div className="space-y-6">
                 <div className="text-center space-y-2">
-                  <h1 className="text-2xl font-semibold text-foreground">
+                  <h1 className="text-2xl font-semibold text-gray-900">
                     Welcome Back!
                   </h1>
                 </div>
@@ -44,7 +44,7 @@ const LoginPage = () => {
                       placeholder="Enter Email Address..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="h-12 bg-input-bg border-input-border rounded-lg px-4 text-base placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="h-12 bg-gray-50 border-gray-200 rounded-lg px-4 text-base placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       required
                     />
                     
@@ -53,24 +53,24 @@ const LoginPage = () => {
                       placeholder="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="h-12 bg-input-bg border-input-border rounded-lg px-4 text-base placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="h-12 bg-gray-50 border-gray-200 rounded-lg px-4 text-base placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       required
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg text-base transition-colors"
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-base transition-colors"
                   >
                     Login
                   </Button>
                 </form>
 
                 <div className="flex justify-between items-center text-sm">
-                  <button className="text-primary hover:text-primary/80 transition-colors">
+                  <button className="text-blue-600 hover:text-blue-500 transition-colors">
                     Forgot Password?
                   </button>
-                  <button className="text-primary hover:text-primary/80 transition-colors">
+                  <button className="text-blue-600 hover:text-blue-500 transition-colors">
                     Create an Account!
                   </button>
                 </div>
