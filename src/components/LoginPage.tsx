@@ -1,0 +1,99 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import warehouseImage from "@/assets/warehouse-inventory.jpg";
+
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle login logic here
+    console.log("Login attempt:", { email, password });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-background flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl flex items-center justify-center gap-8">
+        {/* Left side - Warehouse image */}
+        <div className="hidden lg:block flex-1 max-w-lg">
+          <img
+            src={warehouseImage}
+            alt="Warehouse inventory management dashboard"
+            className="w-full h-auto object-cover rounded-2xl shadow-card"
+          />
+        </div>
+
+        {/* Right side - Login form */}
+        <div className="flex-1 max-w-md w-full">
+          <Card className="bg-card shadow-card border-0 rounded-2xl overflow-hidden">
+            <CardContent className="p-8">
+              <div className="space-y-6">
+                <div className="text-center space-y-2">
+                  <h1 className="text-2xl font-semibold text-foreground">
+                    Welcome Back!
+                  </h1>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-4">
+                    <Input
+                      type="email"
+                      placeholder="Enter Email Address..."
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-12 bg-input-bg border-input-border rounded-lg px-4 text-base placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
+                    />
+                    
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-12 bg-input-bg border-input-border rounded-lg px-4 text-base placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-lg text-base transition-colors"
+                  >
+                    Login
+                  </Button>
+                </form>
+
+                <div className="flex justify-between items-center text-sm">
+                  <button className="text-primary hover:text-primary/80 transition-colors">
+                    Forgot Password?
+                  </button>
+                  <button className="text-primary hover:text-primary/80 transition-colors">
+                    Create an Account!
+                  </button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+        <p className="text-sm text-white/80">
+          ©2024 Automation Anywhere, Inc. For more RPA Challenge pages, head to the{" "}
+          <a 
+            href="#" 
+            className="text-white hover:text-white/90 underline transition-colors"
+          >
+            Automation Anywhere Developer Portal
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;
