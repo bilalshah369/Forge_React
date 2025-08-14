@@ -3,15 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import warehouseImage from "@/assets/warehouse-inventory.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
     console.log("Login attempt:", { email, password });
+    navigate("/AdminDboard");
+    //alert("login");
   };
 
   return (
@@ -40,14 +43,14 @@ const LoginPage = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-4">
                     <Input
-                      type="email"
+                      // type="email"
                       placeholder="Enter Email Address..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="h-12 bg-gray-50 border-gray-200 rounded-lg px-4 text-base placeholder:text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       required
                     />
-                    
+
                     <Input
                       type="password"
                       placeholder="Password"
@@ -67,12 +70,18 @@ const LoginPage = () => {
                 </form>
 
                 <div className="flex justify-between items-center text-sm">
-                  <button className="text-blue-600 hover:text-blue-500 transition-colors">
+                  <Link
+                    to="/forgot-password"
+                    className="text-blue-600 hover:text-blue-500 transition-colors"
+                  >
                     Forgot Password?
-                  </button>
-                  <button className="text-blue-600 hover:text-blue-500 transition-colors">
+                  </Link>
+                  <Link
+                    to="/create-account"
+                    className="text-blue-600 hover:text-blue-500 transition-colors"
+                  >
                     Create an Account!
-                  </button>
+                  </Link>
                 </div>
               </div>
             </CardContent>
@@ -81,17 +90,18 @@ const LoginPage = () => {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+      {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
         <p className="text-sm text-white/80">
-          ©2024 Automation Anywhere, Inc. For more RPA Challenge pages, head to the{" "}
-          <a 
-            href="#" 
+          ©2024 Automation Anywhere, Inc. For more RPA Challenge pages, head to
+          the{" "}
+          <a
+            href="#"
             className="text-white hover:text-white/90 underline transition-colors"
           >
             Automation Anywhere Developer Portal
           </a>
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
