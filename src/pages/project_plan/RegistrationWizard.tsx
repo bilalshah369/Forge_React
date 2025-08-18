@@ -45,6 +45,7 @@ import TeamMembers from "./TeamMembers";
 import MilestoneNew from "./MilestoneNew";
 import CustomData from "./CustomData";
 import Summary from "./Summary";
+import BudgetPlannerNew from "../budget/BudgetPlannerNew";
 
 // Form schemas for different sections
 const intakeSummarySchema = z.object({
@@ -234,7 +235,7 @@ export function RegistrationWizard() {
               {/* Budget Forecast Tab */}
               <TabsContent value="budget-forecast" className="mt-0">
                 <div className="space-y-6">
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold">Budget Forecast</h2>
                     <Button>Add Budget Item</Button>
                   </div>
@@ -278,7 +279,8 @@ export function RegistrationWizard() {
                           .toLocaleString()}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
+                  <BudgetPlannerNew />
                 </div>
               </TabsContent>
 

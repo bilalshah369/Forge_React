@@ -372,7 +372,7 @@ export const InsertBudgetDetailsSingle = async (
   values: object,
 ): Promise<string> => {
   try {
-    //
+    //  
     //const UserID = localStorage.getItem('UserID');
     ////debugger;
     var uri = `${BASE_URL}/utils/insert_budget_details_project_plan`;
@@ -383,7 +383,7 @@ export const InsertBudgetDetailsSingle = async (
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
-    throw Error('Failed' + error);
+    //throw Error('Failed' + error);
   }
 };
 
