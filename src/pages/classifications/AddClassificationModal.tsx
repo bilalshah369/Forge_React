@@ -33,8 +33,15 @@ export const ClassificationModal: React.FC<ModalProps> = ({
         classification_name: editClassification.classification_name,
         is_active: editClassification.is_active,
       });
+    } else if (isOpen) {
+      // Reset form when opening for add
+      setFormData({
+        classification_id: -1,
+        classification_name: "",
+        is_active: true,
+      });
     }
-  }, [editClassification]);
+  }, [editClassification, isOpen]);
 
   const handleSubmit = async () => {
     try {
