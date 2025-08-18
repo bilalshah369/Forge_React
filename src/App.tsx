@@ -33,6 +33,7 @@ import { RegistrationWizard } from "./pages/project_plan/RegistrationWizard";
 import ProjectView from "./pages/projects/ProjectView";
 import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
+import { Classifications } from "./pages/classifications/Classifications";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -188,15 +189,15 @@ const routesWithTitles = [
   //   title: labelApplication.display,
   //   element: <ImpactedApps />,
   // },
+  {
+    path: "/Adminpanel/Classifications",
+    title: "Classifications",
+    element: <Classifications />,
+  },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",
   //   element: <IntakeApprovalView />,
-  // },
-  // {
-  //   path: "/Classification",
-  //   title: labelClassification.display,
-  //   element: <Classification />,
   // },
   // {
   //   path: "/Designation",

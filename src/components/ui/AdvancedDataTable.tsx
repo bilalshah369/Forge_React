@@ -60,6 +60,7 @@ import { AutoComplete, DatePicker } from "rsuite";
 import { get_projects_autocomplete } from "@/utils/PM";
 import { useNavigate } from "react-router-dom";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
+import { cn } from "@/lib/utils";
 
 interface AdvancedDataTableProps {
   data: any[];
@@ -359,6 +360,17 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
         return (
           <span className="text-sm">
             {value ? new Date(value).toLocaleDateString() : "-"}
+          </span>
+        );
+      case "status":
+        return (
+          <span
+            className={cn(
+              item["is_active"] ? "bg-green-500" : "bg-red-500",
+              "h-4 w-10 p-1 rounded-md text-white hover:bg-opacity-80"
+            )}
+          >
+            {item["is_active"] ? "Active" : "Inactive"}
           </span>
         );
       case "sno":
