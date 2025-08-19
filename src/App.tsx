@@ -34,6 +34,8 @@ import ProjectView from "./pages/projects/ProjectView";
 import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
 import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
+import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
+import DepartmentList from "./pages/masters/DepartmentList";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -59,11 +61,11 @@ const routesWithTitles = [
     element: <ProjectAudit />,
   },
   // { path: "/Org", title: "Organization chart", element: <Org /> },
-  // {
-  //   path: "/DepartmentList",
-  //   title: labelDepartment.display,
-  //   element: <DepartmentList />,
-  // },
+  {
+    path: "/Adminpanel/DepartmentList",
+    title: 'Departments',
+    element: <DepartmentList />,
+  },
   // { path: "/RoleMaster", title: labelRoles.display, element: <RoleMaster /> },
   // { path: "/Excel", title: "", element: <Excel /> },
   // {
@@ -237,11 +239,11 @@ const routesWithTitles = [
   //   element: <PlanApproval />,
   // },
   // { path: "/ResetPassword", title: "", element: <ResetPassword /> },
-  // {
-  //   path: "/CompanyDetailPage",
-  //   title: "Company Details",
-  //   element: <CompanyDetailPage />,
-  // },
+  {
+    path: "/Adminpanel/CompanyDetailPage",
+    title: "Company Details",
+    element: <CompanyDetailPage />,
+  },
   // { path: "/MiddlePage", title: "", element: <MiddlePage /> },
   // { path: "/InProgress", title: "WIP", element: <InProgress /> },
   // {
