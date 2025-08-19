@@ -33,7 +33,7 @@ export default function AdminPanel() {
     { icon: <Flower2 size={36} />, label: "PPM Integration" },
     { icon: <BadgeCheck size={36} />, label: "License details" },
     { icon: <Bell size={36} />, label: "Configure Alerts" },
-    { icon: <Spline size={36} />, label: "Org Chart" },
+    { icon: <Spline size={36} />, label: "Org Chart" ,url:"/Adminpanel/Organization"},
     {
       icon: <FileSpreadsheet size={36} />,
       label: "Import Projects from Excel",

@@ -28,7 +28,7 @@ export default function MasterLayout() {
           </header> */}
           <Header />
           {/* Main content */}
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-hidden">
             {/* bg-gradient-to-br from-green-50 to-indigo-100 */}
             <Outlet /> {/* children of the route will render here */}
           </div>

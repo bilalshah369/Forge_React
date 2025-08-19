@@ -6,6 +6,7 @@ import { Delete_svg, EditSVG, Plus_svg } from "@/assets/Icons";
 import { FetchPermission } from "@/utils/Permission";
 import {ChromePicker} from 'react-color'; // Web Color Picker
 import AlertBox from "@/components/ui/AlertBox";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 interface Department {
   department_id?: number;
   customer_id: number;
@@ -42,9 +43,9 @@ const initialNewDepartmentState = {
 
 interface HierarchicalTableProps {
   
-  onAdd: (parentId: number | null, department: Department) => void;
-  onEdit: (department: Department) => void;
-  onDelete: (departmentId: number) => void;
+  onAdd?: (parentId: number | null, department: Department) => void;
+  onEdit?: (department: Department) => void;
+  onDelete?: (departmentId: number) => void;
 }
 interface DataItem {
   department_id?: number;
@@ -64,9 +65,6 @@ interface DataItem {
   children?: DataItem[];
 }
 const HierarchicalTable: React.FC<HierarchicalTableProps> = ({
-  onAdd,
-  onEdit,
-  onDelete,
 }) => {
   const [expanded, setExpanded] = useState<number[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -241,15 +239,15 @@ debugger;
     setModalOpen(true);
     setParentDepartmentName(departmentName);
   };
-  const handleSave = () => {
-    if (!currentDepartment) return;
-    if (isEditing) {
-      onEdit(currentDepartment);
-    } else {
-      onAdd(currentParentId, currentDepartment);
-    }
-    setModalOpen(false);
-  };
+  // const handleSave = () => {
+  //   if (!currentDepartment) return;
+  //   if (isEditing) {
+  //     onEdit(currentDepartment);
+  //   } else {
+  //     onAdd(currentParentId, currentDepartment);
+  //   }
+  //   setModalOpen(false);
+  // };
 
   const renderRows = (items: Department[], level = 0): React.ReactNode =>
     items.map((item) => {
@@ -291,19 +289,34 @@ debugger;
             <td className="px-4 py-2">{item.description}</td>
             <td className="px-4 py-2">
               <div className="flex gap-2 ">
-                <button onClick={() => {setParentDepartmentName("");openEditModal(item)}} >
+                  <Tooltip>
+                      <TooltipTrigger asChild>
+ <button onClick={() => {setParentDepartmentName("");openEditModal(item)}} >
                   <EditSVG width={20} height={20}  className="text-white [&_path]:fill-white" />
                 </button>
+                      </TooltipTrigger>
+                      <TooltipContent>{"Edit"}</TooltipContent>
+                    </Tooltip>
+                <Tooltip>
+                      <TooltipTrigger asChild>
                 <button onClick={() => {if (confirm("Are you sure you want to delete?"))handleDelete(item.department_id)}} >
                   <Delete_svg width={20} height={20} className="text-white [&_path]:fill-white" />
                 </button>
-                <button onClick={() => {
+                </TooltipTrigger>
+                      <TooltipContent>{"Delete"}</TooltipContent>
+                    </Tooltip>
+                     <Tooltip>
+                      <TooltipTrigger asChild>
+ <button onClick={() => {
                         handleAddSubDepartment(
                           item.department_id,
                           item.department_name,
                         );}} >
                   <Plus_svg width={20} height={20} className="text-white [&_path]:fill-white" />
                 </button>
+                      </TooltipTrigger><TooltipContent>{"Add new sub department"}</TooltipContent>
+                    </Tooltip>
+               
               </div>
             </td>
           </tr>
@@ -424,7 +437,7 @@ const location = useLocation();
   </button>
 </div>
         ))}
-      <table className="w-full border border-gray-200 rounded-lg">
+      <table className="w-full border border-gray-200 rounded-lg border-separate border-spacing-y-2">
         <thead className="bg-gray-100">
           <tr>
             <th className="px-4 py-2 text-left">Department</th>

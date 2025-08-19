@@ -17,6 +17,9 @@ import { ProjectPhaseSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
 import HierarchicalTable from "./HierarchicalTable";
+import TreeChartWeb from "../charts/Trees/TreeChartWeb";
+import TreeMapView from "../TeamMap/TreeMapView";
+// import {} from "../TeamMap/TreeMapView.js"
 export interface Header {
   label: string;
   key: string;
@@ -41,6 +44,7 @@ interface Department {
   children?: Department[];
 }
 const DepartmentList = () => {
+  const [shouldFetch, setShouldFetch] = useState(false);
      const [selectedView, setSelectedView] = useState<
         "Tree View" | "Chart View"
       >("Tree View");
@@ -129,14 +133,14 @@ const DepartmentList = () => {
   const location = useLocation();
   const navigation = useNavigate();
   useEffect(() => {
-    (async function () {
+    (async function () {  
      
     })();
   }, [location]); // Runs again on location change
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-full overflow-auto">
-        <div className="min-w-[1000px]">
+    
+      <div >
+        <div>
           <div className="p-2 min-w-[320px] max-w-[400px] bg-white rounded-md justify-center">
             <div className="inline-flex border border-gray-300 rounded-full overflow-hidden text-sm font-medium shadow-sm">
               <button
@@ -168,14 +172,18 @@ const DepartmentList = () => {
               </button>
             </div>
           </div>
-          {
+          <div>
+{
             selectedView==="Tree View" ?<> <HierarchicalTable
      
-        onAdd={handleAdd}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      /></>:<></>
+       
+      /></>:<>
+      {/* */}
+      <TreeMapView selectedView={selectedView}/><TreeChartWeb shouldFetch={shouldFetch} setShouldFetch={setShouldFetch}/> 
+      </>
           }
+          </div>
+          
        
         </div>
         
@@ -185,7 +193,7 @@ const DepartmentList = () => {
           message={message}
         />
       </div>
-    </div>
+   
   );
 };
 

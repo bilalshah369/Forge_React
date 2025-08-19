@@ -36,6 +36,7 @@ import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
 import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
 import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
 import DepartmentList from "./pages/masters/DepartmentList";
+import DesignationChart from "./pages/TeamMap/DesignationChart";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -60,7 +61,7 @@ const routesWithTitles = [
     title: "Project Change Log",
     element: <ProjectAudit />,
   },
-  // { path: "/Org", title: "Organization chart", element: <Org /> },
+   {  path: "/Adminpanel/Organization", title: "Organization chart", element: <DesignationChart /> },
   {
     path: "/Adminpanel/DepartmentList",
     title: 'Departments',
