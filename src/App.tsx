@@ -34,6 +34,7 @@ import ProjectView from "./pages/projects/ProjectView";
 import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
 import { Classifications } from "./pages/classifications/Classifications";
+import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -184,25 +185,25 @@ const routesWithTitles = [
   //   element: <IntakeApproval />,
   // },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
-  // {
-  //   path: "/ImpactedApps",
-  //   title: labelApplication.display,
-  //   element: <ImpactedApps />,
-  // },
+  {
+    path: "/Adminpanel/impacted-applications",
+    title: "Impacted Applications",
+    element: <ImpactedApps />,
+  },
   {
     path: "/Adminpanel/Classifications",
     title: "Classifications",
     element: <Classifications />,
   },
   // {
-  //   path: "/IntakeApprovalView",
-  //   title: "Intake Approval View",
-  //   element: <IntakeApprovalView />,
-  // },
-  // {
   //   path: "/Designation",
   //   title: labelDesignation.display,
   //   element: <Designation />,
+  // },
+  // {
+  //   path: "/IntakeApprovalView",
+  //   title: "Intake Approval View",
+  //   element: <IntakeApprovalView />,
   // },
   // {
   //   path: "/BudgetDetails",
