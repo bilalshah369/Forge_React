@@ -33,6 +33,7 @@ import { RegistrationWizard } from "./pages/project_plan/RegistrationWizard";
 import ProjectView from "./pages/projects/ProjectView";
 import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
+import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
 import { Classifications } from "./pages/classifications/Classifications";
 import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
 import { Designations } from "./pages/designation/Designations";
@@ -281,6 +282,11 @@ const routesWithTitles = [
     path: "/PMView/ChangeRequest",
     title: "Change Request",
     element: <ChangeRequestWizard />,
+  },
+  {
+    path: "/PMView/BudgetPlanner",
+    title: "Budget Forecast",
+    element: <BudgetPlannerNew />,
   },
   // {
   //   path: "/ApproveChangeRequest",

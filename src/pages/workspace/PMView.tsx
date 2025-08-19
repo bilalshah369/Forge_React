@@ -730,7 +730,12 @@ const PMView = () => {
                   isNaN(parseInt(item.status?.toString() ?? ""))) && (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button onClick={() => console.log("View", item)}>
+                      <button onClick={() => {
+                          console.log("View", item);
+                          navigation(
+                            `/PMView/BudgetPlanner?projectId=${item.project_id}`
+                          );
+                        }}>
                         <DollarSign height={22} width={22} />
                       </button>
                     </TooltipTrigger>

@@ -1,8 +1,9 @@
 // Utility function to format amounts
 export const formatAmountWithoutDollarSign = (amount) => {
   // Ensure the amount is a valid number
+  debugger;
   if (amount === null || amount === undefined || isNaN(amount)) {
-    return ""; // Default value for invalid amounts, no decimals
+    return "$"; // Default value for invalid amounts, no decimals
   }
 
   // Convert the amount to a number (if it's a string)
@@ -13,7 +14,7 @@ export const formatAmountWithoutDollarSign = (amount) => {
 
   // Check if the parsed amount is a valid number
   if (isNaN(parsedAmount)) {
-    return ""; // Default value for invalid amounts
+    return "$"; // Default value for invalid amounts
   }
 
   // Format the amount with commas and a dollar sign, without decimals
@@ -28,6 +29,7 @@ export const formatAmountWithoutDollarSign = (amount) => {
 export const formatAmountWithDollarSign = (amount) => {
   debugger;
   // Ensure the amount is a valid number
+  amount=amount?.toString()
   amount=amount.replace(',');
   if (amount === null || amount === undefined || isNaN(amount)) {
     return "$"; // Default value for invalid amounts, no decimals

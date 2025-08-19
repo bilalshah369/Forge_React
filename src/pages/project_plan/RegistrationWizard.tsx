@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -45,6 +45,8 @@ import TeamMembers from "./TeamMembers";
 import MilestoneNew from "./MilestoneNew";
 import CustomData from "./CustomData";
 import Summary from "./Summary";
+import BudgetPlannerNew from "../budget/BudgetPlannerNew";
+import { GetApprovedProjects } from "@/utils/ApprovedProjects";
 
 // Form schemas for different sections
 const intakeSummarySchema = z.object({
@@ -95,7 +97,7 @@ export function RegistrationWizard() {
   const isEditable = searchParams.get("isEditable") === "true";
   const status = parseInt(searchParams.get("status") ?? "");
   const [activeTab, setActiveTab] = useState("intake-summary");
-
+  const [projectObj, setprojectObj] = useState<any>();
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
     {
       id: "1",
@@ -171,16 +173,61 @@ export function RegistrationWizard() {
     console.log("Assessment data submitted");
     // Handle final submission
   };
+     const fetchProjects = async () => {
+      const payload = {projectId};
+      //console.log('Payload for project API:', payload);
+      const response = await GetApprovedProjects(payload);
+      const parsedRes = JSON.parse(response);
+      //console.log('Get Projects Response:', parsedRes);
+  
+      const project = parsedRes.data.projects[0]; // Assuming the first project in the list
+      //debugger;
+      setprojectObj(project);
+      ////debugger;
+    };
+    useEffect(() => {
+    if (projectId) {
+      fetchProjects();
+
+      //setActiveTab(0);
+    }
+  }, [projectId]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5 p-6">
       <div className=" mx-auto">
         {/* Header */}
-        {/* <div className="mb-8">
+         {/* <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
             Project Name - Assessment of Training and Development Needs
           </h1>
-        </div> */}
+        </div>  */}
+        <div className="bg-white shadow-lg shadow-blue-500/40 rounded-lg p-4 mb-4">
+  <div className="flex justify-between items-center">
+    {/* Left side - Project details */}
+    <div>
+      <h1 className="text-xl font-semibold text-gray-800">{projectObj?.customer_project_id} – {projectObj?.project_name}</h1>
+      <p className="text-gray-600 text-sm">
+        Project ID: <span className="font-medium">{projectObj?.customer_project_id}</span> | 
+        Owner: <span className="font-medium">{projectObj?.project_owner_user_name}</span>
+      </p>
+    </div>
+
+    {/* Right side - Timeline + Budget */}
+    <div className="text-right">
+      {/* <p className="text-gray-700">
+        <strong>Start:</strong> Apr 25, 2025 – <strong>End:</strong> Jul 10, 2025
+      </p>
+      <p className="text-gray-700">
+        <strong>Approved Budget:</strong> $19,450
+      </p>
+      <p className="text-gray-700">
+        <strong>Status:</strong> <span className="text-green-600">Active</span>
+      </p> */}
+    </div>
+  </div>
+</div>
+
 
         {/* Main Content */}
         <Card className="shadow-lg border-0">
@@ -234,7 +281,7 @@ export function RegistrationWizard() {
               {/* Budget Forecast Tab */}
               <TabsContent value="budget-forecast" className="mt-0">
                 <div className="space-y-6">
-                  <div className="flex justify-between items-center">
+                  {/* <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold">Budget Forecast</h2>
                     <Button>Add Budget Item</Button>
                   </div>
@@ -278,7 +325,8 @@ export function RegistrationWizard() {
                           .toLocaleString()}
                       </p>
                     </div>
-                  </div>
+                  </div> */}
+                  <BudgetPlannerNew />
                 </div>
               </TabsContent>
 

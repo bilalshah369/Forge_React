@@ -370,7 +370,7 @@ export default function AddTeamMemberModal({
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-        <div className="bg-white rounded-md shadow-lg w-full max-w-2xl p-6">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
           {/* Title */}
           <h2 className="text-lg font-semibold text-center mb-6">
             Add Team Member

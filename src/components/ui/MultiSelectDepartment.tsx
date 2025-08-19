@@ -15,6 +15,7 @@ type Props = {
   placeholder?: string;
   searchable?: boolean;
   className?: string;
+  multi?: boolean;
 };
 
 type DropdownOption = {
@@ -30,7 +31,7 @@ export const MultiSelectDepartment: React.FC<Props> = ({
   onChange,
   placeholder = "Select Options",
   searchable = true,
-  className = "",
+  className = "",multi=true
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -74,13 +75,27 @@ export const MultiSelectDepartment: React.FC<Props> = ({
     console.log("Departments received:", departments);
     return transformDepartments(departments);
   }, [departments]);
+  // const toggleSelect = (value: string) => {
+  //   onChange(
+  //     selected.includes(value)
+  //       ? selected.filter((v) => v !== value)
+  //       : [...selected, value]
+  //   );
+  // };
   const toggleSelect = (value: string) => {
+  if (multi) {
+    // Multi-select (existing behavior)
     onChange(
       selected.includes(value)
         ? selected.filter((v) => v !== value)
         : [...selected, value]
     );
-  };
+  } else {
+    // Single-select
+    onChange(selected.includes(value) ? [] : [value]);
+    setOpen(false); // 👈 optionally close dropdown after single select
+  }
+};
 
   const toggleExpand = (label: string) => {
     setExpandedGroups((prev) =>
@@ -129,9 +144,11 @@ export const MultiSelectDepartment: React.FC<Props> = ({
           <div className="flex justify-between items-center w-full ">
             <div className="flex items-center space-x-2">
               <input
-                type="checkbox"
+                //type="checkbox"
+                type={multi ? "checkbox" : "radio"}
                 checked={selected.includes(item.value)}
                 onChange={() => toggleSelect(item.value)}
+                
               />
               <span className="text-sm">{item.label}</span>
             </div>
@@ -141,7 +158,7 @@ export const MultiSelectDepartment: React.FC<Props> = ({
                 style={{ backgroundColor: item.color }}
               ></span>
               {isGroup && (
-                <button onClick={() => toggleExpand(item.label)}>
+                <button onClick={() => toggleExpand(item.label)} type="button">
                   {isExpanded ? (
                     <ChevronUp size={14} />
                   ) : (
