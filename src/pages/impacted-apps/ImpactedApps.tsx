@@ -8,9 +8,9 @@ import {
   GetApplicationsByPage,
 } from "@/utils/ImpactedApps";
 import { ApplicationModal } from "./ImpactedAppsModal";
+import { useConfirmationAlert } from "@/hooks/useConfirmation";
 
 export const ImpactedApps: React.FC = () => {
-  const [loading, setLoading] = React.useState(true);
   const [applications, setApplications] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editApplication, setEditApplication] = React.useState(null);
@@ -73,7 +73,6 @@ export const ImpactedApps: React.FC = () => {
   ]);
 
   const fetchApplications = async (query: any) => {
-    setLoading(true);
     try {
       const response = await GetApplicationsByPage(query);
       const parsedRes = JSON.parse(response);
@@ -81,8 +80,6 @@ export const ImpactedApps: React.FC = () => {
       setTotalPages(Math.ceil(parsedRes.pagination.totalRecords / rowsPerPage));
     } catch (error) {
       console.error("Error fetching applications:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -139,7 +136,6 @@ export const ImpactedApps: React.FC = () => {
         PageNo: currentPage,
         PageSize: rowsPerPage,
       });
-      setLoading(false);
     };
     fetchData();
   }, []);
@@ -162,7 +158,16 @@ export const ImpactedApps: React.FC = () => {
                 >
                   <Edit className="w-4 h-4 text-black" />
                 </button>
-                <button onClick={() => handleDelete(item.application_id)}>
+                <button
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to delete this classification?"
+                      )
+                    )
+                      handleDelete(item.classification_id);
+                  }}
+                >
                   <Trash2 className="w-4 h-4 text-red-500" />
                 </button>
               </div>

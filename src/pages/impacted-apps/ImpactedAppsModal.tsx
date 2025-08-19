@@ -1,3 +1,4 @@
+import AlertBox from "@/components/ui/AlertBox";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import RequiredLabel from "@/components/ui/required-label";
@@ -23,6 +24,19 @@ export const ApplicationModal: React.FC<ModalProps> = ({
     application_name: "",
     is_active: true,
   });
+
+  /* alert box */
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const [alertVisible, setAlertVisible] = React.useState(false);
+
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
+  };
 
   React.useEffect(() => {
     if (editApplication) {
@@ -55,74 +69,78 @@ export const ApplicationModal: React.FC<ModalProps> = ({
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
-        toast({
-          title: "Success",
-          description: editApplication
+        showAlert(
+          editApplication
             ? "Application updated successfully"
-            : "Application added successfully",
-          variant: "default",
-        });
+            : "Application added successfully"
+        );
         onClose();
       } else {
         console.error("Error adding/editing classification:", parsedRes);
       }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add/edit classification",
-        variant: "destructive",
-      });
+      showAlert("Failed to add/edit application");
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="p-4 w-full">
-        <DialogHeader className="items-center font-semibold text-lg">
-          {editApplication ? "Edit Application" : "Add Application"}
-        </DialogHeader>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-          className="p-4 w-full"
-        >
-          <div className="flex-row w-full">
-            <RequiredLabel className="text-sm">Application Name</RequiredLabel>
-            <Input
-              type="text"
-              name="applicationName"
-              value={formData.application_name}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  application_name: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="col-span-2 flex justify-center gap-4 mt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-6 py-2 bg-gray-200 rounded hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={() => {
-                onCreate();
-              }}
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog open={isOpen} onOpenChange={onClose}>
+        <DialogContent className="p-4 w-full">
+          <DialogHeader className="items-center font-semibold text-lg">
+            {editApplication ? "Edit Application" : "Add Application"}
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            className="p-4 w-full"
+          >
+            <div className="flex-row w-full">
+              <RequiredLabel className="text-sm">
+                Application Name
+              </RequiredLabel>
+              <Input
+                type="text"
+                name="applicationName"
+                value={formData.application_name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    application_name: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="col-span-2 flex justify-center gap-4 mt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-2 bg-gray-200 rounded hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => {
+                  onCreate();
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <AlertBox
+        message={alertMessage}
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+      />
+    </>
   );
 };

@@ -1,10 +1,11 @@
-import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
-import { deleteClassification, GetClasssifcation } from "@/utils/Masters";
 import React from "react";
+import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
+import { deleteClassification, GetClasssifcationByPage } from "@/utils/Masters";
 import { Header } from "../workspace/PMView";
 import { ClassificationModal } from "./AddClassificationModal";
 import { Edit, Trash2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { useConfirmationAlert } from "@/hooks/useConfirmation";
+import AlertBox from "@/components/ui/AlertBox";
 
 export const Classifications: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -13,6 +14,15 @@ export const Classifications: React.FC = () => {
   const [editClassification, setEditClassification] = React.useState(null);
 
   const [headers, setHeaders] = React.useState<Header[]>([
+    {
+      label: "S.no",
+      key: "sno",
+      visible: true,
+      type: "sno",
+      column_width: "100px",
+      url: "Classifications",
+      order_no: 1,
+    },
     {
       label: "Classification",
       key: "classification_name",
@@ -59,47 +69,60 @@ export const Classifications: React.FC = () => {
       order_no: 19,
     },
   ]);
-  const fetchClassifications = async () => {
+  const fetchClassifications = async (query: {
+    PageNo: number;
+    PageSize: number;
+  }) => {
     setLoading(true);
     try {
-      const response = await GetClasssifcation("");
+      const response = await GetClasssifcationByPage(query);
       const parsedRes = JSON.parse(response);
       setClassification(parsedRes.data.classifications);
+      setTotalPages(Math.ceil(parsedRes.pagination.totalRecords / rowsPerPage));
     } catch (error) {
       console.error("Error fetching classifications:", error);
     } finally {
-      setLoading(false);
     }
+  };
+
+  /* pagination */
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number>(10);
+  const [totalPages, setTotalPages] = React.useState<number>(0);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchClassifications({
+      PageNo: page,
+      PageSize: rowsPerPage,
+    });
+  };
+  const handleRowsPerPageChange = (rows: number) => {
+    setRowsPerPage(rows);
+    fetchClassifications({
+      PageNo: currentPage,
+      PageSize: rows,
+    });
   };
 
   const handleDelete = async (id: number) => {
     try {
-      const res = await deleteClassification(id);
-      const parsedRes = JSON.parse(res);
-      if (parsedRes.status === "success") {
-        toast({
-          title: "Success",
-          description: "Classification deleted successfully",
-          variant: "default",
-        });
-      } else {
-        console.error("Error deleting classification:", parsedRes);
-        toast({
-          title: "Error",
-          description: "Failed to delete classification",
-          variant: "destructive",
-        });
-      }
+      await deleteClassification(id);
     } catch (error) {
       console.error("Error deleting classification:", error);
     } finally {
-      fetchClassifications();
+      fetchClassifications({
+        PageNo: currentPage,
+        PageSize: rowsPerPage,
+      });
     }
   };
 
   React.useEffect(() => {
     const fetchData = async () => {
-      fetchClassifications();
+      fetchClassifications({
+        PageNo: currentPage,
+        PageSize: rowsPerPage,
+      });
       setLoading(false);
     };
     fetchData();
@@ -117,33 +140,62 @@ export const Classifications: React.FC = () => {
               <div className="flex space-x-2">
                 <button
                   onClick={() => {
-                    console.log("Edit classification:", item);
                     setEditClassification(item);
                     setModalVisible(true);
                   }}
                 >
                   <Edit className="w-4 h-4 text-black" />
                 </button>
-                <button onClick={() => handleDelete(item.classification_id)}>
+                <button
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to delete this classification?"
+                      )
+                    )
+                      handleDelete(item.classification_id);
+                  }}
+                >
                   <Trash2 className="w-4 h-4 text-red-500" />
                 </button>
               </div>
             )}
             isCreate={true}
             onCreate={() => setModalVisible(true)}
+            isPagingEnable={true}
+            PageNo={currentPage}
+            TotalPageCount={totalPages}
+            rowsOnPage={rowsPerPage}
+            onrowsOnPage={handleRowsPerPageChange}
+            onPageChange={function (worker: number): void {
+              handlePageChange(worker);
+            }}
           />
         </div>
       </div>
 
+      {/* add/edit modal */}
       <ClassificationModal
         isOpen={modalVisible}
         onClose={() => {
           setModalVisible(false);
           setEditClassification(null);
         }}
-        onCreate={fetchClassifications}
+        onCreate={() =>
+          fetchClassifications({
+            PageNo: currentPage,
+            PageSize: rowsPerPage,
+          })
+        }
         editClassification={editClassification}
       />
+
+      {/* alert box */}
+      {/* <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={alertMessage}
+      /> */}
     </>
   );
 };
