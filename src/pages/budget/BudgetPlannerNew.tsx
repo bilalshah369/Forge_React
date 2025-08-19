@@ -297,7 +297,8 @@ const BudgetPlannerNew : React.FC = ({}) => {
     <div className="w-full h-full">
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
-          <div className="max-w-md  p-6 bg-white rounded-2xl shadow-lg shadow-blue-500/40 border border-gray-200 m-4">
+          <div className="flex justify-between">
+<div className="max-w-md  p-6 bg-white rounded-2xl shadow-lg shadow-blue-500/40 border border-gray-200 m-4">
       
      <div className=" justify-end text-md text-gray-800">
       {/* <h2 className="text-lg font-semibold text-blue-600 space-y-5  ">
@@ -324,11 +325,22 @@ const BudgetPlannerNew : React.FC = ({}) => {
 </div>
 
   
-      <div className=" text-gray-800">
-        
-       
-      </div>
+      
     </div> 
+     {/* <div className="max-w-md p-6 bg-white rounded-2xl shadow-lg shadow-blue-500/40 border border-gray-200 m-4">
+      <h2 className="text-blue-700 font-semibold mb-2">How to Enter Data</h2>
+      <ul className="list-disc list-inside space-y-1 text-gray-700">
+        <li>Click <span className="font-semibold">+ Add Budget</span> to create a new entry.</li>
+        <li>Fill in <span className="font-semibold">Category, Sub-Category, Function, Hours</span> as required.</li>
+        <li>Enter the <span className="font-semibold">Allocated Budget</span> and <span className="font-semibold">Forecast</span> values.</li>
+        <li>Use the <span className="text-blue-600">📅</span> icon to set the timeline.</li>
+        <li>Click <span className="text-green-600">✏️</span> to edit or <span className="text-red-600">🗑️</span> to delete an entry.</li>
+        <li>For monthly breakdown, click a row to expand details and update values.</li>
+      </ul>
+    </div> */}
+          </div>
+          
+   
     {/* <div className="w-full text-right p-4">
 
       <div className="text-sm text-gray-600">
