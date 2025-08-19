@@ -203,11 +203,11 @@ const routesWithTitles = [
     title: "Designations",
     element: <Designations />,
   },
-  {
-    path: "/Adminpanel/budget-categories",
-    title: "Budget Categories",
-    element: <BudgetCategories />,
-  },
+  // {
+  //   path: "/Adminpanel/budget-categories",
+  //   title: "Budget Categories",
+  //   element: <BudgetCategories />,
+  // },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",
