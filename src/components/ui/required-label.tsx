@@ -9,8 +9,8 @@ interface Props {
 
 const RequiredLabel: React.FC<Props> = ({ children, className }) => {
   return (
-    <div className={cn(className, "flex items-center")}>
-      <Label>{children}</Label>
+    <div className={"flex items-center"}>
+      <Label className={cn(className)}>{children}</Label>
       <span className="text-red-500 ml-1">*</span>
     </div>
   );

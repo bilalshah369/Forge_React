@@ -44,7 +44,7 @@ export default function AdminPanel() {
     {
       icon: <Dot size={36} />,
       label: "Impacted Application",
-      url: "Adminpanel/impacted-application",
+      url: "Adminpanel/impacted-applications",
     },
     {
       icon: <FileText size={36} />,

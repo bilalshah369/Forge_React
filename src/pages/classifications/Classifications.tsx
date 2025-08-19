@@ -84,9 +84,16 @@ export const Classifications: React.FC = () => {
         });
       } else {
         console.error("Error deleting classification:", parsedRes);
+        toast({
+          title: "Error",
+          description: "Failed to delete classification",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Error deleting classification:", error);
+    } finally {
+      fetchClassifications();
     }
   };
 

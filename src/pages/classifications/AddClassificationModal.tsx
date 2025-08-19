@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import RequiredLabel from "@/components/ui/required-label";
+import { toast } from "@/hooks/use-toast";
 import {
   AddAndEditClassification,
   deleteClassification,
@@ -36,7 +37,7 @@ export const ClassificationModal: React.FC<ModalProps> = ({
     } else if (isOpen) {
       // Reset form when opening for add
       setFormData({
-        classification_id: -1,
+        classification_id: 0,
         classification_name: "",
         is_active: true,
       });
@@ -44,16 +45,38 @@ export const ClassificationModal: React.FC<ModalProps> = ({
   }, [editClassification, isOpen]);
 
   const handleSubmit = async () => {
+    if (!formData.classification_name) {
+      toast({
+        title: "Error",
+        description: "Classification name is required",
+        variant: "destructive",
+      });
+      return;
+    }
     try {
       const res = await AddAndEditClassification(formData);
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
+        toast({
+          title: "Success",
+          description: editClassification
+            ? "Classification updated successfully"
+            : "Classification added successfully",
+          variant: "default",
+        });
         onClose();
       } else {
         console.error("Error adding/editing classification:", parsedRes);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add/edit classification",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -70,7 +93,9 @@ export const ClassificationModal: React.FC<ModalProps> = ({
           className="p-4 w-full"
         >
           <div className="flex-row w-full">
-            <RequiredLabel>Classification Name</RequiredLabel>
+            <RequiredLabel className="text-sm">
+              Classification Name
+            </RequiredLabel>
             <Input
               type="text"
               name="classificationName"
