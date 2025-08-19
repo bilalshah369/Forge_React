@@ -3,25 +3,25 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
-import { AddAndEditApplications } from "@/utils/ImpactedApps";
+import { AddAndEditRole } from "@/utils/RoleMaster";
 import React from "react";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreate: () => void;
-  editApplication?: any;
+  editRole?: any;
 }
 
-export const ApplicationModal: React.FC<ModalProps> = ({
+export const RoleModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   onCreate,
-  editApplication = null,
+  editRole = null,
 }) => {
   const [formData, setFormData] = React.useState({
-    application_id: -1,
-    application_name: "",
+    role_id: -1,
+    role_name: "",
     is_active: true,
   });
 
@@ -39,40 +39,38 @@ export const ApplicationModal: React.FC<ModalProps> = ({
   };
 
   React.useEffect(() => {
-    if (editApplication) {
+    if (editRole) {
       setFormData({
-        application_id: editApplication.application_id,
-        application_name: editApplication.application_name,
-        is_active: editApplication.is_active,
+        role_id: editRole.role_id,
+        role_name: editRole.role_name,
+        is_active: editRole.is_active,
       });
     } else if (isOpen) {
       // Reset form when opening for add
       setFormData({
-        application_id: 0,
-        application_name: "",
+        role_id: 0,
+        role_name: "",
         is_active: true,
       });
     }
-  }, [editApplication, isOpen]);
+  }, [editRole, isOpen]);
 
   const handleSubmit = async () => {
-    if (!formData.application_name) {
+    if (!formData.role_name) {
       toast({
         title: "Error",
-        description: "Application name is required",
+        description: "Role name is required",
         variant: "destructive",
       });
       return;
     }
     try {
-      const res = await AddAndEditApplications(formData);
+      const res = await AddAndEditRole(formData);
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
         showAlert(
-          editApplication
-            ? "Application updated successfully"
-            : "Application added successfully"
+          editRole ? "Role updated successfully" : "Role added successfully"
         );
         onClose();
       } else {
@@ -80,7 +78,7 @@ export const ApplicationModal: React.FC<ModalProps> = ({
       }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
-      showAlert("Failed to add/edit application");
+      showAlert("Failed to add/edit role");
     }
   };
 
@@ -89,7 +87,7 @@ export const ApplicationModal: React.FC<ModalProps> = ({
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="p-4 w-full">
           <DialogHeader className="items-center font-semibold text-lg">
-            {editApplication ? "Edit Application" : "Add Application"}
+            {editRole ? "Edit Role" : "Add Role"}
           </DialogHeader>
           <form
             onSubmit={(e) => {
@@ -99,18 +97,16 @@ export const ApplicationModal: React.FC<ModalProps> = ({
             className="p-4 w-full"
           >
             <div className="flex-row w-full">
-              <RequiredLabel className="text-sm">
-                Application Name
-              </RequiredLabel>
+              <RequiredLabel className="text-sm">Role Name</RequiredLabel>
               <input
                 className="p-2 border border-gray-300 rounded w-full"
                 type="text"
-                name="applicationName"
-                value={formData.application_name}
+                name="roleName"
+                value={formData.role_name}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    application_name: e.target.value,
+                    role_name: e.target.value,
                   })
                 }
               />

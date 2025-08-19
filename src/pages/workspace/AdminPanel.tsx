@@ -23,24 +23,24 @@ export default function AdminPanel() {
     {
       icon: <Building2 size={36} />,
       label: "Company Details",
-      url: "Adminpanel/company",
+      url: "/Adminpanel/company",
     },
     {
       icon: <Network size={36} />,
       label: "Departments",
-      url: "Adminpanel/departments",
+      url: "/Adminpanel/departments",
     },
     {
       icon: <Share2 size={36} />,
       label: "AD Integration",
-      url: "Adminpanel/ad-integration",
+      url: "/Adminpanel/ad-integration",
     },
     {
       icon: <Layers size={36} />,
       label: "Resources",
-      url: "Adminpanel/resources",
+      url: "/Adminpanel/resources",
     },
-    { icon: <Badge size={36} />, label: "Roles", url: "Adminpanel/roles" },
+    { icon: <Badge size={36} />, label: "Roles", url: "/Adminpanel/roles" },
     {
       icon: <Dot size={36} />,
       label: "Impacted Application",
@@ -54,12 +54,12 @@ export default function AdminPanel() {
     {
       icon: <User size={36} />,
       label: "Designations",
-      url: "Adminpanel/designations",
+      url: "/Adminpanel/designations",
     },
     {
       icon: <LayoutGrid size={36} />,
       label: "Budget Categories",
-      url: "Adminpanel/budget-categories",
+      url: "/Adminpanel/budget-categories",
     },
     {
       icon: <Tag size={36} />,
@@ -69,22 +69,22 @@ export default function AdminPanel() {
     {
       icon: <Flower2 size={36} />,
       label: "PPM Integration",
-      url: "Adminpanel/ppm-integration",
+      url: "/Adminpanel/ppm-integration",
     },
     {
       icon: <BadgeCheck size={36} />,
       label: "License details",
-      url: "Adminpanel/license-details",
+      url: "/Adminpanel/license-details",
     },
     {
       icon: <Bell size={36} />,
       label: "Configure Alerts",
-      url: "Adminpanel/configure-alerts",
+      url: "/Adminpanel/configure-alerts",
     },
     {
       icon: <Spline size={36} />,
       label: "Org Chart",
-      url: "Adminpanel/org-chart",
+      url: "/Adminpanel/org-chart",
     },
     {
       icon: <FileSpreadsheet size={36} />,

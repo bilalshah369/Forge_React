@@ -35,6 +35,8 @@ import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
 import { Classifications } from "./pages/classifications/Classifications";
 import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
+import { Designations } from "./pages/designation/Designations";
+import { Roles } from "./pages/roles/Roles";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -65,7 +67,6 @@ const routesWithTitles = [
   //   title: labelDepartment.display,
   //   element: <DepartmentList />,
   // },
-  // { path: "/RoleMaster", title: labelRoles.display, element: <RoleMaster /> },
   // { path: "/Excel", title: "", element: <Excel /> },
   // {
   //   path: "/WelcomeScreen",
@@ -185,6 +186,7 @@ const routesWithTitles = [
   //   element: <IntakeApproval />,
   // },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
+  { path: "/Adminpanel/roles", title: "Roles", element: <Roles /> },
   {
     path: "/Adminpanel/impacted-applications",
     title: "Impacted Applications",
@@ -195,20 +197,20 @@ const routesWithTitles = [
     title: "Classifications",
     element: <Classifications />,
   },
-  // {
-  //   path: "/Designation",
-  //   title: labelDesignation.display,
-  //   element: <Designation />,
-  // },
+  {
+    path: "/Adminpanel/designations",
+    title: "Designations",
+    element: <Designations />,
+  },
+  {
+    path: "/Adminpanel/budget-categories",
+    title: "Budget Categories",
+    element: <BudgetCategories />,
+  },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",
   //   element: <IntakeApprovalView />,
-  // },
-  // {
-  //   path: "/BudgetDetails",
-  //   title: "Budget Details",
-  //   element: <BudgetDetails />,
   // },
   // {
   //   path: "/ProjectDetailedView",

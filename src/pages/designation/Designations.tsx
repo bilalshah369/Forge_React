@@ -3,17 +3,13 @@ import React from "react";
 import { Header } from "../workspace/PMView";
 import { Edit, Trash2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import {
-  DeleteApplications,
-  GetApplicationsByPage,
-} from "@/utils/ImpactedApps";
-import { ApplicationModal } from "./ImpactedAppsModal";
-import { useConfirmationAlert } from "@/hooks/useConfirmation";
+import { deleteDesignation, GetDesignationByPage } from "@/utils/Designation";
+import { DesignationModal } from "./DesignationModal";
 
-export const ImpactedApps: React.FC = () => {
-  const [applications, setApplications] = React.useState([]);
+export const Designations: React.FC = () => {
+  const [designations, setDesignations] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [editApplication, setEditApplication] = React.useState(null);
+  const [editDesignation, setEditDesignation] = React.useState(null);
 
   const [headers, setHeaders] = React.useState<Header[]>([
     {
@@ -22,16 +18,16 @@ export const ImpactedApps: React.FC = () => {
       visible: true,
       type: "sno",
       column_width: "100px",
-      url: "Applications",
+      url: "Designations",
       order_no: 1,
     },
     {
-      label: "Application",
-      key: "application_name",
+      label: "Designation",
+      key: "designation_name",
       visible: true,
       type: "string",
       column_width: "200px",
-      url: "Applications",
+      url: "Designations",
       order_no: 2,
     },
     {
@@ -40,7 +36,7 @@ export const ImpactedApps: React.FC = () => {
       visible: true,
       type: "status",
       column_width: "200px",
-      url: "Applications",
+      url: "Designations",
       order_no: 3,
     },
     {
@@ -49,7 +45,7 @@ export const ImpactedApps: React.FC = () => {
       visible: true,
       type: "date",
       column_width: "200px",
-      url: "Applications",
+      url: "Designations",
       order_no: 4,
     },
     {
@@ -58,7 +54,7 @@ export const ImpactedApps: React.FC = () => {
       visible: true,
       type: "date",
       column_width: "200px",
-      url: "Applications",
+      url: "Designations",
       order_no: 4,
     },
     {
@@ -67,19 +63,19 @@ export const ImpactedApps: React.FC = () => {
       visible: true,
       type: "actions",
       column_width: "100",
-      url: "Applications",
+      url: "Designations",
       order_no: 5,
     },
   ]);
 
-  const fetchApplications = async (query: any) => {
+  const fetchDesignations = async (query: any) => {
     try {
-      const response = await GetApplicationsByPage(query);
+      const response = await GetDesignationByPage(query);
       const parsedRes = JSON.parse(response);
-      setApplications(parsedRes.data.impacted_applications);
+      setDesignations(parsedRes.data.designations);
       setTotalPages(Math.ceil(parsedRes.pagination.totalRecords / rowsPerPage));
     } catch (error) {
-      console.error("Error fetching applications:", error);
+      console.error("Error fetching designations:", error);
     }
   };
 
@@ -89,37 +85,37 @@ export const ImpactedApps: React.FC = () => {
   const [totalPages, setTotalPages] = React.useState<number>(0);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    fetchApplications({
-      PageNo: page,
-      PageSize: rowsPerPage,
+    fetchDesignations({
+      pageNo: page,
+      pageSize: rowsPerPage,
     });
   };
   const handleRowsPerPageChange = (rows: number) => {
     setRowsPerPage(rows);
-    fetchApplications({
-      PageNo: currentPage,
-      PageSize: rows,
+    fetchDesignations({
+      pageNo: currentPage,
+      pageSize: rows,
     });
   };
 
   const handleDelete = async (id: number) => {
     try {
-      await DeleteApplications(id);
+      await deleteDesignation(id);
     } catch (error) {
-      console.error("Error deleting application:", error);
+      console.error("Error deleting designation:", error);
     } finally {
-      fetchApplications({
-        PageNo: currentPage,
-        PageSize: rowsPerPage,
+      fetchDesignations({
+        pageNo: currentPage,
+        pageSize: rowsPerPage,
       });
     }
   };
 
   React.useEffect(() => {
     const fetchData = async () => {
-      fetchApplications({
-        PageNo: currentPage,
-        PageSize: rowsPerPage,
+      fetchDesignations({
+        pageNo: currentPage,
+        pageSize: rowsPerPage,
       });
     };
     fetchData();
@@ -130,14 +126,14 @@ export const ImpactedApps: React.FC = () => {
       <div className="flex">
         <div className="flex-1 overflow-auto">
           <AdvancedDataTable
-            data={applications}
-            data_type={"application"}
+            data={designations}
+            data_type={"designation"}
             columns={headers}
             actions={(item) => (
               <div className="flex space-x-2">
                 <button
                   onClick={() => {
-                    setEditApplication(item);
+                    setEditDesignation(item);
                     setModalVisible(true);
                   }}
                 >
@@ -172,20 +168,20 @@ export const ImpactedApps: React.FC = () => {
       </div>
 
       {/* add/edit modal */}
-      <ApplicationModal
+      <DesignationModal
         isOpen={modalVisible}
         onClose={() => {
           setModalVisible(false);
-          setEditApplication(null);
+          setEditDesignation(null);
         }}
         onCreate={() => {
-          fetchApplications({
+          fetchDesignations({
             PageNo: currentPage,
             PageSize: rowsPerPage,
           });
           setModalVisible(false);
         }}
-        editApplication={editApplication}
+        editDesignation={editDesignation}
       />
     </>
   );
