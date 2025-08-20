@@ -22,14 +22,15 @@ export default function AdminPanel() {
   const items = [
     {
       icon: <Building2 size={36} />,
-      label: "Company Details"
-      
-    ,url:"/Adminpanel/CompanyDetailPage"},
+      label: "Company Details",
+
+      url: "/Adminpanel/CompanyDetailPage",
+    },
     {
       icon: <Network size={36} />,
-      label: "Departments"
-
-   , url:"/Adminpanel/DepartmentList"},
+      label: "Departments",
+      url: "/Adminpanel/DepartmentList",
+    },
     {
       icon: <Share2 size={36} />,
       label: "AD Integration",
@@ -83,9 +84,9 @@ export default function AdminPanel() {
     },
     {
       icon: <Spline size={36} />,
-      label: "Org Chart"
- 
-    ,url:"/Adminpanel/Organization"},
+      label: "Org Chart",
+      url: "/Adminpanel/Organization",
+    },
     {
       icon: <FileSpreadsheet size={36} />,
       label: "Import Projects from Excel",
@@ -106,7 +107,7 @@ export default function AdminPanel() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-screen-xl mx-auto">
         {items.map((item, index) => (
           <Link
-            to={`${item.url}`}
+            to={item.url}
             key={index}
             className="flex flex-col items-center justify-center p-5 bg-white rounded-xl shadow-lg hover:shadow-xl cursor-pointer transition duration-200 min-w-[140px] min-h-[110px] text-center"
           >

@@ -1,6 +1,5 @@
 import AlertBox from "@/components/ui/AlertBox";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
 import { AddAndEditApplications } from "@/utils/ImpactedApps";
@@ -9,7 +8,7 @@ import React from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: () => void;
+  onCreate?: () => void;
   editApplication?: any;
 }
 

@@ -44,6 +44,7 @@ import { Roles } from "./pages/roles/Roles";
 import ADIntegrationList from "./pages/masters/ADIntegrationList";
 import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
 import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
+import BudgetCategories from "./pages/budget-categories/BudgetCategories";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -68,13 +69,16 @@ const routesWithTitles = [
     title: "Project Change Log",
     element: <ProjectAudit />,
   },
-   {  path: "/Adminpanel/Organization", title: "Organization chart", element: <DesignationChart /> },
+  {
+    path: "/Adminpanel/Organization",
+    title: "Organization chart",
+    element: <DesignationChart />,
+  },
   {
     path: "/Adminpanel/DepartmentList",
-    title: 'Departments',
+    title: "Departments",
     element: <DepartmentList />,
   },
-  // { path: "/RoleMaster", title: labelRoles.display, element: <RoleMaster /> },
   // { path: "/Excel", title: "", element: <Excel /> },
   // {
   //   path: "/WelcomeScreen",
@@ -210,11 +214,11 @@ const routesWithTitles = [
     title: "Designations",
     element: <Designations />,
   },
-  // {
-  //   path: "/Adminpanel/budget-categories",
-  //   title: "Budget Categories",
-  //   element: <BudgetCategories />,
-  // },
+  {
+    path: "/Adminpanel/budget-categories",
+    title: "Budget Categories",
+    element: <BudgetCategories />,
+  },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",

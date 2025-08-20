@@ -17,8 +17,8 @@ import {
   useRoutes,
   useSearchParams,
 } from "react-router-dom";
-import { GetGoals } from "../goals/Goals";
-import { GetProgramsByGoalId } from "../goals/ManageProgram";
+import { GetGoals } from "@/utils/Goals";
+import { GetProgramsByGoalId } from "@/utils/ManageProgram";
 import { GetClasssifcation } from "@/utils/Masters";
 import {
   GetBudgetDetails,
@@ -47,6 +47,9 @@ import AlertBox from "@/components/ui/AlertBox";
 import BudgetCalculationForm from "../budget/BudgetCalculationForm";
 import ModalExample from "@/test/ModalExample";
 import ROICalculationForm from "../budget/ROICalculationForm";
+import { GoalsModal } from "../goals/GoalsModal";
+import { ClassificationModal } from "../classifications/AddClassificationModal";
+import { ApplicationModal } from "../impacted-apps/ImpactedAppsModal";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export interface Header {
@@ -1320,7 +1323,10 @@ const NewIntake = () => {
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
                   Classification <span className="text-red-500">*</span>{" "}
-                  <span className="text-blue-600 cursor-pointer ml-1">
+                  <span
+                    onClick={() => setClassificationVisible(true)}
+                    className="text-blue-600 cursor-pointer ml-1"
+                  >
                     + Add
                   </span>
                 </label>
@@ -1345,13 +1351,14 @@ const NewIntake = () => {
                     Classification is required
                   </p>
                 )}
+                <ClassificationModal
+                  isOpen={classificationModal}
+                  onClose={() => setClassificationVisible(false)}
+                />
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
                   Priority <span className="text-red-500">*</span>{" "}
-                  <span className="text-blue-600 cursor-pointer ml-1">
-                    + Add
-                  </span>
                 </label>
 
                 <select
@@ -1378,7 +1385,10 @@ const NewIntake = () => {
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
                   Goal{" "}
-                  <span className="text-blue-600 cursor-pointer ml-1">
+                  <span
+                    onClick={() => setGoalsVisible(true)}
+                    className="text-blue-600 cursor-pointer ml-1"
+                  >
                     + Add
                   </span>
                 </label>
@@ -1398,9 +1408,19 @@ const NewIntake = () => {
                     </option>
                   ))}
                 </select>
+                <GoalsModal isOpen={goalsModal} onClose={goalsModalClose} />
               </div>
               <div className="col-span-1">
-                <label className="block text-sm font-medium">Program</label>
+                <label className="block text-sm font-medium">
+                  Program
+                  <span
+                    onClick={() => setProgramsVisible(true)}
+                    className="text-blue-600 cursor-pointer ml-1"
+                  >
+                    {" "}
+                    + Add
+                  </span>
+                </label>
 
                 <select
                   className="w-full mt-1 p-2 border rounded"
@@ -1482,28 +1502,36 @@ const NewIntake = () => {
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
                   Impacted Application <span className="text-red-500">*</span>{" "}
-                  <span className="text-blue-600 cursor-pointer ml-1">
+                  <span
+                    onClick={() => setAppsVisible(true)}
+                    className="text-blue-600 cursor-pointer ml-1"
+                  >
                     + Add
                   </span>
                 </label>
-                <MultiSelectDropdown
-                  items={applications}
-                  placeholder="Select Impacted Application"
-                  selected={
-                    impactedApp?.length > 0 ? impactedApp?.split(",") : []
-                  }
-                  onChange={async function (selected: string[]): Promise<void> {
-                    //
-                    const worker: any = selected?.join(",");
-                    setImpactedApp(worker);
-                    //onStatusFilterAction(worker);
-                  }}
-                />
+                {applications && (
+                  <MultiSelectDropdown
+                    items={applications}
+                    placeholder="Select Impacted Application"
+                    selected={
+                      impactedApp?.length > 0 ? impactedApp?.split(",") : []
+                    }
+                    onChange={async function (
+                      selected: string[]
+                    ): Promise<void> {
+                      //
+                      const worker: any = selected?.join(",");
+                      setImpactedApp(worker);
+                      //onStatusFilterAction(worker);
+                    }}
+                  />
+                )}
                 {submitted && !impactedApp && (
                   <p className="text-red-500 text-sm mt-1" ref={impactedAppRef}>
                     Impacted Application is required
                   </p>
                 )}
+                <ApplicationModal isOpen={appsModal} onClose={appsModalClose} />
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">

@@ -4,7 +4,6 @@ import { deleteClassification, GetClasssifcationByPage } from "@/utils/Masters";
 import { Header } from "../workspace/PMView";
 import { ClassificationModal } from "./AddClassificationModal";
 import { Edit, Trash2 } from "lucide-react";
-import { useConfirmationAlert } from "@/hooks/useConfirmation";
 import AlertBox from "@/components/ui/AlertBox";
 
 export const Classifications: React.FC = () => {
@@ -12,6 +11,18 @@ export const Classifications: React.FC = () => {
   const [classification, setClassification] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editClassification, setEditClassification] = React.useState(null);
+
+  /* Alert states */
+  const [alertVisible, setAlertVisible] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
+  };
 
   const [headers, setHeaders] = React.useState<Header[]>([
     {
@@ -107,8 +118,10 @@ export const Classifications: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await deleteClassification(id);
+      showAlert("Classification deleted successfully");
     } catch (error) {
       console.error("Error deleting classification:", error);
+      showAlert("Error deleting classification");
     } finally {
       fetchClassifications({
         PageNo: currentPage,
@@ -191,11 +204,11 @@ export const Classifications: React.FC = () => {
       />
 
       {/* alert box */}
-      {/* <AlertBox
+      <AlertBox
         visible={alertVisible}
         onCloseAlert={closeAlert}
         message={alertMessage}
-      /> */}
+      />
     </>
   );
 };

@@ -9,7 +9,7 @@ import React from "react";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: () => void;
+  onCreate?: () => void;
   editClassification?: any;
 }
 

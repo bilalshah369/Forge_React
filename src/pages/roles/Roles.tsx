@@ -5,11 +5,24 @@ import { Edit, Trash2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { DeleteRole, GetRolesByPage } from "@/utils/RoleMaster";
 import { RoleModal } from "./RolesModal";
+import AlertBox from "@/components/ui/AlertBox";
 
 export const Roles: React.FC = () => {
   const [roles, setRoles] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editRole, setEditRole] = React.useState(null);
+
+  /* Alert states */
+  const [alertVisible, setAlertVisible] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
+  };
 
   const [headers, setHeaders] = React.useState<Header[]>([
     {
@@ -101,8 +114,10 @@ export const Roles: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await DeleteRole(id);
+      showAlert("Role deleted successfully");
     } catch (error) {
       console.error("Error deleting role:", error);
+      showAlert("Error deleting role");
     } finally {
       fetchRoles({
         PageNo: currentPage,
@@ -182,6 +197,13 @@ export const Roles: React.FC = () => {
           setModalVisible(false);
         }}
         editRole={editRole}
+      />
+
+      {/* alertbox */}
+      <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={alertMessage}
       />
     </>
   );

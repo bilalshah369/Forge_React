@@ -31,6 +31,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Plus,
 } from "lucide-react";
 import {
   Select,
@@ -705,9 +706,9 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               <button
                 type="button"
                 onClick={() => onCreate()}
-                className="flex items-center gap-2 text-sm text-blue-900 hover:text-blue-800 font-medium mr-2 mb-2"
+                className="flex items-center p-2 gap-2 text-sm text-blue-800 rounded hover:bg-blue-100 font-medium mr-2 mb-2"
               >
-                <Plus_svg className="w-5 h-5 fill-[#044086]" />
+                <Plus className="w-5 h-5 fill-[#044086]" />
                 {`Add ${data_type === "Category" ? "Budget" : ""} ${data_type}`}
               </button>
             )}

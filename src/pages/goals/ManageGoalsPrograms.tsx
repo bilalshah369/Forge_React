@@ -17,11 +17,11 @@ import {
   endOfYear,
 } from "date-fns";
 import { Header } from "../workspace/PMView";
-import { DeleteGoal, GetGoals, GetSearchedGoals } from "./Goals";
+import { DeleteGoal, GetGoals, GetSearchedGoals } from "@/utils/Goals";
 import { GetDept } from "@/utils/Departments";
 import { FetchPermission } from "@/utils/Permission";
 import { GetColumnVisibility } from "@/utils/PM";
-import { GetPrograms } from "./ManageProgram";
+import { GetPrograms } from "@/utils/ManageProgram";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -32,6 +32,9 @@ import { Clear_filter } from "@/assets/Icons";
 import { AutoComplete, DateRangePicker } from "rsuite";
 import GanttGoalsProgramsProjects from "./GanttGoalProgramProject";
 import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
+import AlertBox from "@/components/ui/AlertBox";
+import { GoalsModal } from "./GoalsModal";
+import { Edit, Trash2 } from "lucide-react";
 const now = new Date();
 const currentYear = now.getFullYear();
 
@@ -181,7 +184,7 @@ const ManageGoalsPrograms: React.FC = () => {
       label: "Action",
       key: "action",
       visible: true,
-      type: "",
+      type: "actions",
       column_width: "100",
       url: "ManageGoalsPrograms",
       order_no: 11,
@@ -315,12 +318,11 @@ const ManageGoalsPrograms: React.FC = () => {
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisibleAction, setModalVisibleAction] = useState<boolean>(false);
-  // useEffect(() => {
-  //   setHeaderChecked(checkedItems.size === goalData.length);
-  // }, [checkedItems, goalData]);
   const [start_date, setStartDate] = useState<string>("2025-01-01");
   const [end_date, setEndDate] = useState<string>("2025-12-31");
-  const [currentView, setCurrentView] = useState<string>("month");
+  const [currentView, setCurrentView] = useState<
+    "month" | "day" | "week" | "quarter" | "year"
+  >("month");
   const [open, setOpen] = useState(false);
   const [departments, setDepartments] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -684,6 +686,7 @@ const ManageGoalsPrograms: React.FC = () => {
         showAlert("Goal deleted");
       }
       fetchGoals();
+      fetchGoalsForTable();
     } catch (error) {
       console.error("Error Deleting Goals:", error);
       setApiMessage(error.message);
@@ -727,14 +730,12 @@ const ManageGoalsPrograms: React.FC = () => {
   const [programModalVisible, setProgramModalVisible] = useState(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [selectedGoal, setSelectedGoal] = useState({ id: "", name: "" });
-  const openCreateProgramModal = (goalId: string, goalName: string) => {
-    setSelectedGoal({ id: goalId, name: goalName });
+  const openCreateProgramModal = () => {
     setProgramModalVisible(true);
   };
 
   const closeCreateProgramModal = () => {
     setProgramModalVisible(false);
-    setSelectedGoal({ id: "", name: "" });
   };
   const handleCloseDialog = () => {
     setDialogVisible(false);
@@ -824,7 +825,14 @@ const ManageGoalsPrograms: React.FC = () => {
                         key={opt.value}
                         onClick={() => {
                           setIsLoading(true);
-                          setCurrentView(opt.value);
+                          setCurrentView(
+                            opt.value as
+                              | "month"
+                              | "day"
+                              | "week"
+                              | "quarter"
+                              | "year"
+                          );
                           if (opt.value === "year") {
                             setStartDate(`${earliestYear}-01-01`);
                             setEndDate(`${latestYear}-12-31`);
@@ -877,7 +885,9 @@ const ManageGoalsPrograms: React.FC = () => {
             />
           ) : (
             <div style={styles.card}>
-              <label style={styles.message}>No records</label>
+              <label className="text-[16px] text-[#333] text-center">
+                No records
+              </label>
             </div>
           )}
           <div className="p-2 min-w-[320px] max-w-[400px] bg-white rounded-md justify-center mt-5 mb-5">
@@ -924,7 +934,7 @@ const ManageGoalsPrograms: React.FC = () => {
               title="Programs"
               exportFileName="programs"
               isCreate={true}
-              onCreate={() => navigation("/NewIntake")}
+              onCreate={openCreateProgramModal}
               isPagingEnable={true}
               PageNo={currentPage}
               TotalPageCount={totalPagesProgram}
@@ -941,10 +951,32 @@ const ManageGoalsPrograms: React.FC = () => {
                 isfilter1={false}
                 data={goalDataForTable}
                 columns={headers}
+                actions={(item) => (
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => {
+                        setEditGoal(item);
+                        setModalVisible(true);
+                      }}
+                    >
+                      <Edit className="w-4 h-4 text-black" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (
+                          confirm("Are you sure you want to delete this goal?")
+                        )
+                          HandleDeleteGoal(item.goal_id);
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4 text-red-500" />
+                    </button>
+                  </div>
+                )}
                 title="Goals"
                 exportFileName="goals"
                 isCreate={true}
-                onCreate={() => navigation("/NewIntake")}
+                onCreate={openModal}
                 isPagingEnable={true}
                 PageNo={currentPage}
                 TotalPageCount={totalPages}
@@ -959,378 +991,26 @@ const ManageGoalsPrograms: React.FC = () => {
           )}
         </div>
       </div>
-      {/* <ScrollView style={styles.container}>
-        <AlertBox
-          visible={alertVisible}
-          onCloseAlert={closeAlert}
-          message={alertMessage}
-        />
 
-        <View style={styles.row}>
-          <View style={styles.boxFilter}>
-            <View style={{ flexDirection: "row" }}>
-              {selectedProgram?.length > 0 ? (
-                <Tooltip
-                  title="Clear Filter"
-                  theme={{
-                    colors: {
-                      onSurface: "black",
-                      surface: "white",
-                    },
-                  }}
-                  leaveTouchDelay={0}
-                  enterTouchDelay={0}
-                >
-                  <TouchableOpacity
-                    onPress={() => {
-                      setRange(null);
-                      // setStartDate('');
-                      // setEndDate('');
-                      // setIsChartFiltered(false); // Reset chart filter flag
-                      setSelectedProgram("");
-                      fetchGoals(1, rowsPerPage, "", start_date, end_date);
-                    }}
-                    style={{
-                      //paddingVertical: 8,
-                      //paddingHorizontal: 12,
-                      borderRadius: 6,
-                      alignSelf: "flex-end",
-                      marginRight: 10,
-                      marginTop: 5,
-                      //marginBottom: 10,
-                    }}
-                  >
-                    <Clear_filter height={30} width={40} />
-                  </TouchableOpacity>
-                </Tooltip>
-              ) : null}
+      {/* goals modal */}
+      <GoalsModal
+        isOpen={modalVisible}
+        onClose={closeModal}
+        onCreate={() => {
+          fetchGoals();
+          fetchGoalsForTable();
+        }}
+        editGoal={editGoal}
+      />
 
-              <MultiFeatureDropdown
-                dropdown_id={"zoom_to"}
-                placeholder={"Zoom To"}
-                dropdown_type={"single"}
-                selected_value={currentView}
-                onSingleSelect={function (worker: string): void {
-                  ////////////debugger;
-                  setIsLoading(true);
-                  setCurrentView(worker);
-                  if (worker === "year") {
-                    setStartDate(`${earliestYear}-01-01`);
-                    setEndDate(`${latestYear}-12-31`);
-                  } else {
-                    setStartDate(`${earliestYear}-01-01`);
-                    setEndDate(`${latestYear}-12-31`);
-                  }
-                  setIsLoading(false);
-                }}
-                onMultiSelect={function (worker: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-                MasterData={[
-                  {
-                    label: "Weekly",
-                    value: "week",
-                    group: "",
-                  },
-                  {
-                    label: "Monthly",
-                    value: "month",
-                    group: "",
-                  },
-                  {
-                    label: "Yearly",
-                    value: "year",
-                    group: "",
-                  },
-                ]}
-                dropdown_styles={{ width: 208, marginRight: 10 }}
-                options_styles={{ width: 208 }}
-              />
-              <DateRangePicker
-                //placeholder="Select date range"
-                ranges={customRanges}
-                format="MM/dd/yyyy"
-                onChange={handleChange}
-                style={
-                  {
-                    color: "black",
-                    "--rs-picker-placeholder-color": "black",
-                  } as React.CSSProperties
-                }
-                placement="bottomEnd"
-                placeholder="mm/dd/yyyy - mm/dd/yyyy"
-                editable={false}
-                // shouldDisableDate={combine(allowedMaxDays(7), beforeToday())}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.box1}>
-            
-            {goalData?.length > 0 ? (
-              <GanttGoalProgramProject
-                data={goalData}
-                chat_view={currentView}
-                start_date={start_date}
-                end_date={end_date}
-              />
-            ) : (
-              <View style={styles.card}>
-                <Text style={styles.message}>No records</Text>
-              </View>
-            )}
-          </View>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <div className="tabs" style={{ padding: 10, marginBottom: 10 }}>
-            <button
-              className={`tab ${!showPrograms ? "active" : ""}`}
-              onClick={(e) => {
-                setShowPrograms(false);
-                e.preventDefault();
-              }}
-            >
-              Goals
-            </button>
-            <button
-              className={`tab ${showPrograms ? "active" : ""}`}
-              onClick={(e) => {
-                setShowPrograms(true);
-                e.preventDefault();
-              }}
-            >
-              Programs
-            </button>
-          </div>
-          <ScrollView
-            contentContainerStyle={{ width: screenWidth - 100 }}
-            horizontal
-          >
-            {showPrograms ? (
-              <ManagePrograms />
-            ) : (
-              <DataTable
-                assignedPermission={permissions}
-                isColumnVisibilityDatabase={isColumnVisibility}
-                onActionDot={(worker: any) => {
-                  //////////////////debugger;
-                  setEditGoal(worker);
-                }}
-                onActiveChange={(worker: any) => {
-                  //handleStatusToggle(worker);
-                }}
-                data_type="Goal"
-                key={Math.random()}
-                loading={dataLoading}
-                headersData={headers}
-                rowsData={goalDataForTable}
-                PageNo={currentPage}
-                TotalPageCount={totalPages}
-                rowsOnPage={rowsPerPage}
-                onrowsOnPage={handleRowsPerPageChange}
-                isPagingEnable={true}
-                isEdit={true}
-                isDelete={true}
-                isView={false}
-                isAction={false}
-                isActionName="Update"
-                isCreate={true}
-                onCreate={() => {
-                  ////////////////////debugger;
-                  openModal();
-                }}
-                isFilter={false}
-                onFilter={() => {}}
-                isDynamicSearch={true}
-                onDynamicSearch={function (worker: string): void {
-                  setSearchQuery(worker);
-                  fetchSearchedProjects(1, rowsPerPage, worker);
-                }}
-                query={searchQuery}
-                onEdit={(worker?: string, row?: any) => {
-                  openModal(row);
-                  //setClassificationName(classification.classification_name);
-                  //setIsEditModalVisible(true);
-                  //setMenuVisible(false);
-                }}
-                onDelete={function (worker?: string): void {
-                  if (worker) {
-                    const goal_id = parseInt(worker, 10);
-                    if (!isNaN(goal_id)) {
-                      HandleDeleteGoal(goal_id);
-                    } else {
-                      console.error("Invalid goal ID:", worker);
-                    }
-                  }
-                }}
-                onView={function (worker?: string, value?: string): void {
-                  //alert('On View');
-                  //handleViewPress(parseInt(worker ?? '', 10));
-                  // handleViewPress(
-                  //   parseInt(worker ?? '', 10),
-                  //   parseInt(value ?? '', 10),
-                  // );
-                }}
-                onPageChange={function (worker: number): void {
-                  //handleViewPress(parseInt(worker ?? '', 10));
-                  //worker => handlePageChange(worker);
-                  handlePageChange(worker);
-                }}
-                onAction={function (worker?: string): void {
-                  //alert('dsfsf');
-                }}
-                isColumnVisibility={true}
-                checkEnable={false}
-                isMultiDelete={false}
-                isMultiAssignDepartment={false}
-                isMultiAssignRole={false}
-                isMultiConfirmUser={false}
-                isSync={false}
-                onCheckChange={function (worker: number): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onMultiDelete={function (worker: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onMultiAssignDepartment={function (worker: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onMultiAssignRole={function (worker: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onMultiConfirmUser={function (worker: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                onSync={function (worker: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                isShowPending={false}
-                onShowPending={function (worker?: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-                numberOfPending={0}
-                isDecisionFilter={false}
-                decision={0}
-                decisiontype={""}
-                onDecisionFilterAction={function (worker: number): void {
-                  throw new Error("Function not implemented.");
-                }}
-                isAction1={false}
-                onAction1={function (worker?: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                isAction2={false}
-                onAction2={function (worker?: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                isAction3={false}
-                onAction3={function (worker?: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                isAction4={false}
-                onAction4={function (worker?: any): void {
-                  throw new Error("Function not implemented.");
-                }}
-                MasterStatus={undefined}
-              />
-            )}
-          </ScrollView>
-        </View>
-        <GoalsModal
-          visible={modalVisible}
-          onClose={closeModal}
-          editGoal={editGoal}
-          fetchGoals={fetchGoals}
-          placeholderVal={{
-            departmentId: editGoal ? editGoal.goal_owner : "",
-            departmentName: editGoal
-              ? mapDepartmentIdToName(parseInt(editGoal.goal_owner))
-              : "",
-          }}
-        />
-        <ConfirmationBox
-          visible={dialogVisible}
-          onClose={handleCloseDialog}
-          onConfirm={() => {
-            HandleDeleteGoal(goal_id);
-            setDialogVisible(false);
-            fetchGoals();
-          }}
-          message="Do you wish to delete this Goal"
-        />
-        <Modal
-          transparent={true}
-          visible={modalVisibleAction}
-          animationType="fade"
-          onRequestClose={() => setModalVisibleAction(false)}
-        >
-          <TouchableWithoutFeedback
-            onPress={() => setModalVisibleAction(false)}
-          >
-            <View style={styles.modalOverlay}>
-              <View
-                style={[
-                  styles.modalContent,
-                  {
-                    position: "absolute",
-                    top: modalPosition.top,
-                    left: modalPosition.left,
-                  },
-                ]}
-              >
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisibleAction(false);
-                    setModalVisible(true);
-                  }}
-                  style={{ display: "flex", flexDirection: "row" }}
-                >
-                 
-                  <Text style={styles.modalOption}>Edit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => {
-                    handleDeletePress(goal_id);
-                    setModalVisibleAction(false);
-                  }}
-                  style={{ display: "flex", flexDirection: "row" }}
-                >
-                  
-                  <Text style={styles.modalOption}>Delete</Text>
-                </TouchableOpacity>
-                
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
+      {/* programs modal */}
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={messageModalVisible}
-          onRequestClose={() => setMessageModalVisible(false)}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>{apiMessage}</Text>
-            </View>
-            <View
-              style={[
-                styles.buttonContainer,
-                { flexDirection: "row", justifyContent: "space-between" },
-              ]}
-            >
-              <TouchableOpacity
-                style={[styles.submitButton]}
-                onPress={() => setMessageModalVisible(false)}
-              >
-                <Text style={styles.submitButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </ScrollView> */}
+      {/* alert box */}
+      <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={alertMessage}
+      />
     </>
   );
 };
