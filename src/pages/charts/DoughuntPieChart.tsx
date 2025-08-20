@@ -123,14 +123,14 @@ const DoughuntPieChart: React.FC<ChartProps> = ({
           ]}
         />
       </div>
-      <div
+      {/* <div
         className="w-[30%] pl-3 overflow-y-auto flex flex-col justify-start max-h-full"
         //style={{ height: chartHeight }}
       >
         {statusColorList.map((item, index) => (
           <div key={index} className="flex items-center mb-2">
             <Circle_svg
-              className="mr-2"
+              // className="mr-2"
               width={20}
               height={20}
               fill={item.color}
@@ -138,7 +138,20 @@ const DoughuntPieChart: React.FC<ChartProps> = ({
             <span className="text-sm text-black">{item.name}</span>
           </div>
         ))}
+      </div> */}
+      <div
+  className="w-[30%] pl-3 overflow-y-auto flex flex-col justify-start"
+  style={{ height: chartHeight }}
+>
+  {statusColorList.map((item, index) => (
+    <div key={index} className="flex items-center mb-2">
+      <div className="mr-2">
+      <Circle_svg width={20} height={20} fill={item.color} />
       </div>
+      <span className="text-sm text-black truncate">{item.name}</span>
+    </div>
+  ))}
+</div>
     </div>
   );
 };

@@ -33,7 +33,7 @@ export default function AdminPanel() {
     {
       icon: <Share2 size={36} />,
       label: "AD Integration",
-      url: "/Adminpanel/ad-integration",
+      url: "/Adminpanel/ADIntegrationList",
     },
     {
       icon: <Layers size={36} />,
@@ -74,12 +74,12 @@ export default function AdminPanel() {
     {
       icon: <BadgeCheck size={36} />,
       label: "License details",
-      url: "/Adminpanel/license-details",
+      url: "/Adminpanel/SubscriptionModel",
     },
     {
       icon: <Bell size={36} />,
       label: "Configure Alerts",
-      url: "/Adminpanel/configure-alerts",
+      url: "/Adminpanel/AlertsConfiguration",
     },
     {
       icon: <Spline size={36} />,
