@@ -23,7 +23,8 @@ export default function AdminPanel() {
     {
       icon: <Building2 size={36} />,
       label: "Company Details",
-      url: "/Adminpanel/company",
+
+      url: "/Adminpanel/CompanyDetailPage",
     },
     {
       icon: <Network size={36} />,
