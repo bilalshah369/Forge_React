@@ -38,6 +38,7 @@ import { Classifications } from "./pages/classifications/Classifications";
 import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
 import { Designations } from "./pages/designation/Designations";
 import { Roles } from "./pages/roles/Roles";
+import BudgetCategories from "./pages/budget-categories/BudgetCategories";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -203,11 +204,11 @@ const routesWithTitles = [
     title: "Designations",
     element: <Designations />,
   },
-  // {
-  //   path: "/Adminpanel/budget-categories",
-  //   title: "Budget Categories",
-  //   element: <BudgetCategories />,
-  // },
+  {
+    path: "/Adminpanel/budget-categories",
+    title: "Budget Categories",
+    element: <BudgetCategories />,
+  },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",
