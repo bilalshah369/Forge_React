@@ -31,7 +31,8 @@ export const MultiSelectDepartment: React.FC<Props> = ({
   onChange,
   placeholder = "Select Options",
   searchable = true,
-  className = "",multi=true
+  className = "",
+  multi = true,
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -83,19 +84,19 @@ export const MultiSelectDepartment: React.FC<Props> = ({
   //   );
   // };
   const toggleSelect = (value: string) => {
-  if (multi) {
-    // Multi-select (existing behavior)
-    onChange(
-      selected.includes(value)
-        ? selected.filter((v) => v !== value)
-        : [...selected, value]
-    );
-  } else {
-    // Single-select
-    onChange(selected.includes(value) ? [] : [value]);
-    setOpen(false); // 👈 optionally close dropdown after single select
-  }
-};
+    if (multi) {
+      // Multi-select (existing behavior)
+      onChange(
+        selected.includes(value)
+          ? selected.filter((v) => v !== value)
+          : [...selected, value]
+      );
+    } else {
+      // Single-select
+      onChange(selected.includes(value) ? [] : [value]);
+      setOpen(false); // 👈 optionally close dropdown after single select
+    }
+  };
 
   const toggleExpand = (label: string) => {
     setExpandedGroups((prev) =>
@@ -148,7 +149,6 @@ export const MultiSelectDepartment: React.FC<Props> = ({
                 type={multi ? "checkbox" : "radio"}
                 checked={selected.includes(item.value)}
                 onChange={() => toggleSelect(item.value)}
-                
               />
               <span className="text-sm">{item.label}</span>
             </div>
@@ -194,7 +194,7 @@ export const MultiSelectDepartment: React.FC<Props> = ({
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-2 w-72 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-y-auto right-0">
+        <div className="absolute w-full z-50 mt-2 bg-white border border-gray-200 rounded-md shadow-lg max-h-80 overflow-y-auto right-0">
           {searchable && (
             <div className="p-2">
               <input
