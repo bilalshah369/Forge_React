@@ -7,30 +7,9 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Edit, Plus, Trash2 } from "lucide-react";
+import AlertBox from "@/components/ui/AlertBox";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-// Simple AlertBox component
-const AlertBox: React.FC<{
-  visible: boolean;
-  onCloseAlert: () => void;
-  message: string;
-}> = ({ visible, onCloseAlert, message }) => {
-  if (!visible) return null;
-  return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <p className="mb-4">{message}</p>
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={onCloseAlert}
-        >
-          OK
-        </button>
-      </div>
-    </div>
-  );
-};
 
 interface DataItem {
   category_id: number;

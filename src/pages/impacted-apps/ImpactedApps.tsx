@@ -2,18 +2,29 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import React from "react";
 import { Header } from "../workspace/PMView";
 import { Edit, Trash2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import {
   DeleteApplications,
   GetApplicationsByPage,
 } from "@/utils/ImpactedApps";
 import { ApplicationModal } from "./ImpactedAppsModal";
-import { useConfirmationAlert } from "@/hooks/useConfirmation";
+import AlertBox from "@/components/ui/AlertBox";
 
 export const ImpactedApps: React.FC = () => {
   const [applications, setApplications] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editApplication, setEditApplication] = React.useState(null);
+
+  /* Alert states */
+  const [alertVisible, setAlertVisible] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
+  };
 
   const [headers, setHeaders] = React.useState<Header[]>([
     {
@@ -105,8 +116,10 @@ export const ImpactedApps: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await DeleteApplications(id);
+      showAlert("Application deleted successfully");
     } catch (error) {
       console.error("Error deleting application:", error);
+      showAlert("Error deleting application");
     } finally {
       fetchApplications({
         PageNo: currentPage,
@@ -186,6 +199,13 @@ export const ImpactedApps: React.FC = () => {
           setModalVisible(false);
         }}
         editApplication={editApplication}
+      />
+
+      {/* alertbox */}
+      <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={alertMessage}
       />
     </>
   );

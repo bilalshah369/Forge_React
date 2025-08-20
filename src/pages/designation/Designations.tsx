@@ -2,14 +2,26 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import React from "react";
 import { Header } from "../workspace/PMView";
 import { Edit, Trash2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import { deleteDesignation, GetDesignationByPage } from "@/utils/Designation";
 import { DesignationModal } from "./DesignationModal";
+import AlertBox from "@/components/ui/AlertBox";
 
 export const Designations: React.FC = () => {
   const [designations, setDesignations] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editDesignation, setEditDesignation] = React.useState(null);
+
+  /* Alert states */
+  const [alertVisible, setAlertVisible] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const showAlert = (message: string) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+  };
+  const closeAlert = () => {
+    setAlertVisible(false);
+    setAlertMessage("");
+  };
 
   const [headers, setHeaders] = React.useState<Header[]>([
     {
@@ -101,8 +113,10 @@ export const Designations: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await deleteDesignation(id);
+      showAlert("Designation deleted successfully");
     } catch (error) {
       console.error("Error deleting designation:", error);
+      showAlert("Error deleting designation");
     } finally {
       fetchDesignations({
         pageNo: currentPage,
@@ -182,6 +196,13 @@ export const Designations: React.FC = () => {
           setModalVisible(false);
         }}
         editDesignation={editDesignation}
+      />
+
+      {/* alertbox */}
+      <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={alertMessage}
       />
     </>
   );
