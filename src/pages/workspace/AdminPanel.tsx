@@ -28,7 +28,7 @@ export default function AdminPanel() {
     {
       icon: <Network size={36} />,
       label: "Departments",
-      url: "/Adminpanel/departments",
+      url: "/Adminpanel/DepartmentList",
     },
     {
       icon: <Share2 size={36} />,
