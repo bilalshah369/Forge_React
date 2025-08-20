@@ -37,6 +37,10 @@ import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
 import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
 import DepartmentList from "./pages/masters/DepartmentList";
 import DesignationChart from "./pages/TeamMap/DesignationChart";
+import { Classifications } from "./pages/classifications/Classifications";
+import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
+import { Designations } from "./pages/designation/Designations";
+import { Roles } from "./pages/roles/Roles";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -187,30 +191,31 @@ const routesWithTitles = [
   //   element: <IntakeApproval />,
   // },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
+  { path: "/Adminpanel/roles", title: "Roles", element: <Roles /> },
+  {
+    path: "/Adminpanel/impacted-applications",
+    title: "Impacted Applications",
+    element: <ImpactedApps />,
+  },
+  {
+    path: "/Adminpanel/Classifications",
+    title: "Classifications",
+    element: <Classifications />,
+  },
+  {
+    path: "/Adminpanel/designations",
+    title: "Designations",
+    element: <Designations />,
+  },
   // {
-  //   path: "/ImpactedApps",
-  //   title: labelApplication.display,
-  //   element: <ImpactedApps />,
+  //   path: "/Adminpanel/budget-categories",
+  //   title: "Budget Categories",
+  //   element: <BudgetCategories />,
   // },
   // {
   //   path: "/IntakeApprovalView",
   //   title: "Intake Approval View",
   //   element: <IntakeApprovalView />,
-  // },
-  // {
-  //   path: "/Classification",
-  //   title: labelClassification.display,
-  //   element: <Classification />,
-  // },
-  // {
-  //   path: "/Designation",
-  //   title: labelDesignation.display,
-  //   element: <Designation />,
-  // },
-  // {
-  //   path: "/BudgetDetails",
-  //   title: "Budget Details",
-  //   element: <BudgetDetails />,
   // },
   // {
   //   path: "/ProjectDetailedView",

@@ -20,20 +20,72 @@ import { Link } from "react-router-dom";
 
 export default function AdminPanel() {
   const items = [
-    { icon: <Building2 size={36} />, label: "Company Details" ,url:"/Adminpanel/CompanyDetailPage"},
-    { icon: <Network size={36} />, label: "Departments", url:"/Adminpanel/DepartmentList"},
-    { icon: <Share2 size={36} />, label: "AD Integration" },
-    { icon: <Layers size={36} />, label: "Resources" },
-    { icon: <Badge size={36} />, label: "Roles" },
-    { icon: <Dot size={36} />, label: "Impacted Application" },
-    { icon: <FileText size={36} />, label: "Classifications" },
-    { icon: <User size={36} />, label: "Designations" },
-    { icon: <LayoutGrid size={36} />, label: "Budget Categories" },
-    { icon: <Tag size={36} />, label: "Edit Field Labels" },
-    { icon: <Flower2 size={36} />, label: "PPM Integration" },
-    { icon: <BadgeCheck size={36} />, label: "License details" },
-    { icon: <Bell size={36} />, label: "Configure Alerts" },
-    { icon: <Spline size={36} />, label: "Org Chart" ,url:"/Adminpanel/Organization"},
+    {
+      icon: <Building2 size={36} />,
+      label: "Company Details"
+      
+    ,url:"/Adminpanel/CompanyDetailPage"},
+    {
+      icon: <Network size={36} />,
+      label: "Departments"
+
+   , url:"/Adminpanel/DepartmentList"},
+    {
+      icon: <Share2 size={36} />,
+      label: "AD Integration",
+      url: "/Adminpanel/ad-integration",
+    },
+    {
+      icon: <Layers size={36} />,
+      label: "Resources",
+      url: "/Adminpanel/resources",
+    },
+    { icon: <Badge size={36} />, label: "Roles", url: "/Adminpanel/roles" },
+    {
+      icon: <Dot size={36} />,
+      label: "Impacted Application",
+      url: "/Adminpanel/impacted-applications",
+    },
+    {
+      icon: <FileText size={36} />,
+      label: "Classifications",
+      url: "/Adminpanel/Classifications",
+    },
+    {
+      icon: <User size={36} />,
+      label: "Designations",
+      url: "/Adminpanel/designations",
+    },
+    {
+      icon: <LayoutGrid size={36} />,
+      label: "Budget Categories",
+      url: "/Adminpanel/budget-categories",
+    },
+    {
+      icon: <Tag size={36} />,
+      label: "Edit Field Labels",
+      url: "/Adminpanel/edit-field-labels",
+    },
+    {
+      icon: <Flower2 size={36} />,
+      label: "PPM Integration",
+      url: "/Adminpanel/ppm-integration",
+    },
+    {
+      icon: <BadgeCheck size={36} />,
+      label: "License details",
+      url: "/Adminpanel/license-details",
+    },
+    {
+      icon: <Bell size={36} />,
+      label: "Configure Alerts",
+      url: "/Adminpanel/configure-alerts",
+    },
+    {
+      icon: <Spline size={36} />,
+      label: "Org Chart"
+ 
+    ,url:"/Adminpanel/Organization"},
     {
       icon: <FileSpreadsheet size={36} />,
       label: "Import Projects from Excel",
