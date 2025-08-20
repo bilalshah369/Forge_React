@@ -118,7 +118,7 @@ export default function Header() {
     }
   }, []);
   return (
-    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
+    <header className="sticky top-0 z-50 h-16 border-b border-border bg-card flex items-center justify-between px-6">
       <button
         className="lg:hidden flex items-center justify-center  rounded hover:bg-gray-100"
         onClick={toggleSidebar}

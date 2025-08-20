@@ -34,6 +34,9 @@ import ProjectView from "./pages/projects/ProjectView";
 import ProjectDashboard from "./pages/projects/ProjectDashboard";
 import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
 import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
+import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
+import DepartmentList from "./pages/masters/DepartmentList";
+import DesignationChart from "./pages/TeamMap/DesignationChart";
 import { Classifications } from "./pages/classifications/Classifications";
 import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
 import { Designations } from "./pages/designation/Designations";
@@ -63,12 +66,16 @@ const routesWithTitles = [
     title: "Project Change Log",
     element: <ProjectAudit />,
   },
-  // { path: "/Org", title: "Organization chart", element: <Org /> },
-  // {
-  //   path: "/DepartmentList",
-  //   title: labelDepartment.display,
-  //   element: <DepartmentList />,
-  // },
+  {
+    path: "/Adminpanel/Organization",
+    title: "Organization chart",
+    element: <DesignationChart />,
+  },
+  {
+    path: "/Adminpanel/DepartmentList",
+    title: "Departments",
+    element: <DepartmentList />,
+  },
   // { path: "/Excel", title: "", element: <Excel /> },
   // {
   //   path: "/WelcomeScreen",
@@ -242,11 +249,11 @@ const routesWithTitles = [
   //   element: <PlanApproval />,
   // },
   // { path: "/ResetPassword", title: "", element: <ResetPassword /> },
-  // {
-  //   path: "/CompanyDetailPage",
-  //   title: "Company Details",
-  //   element: <CompanyDetailPage />,
-  // },
+  {
+    path: "/Adminpanel/CompanyDetailPage",
+    title: "Company Details",
+    element: <CompanyDetailPage />,
+  },
   // { path: "/MiddlePage", title: "", element: <MiddlePage /> },
   // { path: "/InProgress", title: "WIP", element: <InProgress /> },
   // {

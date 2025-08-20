@@ -84,7 +84,7 @@ export default function AdminPanel() {
     {
       icon: <Spline size={36} />,
       label: "Org Chart",
-      url: "/Adminpanel/org-chart",
+      url: "/Adminpanel/Organization",
     },
     {
       icon: <FileSpreadsheet size={36} />,

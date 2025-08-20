@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+body * {
+  box-sizing: border-box;
+}
+
+.test {
+  padding: 5px;
+  /* display: flex; */
+  /* align-items: center; */
+  /* //border: 1px solid #ccc; */
+  transition: border-color 0.3s;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  
+}
+
+.hr-teams {
+  display: flex;
+  flex-direction: column;
+  min-width: 1000px;
+}
+.hr-teams .item {
+  display: flex;
+}
+.hr-teams .item__parent {
+  position: relative;
+  min-width: 150px;
+}
+.hr-teams .item__parent__line {
+  position: absolute;
+  width: 1px;
+  background-color: black;
+  right: calc(100% + 20px);
+  z-index: 10;
+  transition: background-color 0.3s;
+}
+.hr-teams .item__parent__element {
+  min-width: 200px;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.hr-teams .item__parent__element.has-children:after {
+  content: "";
+  display: block;
+  width: 20px;  
+  height: 1px;
+  background-color: black;
+  position: absolute;
+  z-index: 20;
+  transition: background-color 0.3s;
+  left: 100%;
+}
+
+.hr-teams .item__parent__element.has-parent:before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 1px;
+  background-color: black;
+  position: absolute;
+  z-index: 20;
+  transition: background-color 0.3s;
+  right: 100%;
+}
+
+
+/* .hr-teams .item__parent__element.has-children .arrow {
+  position: absolute;
+  left: calc(100% + 20px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid black;     
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+} */
+.hr-teams .item__parent__element:last-child {
+  margin-bottom: 0;
+}
+.hr-teams .item__parent.active .item__parent__element.has-children.no-active-children:after {
+  background-color: #ccc;
+}
+.hr-teams .item__children {
+  margin-left: 40px;
+  position: relative;
+  flex: 1;
+}
+
+/* LIGHT THEME COLORS */
+body.currentapp_noapp .hr-teams .item__parent__line.active {
+  background-color: black;
+}
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element {
+  border-color: black;
+}
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element.has-parent:before,
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element.has-children:after {
+  background-color: black;
+}
+body.currentapp_noapp .hr-teams .item__parent.active .test {
+  border-color: black;
+}
+body.currentapp_noapp .hr-teams .item__children.dragged-over {
+  background-color: rgba(153, 153, 153, 0.1);
+}
+
+/* Repeat for each light color */
+body.currentapp_hr .hr-teams .item__parent__line.active { background-color: #ff8360; }
+body.currentapp_hr .hr-teams .item__parent.active .item__parent__element {border-color: black; border-width: 2; }
+body.currentapp_hr .hr-teams .item__parent.active .item__parent__element.has-parent:before,
+body.currentapp_hr .hr-teams .item__parent.active .item__parent__element.has-children:after { background-color: black; }
+body.currentapp_hr .hr-teams .item__parent.active .test { border-color: black; border-width: 2;}
+body.currentapp_hr .hr-teams .item__children.dragged-over { background-color: rgba(255,131,96,0.1); }
+
+/* ... same structure for revenue, calendar, doc, mc, crm, settings, bills, accounting, customers, reporting, good, neutral, bad */
+
+/* DARK THEME COLORS */
+body.currentapp_noapp .hr-teams .item__parent__line.active { background-color: black; }
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element { border-color: black; }
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element.has-parent:before,
+body.currentapp_noapp .hr-teams .item__parent.active .item__parent__element.has-children:after { background-color: black; }
+body.currentapp_noapp .hr-teams .item__parent.active .test { border-color: black; }
+body.currentapp_noapp .hr-teams .item__children.dragged-over { background-color: rgba(102,102,102,0.1); }
+
+/* ... same structure repeated for all dark-colors (hr, revenue, calendar, doc, mc, crm, settings, bills, accounting, customers, reporting, good, neutral, bad) */
