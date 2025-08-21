@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import {
   Building2,
   Network,
@@ -92,14 +93,20 @@ export default function AdminPanel() {
       label: "Import Projects from Excel",
       url: "/Adminpanel/IntakeUpload",
     },
-    { icon: <UploadCloud size={36} />, label: "Import Resources from Excel" },
+    {
+      icon: <UploadCloud size={36} />,
+      label: "Import Resources from Excel",
+      url: "/Adminpanel/ResourceUpload",
+    },
     {
       icon: <UploadCloud size={36} />,
       label: "Project Plan Upload from Excel",
+      url: "/Adminpanel/ProjectPlanUpload",
     },
     {
       icon: <UploadCloud size={36} />,
       label: "Project Progress Upload from Excel",
+      url: "/Adminpanel/ProjectProgressUpload",
     },
   ];
 

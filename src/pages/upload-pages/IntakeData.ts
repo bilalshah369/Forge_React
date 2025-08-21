@@ -1,52 +1,14 @@
-export interface IntakeData {
-  project_name?: string;
-  description?: string;
-  project_owner_user?: number;
-  project_manager?: number;
-  business_stakeholder_user?: number;
-  project_owner_dept?: number;
-  business_stakeholder_dept?: number;
-  impacted_function?: string;
-  priority?: number;
-  project_size?: number;
-  budget_size?: number;
-  classification?: number;
-  goal?: number;
-  program?: number;
-  impacted_applications?: number;
-  start_date?: string;
-  end_date?: string;
-  golive_date?: string;
-  business_rationale?: string;
-  success_criteria?: string;
-  assumptions?: string;
-  constraints?: string;
-  risks?: string;
-  dependencies?: string;
-  alternatives?: string;
-  impact_analysis?: string;
-}
-
-export interface MasterData {
-  users: User[];
-  projectSizes: ProjectSize[];
-  priorities: Priority[];
-  departments: Department[];
-  goals: Goal[];
-  programs: Program[];
-  imapctedApplications: ImpactedApplication[];
-  classifications: Classification[];
-  budgetSizes: BudgetSize[];
-}
-
 export interface User {
   user_id: number;
   first_name: string;
   last_name: string;
-  department_id: number;
 }
 
 export interface ProjectSize {
+  id: number;
+  value: string;
+}
+export interface BudgetSize {
   id: number;
   value: string;
 }
@@ -57,90 +19,98 @@ export interface Priority {
 }
 
 export interface Department {
-  department_id: number;
+  department_id: string;
   department_name: string;
 }
 
 export interface Goal {
-  goal_id: number;
+  goal_id: string;
   goal_name: string;
 }
 
 export interface Program {
-  program_id: number;
+  program_id: string;
   program_name: string;
 }
 
-export interface ImpactedApplication {
+export interface ImapctedApplication {
   application_id: number;
   application_name: string;
 }
-
 export interface Classification {
   classification_id: number;
   classification_name: string;
 }
 
-export interface BudgetSize {
-  id: number;
-  value: string;
+export interface MasterData {
+  users: User[];
+  projectSizes: ProjectSize[];
+  priorities: Priority[];
+  departments: Department[];
+  goals: Goal[];
+  programs: Program[];
+  imapctedApplications: ImapctedApplication[];
+  classifications: Classification[];
+  budgetSizes: BudgetSize[];
 }
 
-// Readable field names for mapping
-export type ReadableField =
-  | "Project Name"
-  | "Description"
-  | "Project Owner"
-  | "Project Manager"
-  | "Business Owner"
-  | "Project Owner Department"
-  | "Business Owner Department"
-  | "Impacted Function"
-  | "Priority"
-  | "Project Size"
-  | "Budget Size"
-  | "Classification"
-  | "Goal"
-  | "Program"
-  | "Impacted Applications"
-  | "Start Date"
-  | "End Date"
-  | "Go-live Date"
-  | "Business Rationale"
-  | "Success Criteria"
-  | "Assumptions"
-  | "Constraints"
-  | "Risks"
-  | "Dependencies"
-  | "Alternatives"
-  | "Impact Analysis";
+export interface IntakeData {
+  project_id: string;
+  project_name: string;
+  classification: string;
+  goal_id: string;
+  program_id: string;
+  business_stakeholder_user: string;
+  business_stakeholder_dept: string;
+  project_owner_user: string;
+  project_owner_dept: string;
+  project_manager_id: string;
+  // impacted_stakeholder_dept: ,
+  impacted_function: string;
+  impacted_applications: string;
+  priority: string;
+  budget_size: string;
+  project_size: string;
+  start_date: string;
+  end_date: string;
+  golive_date: string;
+  roi: string;
+  business_desc: string;
+  scope_definition: string;
+  key_assumption: string;
+  benefit_roi: string;
+  risk: string;
+  budget_impact: string;
+  actual_budget: string;
+}
 
-// Mapping from readable field names to database field names
-export const fieldMapping: Record<ReadableField, keyof IntakeData> = {
+// Mapping between readable field names and database field names
+export const fieldMapping: Record<string, keyof IntakeData> = {
   "Project Name": "project_name",
-  Description: "description",
-  "Project Owner": "project_owner_user",
-  "Project Manager": "project_manager",
-  "Business Owner": "business_stakeholder_user",
-  "Project Owner Department": "project_owner_dept",
-  "Business Owner Department": "business_stakeholder_dept",
-  "Impacted Function": "impacted_function",
-  Priority: "priority",
-  "Project Size": "project_size",
-  "Budget Size": "budget_size",
   Classification: "classification",
-  Goal: "goal",
-  Program: "program",
+  Goal: "goal_id",
+  Program: "program_id",
+  "Business Owner": "business_stakeholder_user",
+  "Business Owner Department": "business_stakeholder_dept",
+  "Project Owner": "project_owner_user",
+  "Project Owner Department": "project_owner_dept",
+  "Project Manager": "project_manager_id",
+  "Impacted Function": "impacted_function",
   "Impacted Applications": "impacted_applications",
+  Priority: "priority",
+  "Budget Size": "budget_size",
+  "Project Size": "project_size",
   "Start Date": "start_date",
   "End Date": "end_date",
   "Go-live Date": "golive_date",
-  "Business Rationale": "business_rationale",
-  "Success Criteria": "success_criteria",
-  Assumptions: "assumptions",
-  Constraints: "constraints",
-  Risks: "risks",
-  Dependencies: "dependencies",
-  Alternatives: "alternatives",
-  "Impact Analysis": "impact_analysis",
-};
+  ROI: "roi",
+  "Business Description": "business_desc",
+  "Scope Definition": "scope_definition",
+  "Key Assumption": "key_assumption",
+  "Benefit ROI": "benefit_roi",
+  Risk: "risk",
+  "Budget Impact": "budget_impact",
+  "Actual Budget": "actual_budget",
+} as const;
+
+export type ReadableField = keyof typeof fieldMapping;
