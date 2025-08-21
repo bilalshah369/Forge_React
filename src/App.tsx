@@ -46,6 +46,7 @@ import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
 import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
 import BudgetCategories from "./pages/budget-categories/BudgetCategories";
 import Resources from "./pages/profiles/Resources";
+import IntakeUpload from "./pages/upload-pages/IntakeUpload";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -154,7 +155,7 @@ const routesWithTitles = [
   //   title: "Milestone Details",
   //   element: <MilestoneViewGantt />,
   // },
-   { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
+  { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
   {
     path: "/IntakeList",
     title: "Intake/Backlog List",
@@ -300,6 +301,11 @@ const routesWithTitles = [
     title: "Budget Forecast",
     element: <BudgetPlannerNew />,
   },
+  {
+    path: "/Adminpanel/IntakeUpload",
+    title: "Create Intake from File Upload",
+    element: <IntakeUpload />,
+  },
   // {
   //   path: "/ApproveChangeRequest",
   //   title: "Approve Project Change",
@@ -333,11 +339,6 @@ const routesWithTitles = [
   //   path: "/Notifications",
   //   title: "Notifications",
   //   element: <Notifications />,
-  // },
-  // {
-  //   path: "/IntakeUpload",
-  //   title: "Create Intake from File Upload",
-  //   element: <IntakeUpload />,
   // },
   // {
   //   path: "/IntegrationLinkForm",
