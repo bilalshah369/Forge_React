@@ -584,9 +584,8 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
   return (
     <>
       {isPopup ? (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div
-            className="bg-white p-6 rounded shadow-lg w-full max-w-[700px]"
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6"
             onClick={(e) => e.stopPropagation()} // Prevent modal from closing on outside click
           >
             <div className="flex justify-between items-center mb-4">
@@ -613,6 +612,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
                   required
                   type="text"
                   readOnly
+                  disabled
                   name="projectName"
                   value={form.projectName}
                   onChange={handleChange}
