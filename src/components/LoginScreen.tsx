@@ -133,7 +133,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
     //   .digest('hex');
 
     const hash = CryptoJS.SHA256(password).toString();
-    //////debugger;
+    ////////debugger;
     const payload = JSON.stringify({ email: email, password: password });
 
     try {
@@ -227,7 +227,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
   }) => {
     localStorage.setItem("UserEmail", encodeBase64(email.toLowerCase() || ""));
     localStorage.setItem("ID", encodeBase64(userId?.toString() || ""));
-    localStorage.setItem("UserState", "Adminpanel");
+    //localStorage.setItem("UserState", "Adminpanel");
     localStorage.setItem("Token", "Bearer " + accessToken);
     localStorage.setItem("refreshToken", refreshToken || "");
     localStorage.setItem("lastInteraction", Date.now().toString());

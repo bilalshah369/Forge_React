@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const handleResetPassword = async (e: React.FormEvent) => {
     try {
-      //debugger;
+      ////debugger;
       const response = await forgotPassword({ email: email });
 
       const parsedResponse = JSON.parse(response);
@@ -34,7 +34,7 @@ const ForgotPassword = () => {
           : parsedResponse.message || "Something went wrong."
       );
     } catch (error) {
-      //debugger;
+      ////debugger;
       console.error("Error resetting password:", error);
       setErrorMessage("Something went wrong. Please try again later.");
     }

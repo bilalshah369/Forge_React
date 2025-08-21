@@ -93,7 +93,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
       var task: any[] = [];
       var links: any[] = [];
       data.forEach((element: any, index: any) => {
-        ////////////debugger;
+        //////////////debugger;
         task.push({
           s_no: element.customer_project_id,
           id: element.project_id,

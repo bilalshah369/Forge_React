@@ -121,7 +121,7 @@ export const GetResourcesWithFilters = async (filters: {
   is_a_user?:boolean;
 }): Promise<string> => {
   try {
-    //////////debugger;
+    ////////////debugger;
     let uri = `${BASE_URL}/customeradmin/get_resources`;
 
     // Build the query string dynamically from the filters object

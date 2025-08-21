@@ -355,7 +355,7 @@ export const InsertBudgetDetails = async (
   try {
     //
     //const UserID = localStorage.getItem('UserID');
-    ////debugger;
+    //////debugger;
     var uri = `${BASE_URL}/utils/insert_budget_details`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
     const token = localStorage.getItem('Token');
@@ -374,7 +374,7 @@ export const InsertBudgetDetailsSingle = async (
   try {
     //
     //const UserID = localStorage.getItem('UserID');
-    ////debugger;
+    //////debugger;
     var uri = `${BASE_URL}/utils/insert_budget_details_project_plan`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
     const token = localStorage.getItem('Token');

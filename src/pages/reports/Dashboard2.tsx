@@ -307,7 +307,7 @@ const Dashboard2 = () => {
   const justSelected = useRef(false);
   const [selectedProject_id, setSelectedProject_id] = useState<string>("");
   const handleChange = async (value: any) => {
-    //////////////debugger;
+    ////////////////debugger;
     setRange(value);
     let std = selectedStatus.replace("55", "1,2,3,4,10");
     if (value) {
@@ -362,7 +362,7 @@ const Dashboard2 = () => {
         page: 1,
         pageSize: rowsPerPage,
       });
-      // //////////////debugger;
+      // ////////////////debugger;
       await fetch_departments_projects(
         selectedProject_id,
         selectedStatus,
@@ -424,7 +424,7 @@ const Dashboard2 = () => {
       );
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      //////debugger;
+      ////////debugger;
       //setpieDataChart(result);
       setStatusDataCount(result.data);
     } catch (error) {
@@ -451,7 +451,7 @@ const Dashboard2 = () => {
       );
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      // ////debugger;
+      // //////debugger;
       //setpieDataChart(result);
       setBudgetDataCount(result.data);
     } catch (error) {
@@ -461,7 +461,7 @@ const Dashboard2 = () => {
   };
 
   const handleSearch = async (value: any) => {
-    ////debugger;
+    //////debugger;
     setSearchQuery(value);
     if (!value.trim()) {
       setSearchList([]);
@@ -504,7 +504,7 @@ const Dashboard2 = () => {
     // Extract pagination info from filters or set defaults
     const page = filters.page || currentPage;
     const pageSize = filters.pageSize || rowsPerPage;
-    ////////////////debugger;
+    //////////////////debugger;
     try {
       //setdataLoading(true);
 
@@ -514,7 +514,7 @@ const Dashboard2 = () => {
 
       const response = await GetDashProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -613,14 +613,14 @@ const Dashboard2 = () => {
         project_end_date,
         budget_impact
       );
-      ////debugger;
+      //////debugger;
       console.log(response);
       const result = JSON.parse(response);
       //var dk = transformToChartData(result);
-      ////////////debugger;
+      //////////////debugger;
       //console.log(dk);
       //setDepartmentChartData(transformToChartData(result));
-      ////debugger;
+      //////debugger;
       //const isAllZero = result.data.every(item => item.total_projects === '0');
       if (false) {
         setChartData3D([]);
@@ -647,7 +647,7 @@ const Dashboard2 = () => {
         project_end_date
       );
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       //setResourceUtilized(result.data);
       setEChart3dData(result);
       // const parsedRes =
@@ -675,7 +675,7 @@ const Dashboard2 = () => {
 
       if (result.status === "success") {
         //permissions
-        ////////////debugger;
+        //////////////debugger;
         setDepartments(result.data.departments);
         //Column Visibility
         if (result.data.column_visibility.length > 0) {
@@ -748,7 +748,7 @@ const Dashboard2 = () => {
     const filters = location.state?.filters;
 
     (async () => {
-      localStorage.setItem("UserState", "AdminDboard2");
+      //localStorage.setItem("UserState", "AdminDboard2");
       setStartDate(startOfYearInput.toLocaleDateString("en-CA")); // 'YYYY-MM-DD'
       setEndDate(endOfYearInput.toLocaleDateString("en-CA")); // 'YYYY-MM-DD'
       FetchMasterDataPM("AdminDboard2");
@@ -919,7 +919,7 @@ const Dashboard2 = () => {
             selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
           }
           onChange={async function (selected: string[]): Promise<void> {
-            ////debugger;
+            //////debugger;
             const worker: any = selected?.join(",");
 
             setSelectedStatus(worker ?? "");
@@ -983,7 +983,7 @@ const Dashboard2 = () => {
               page: 1,
               pageSize: rowsPerPage,
             });
-            // //////////////debugger;
+            // ////////////////debugger;
             await fetch_departments_projects(
               selectedProject_id,
               selectedStatus,
@@ -1275,7 +1275,7 @@ const Dashboard2 = () => {
                   ): Promise<void> {
                     //setChartLoading1(true);
                     //setdataLoading(true);
-                    // //////////debugger;
+                    // ////////////debugger;
                     console.log(statuses);
 
                     setSelectedBudgetImpact(worker1 ?? "");
@@ -1314,9 +1314,9 @@ const Dashboard2 = () => {
               ) : (
                 <>
                   {(() => {
-                    ////////////debugger;
+                    //////////////debugger;
                     if (StatusDataCount?.length === 0) {
-                      //////////debugger; // Breakpoint hits here
+                      ////////////debugger; // Breakpoint hits here
                       return (
                         <div className="p-4 border rounded shadow bg-white mt-4">
                           <span className="text-gray-500">No records</span>

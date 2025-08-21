@@ -297,7 +297,7 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
           created_at: new Date(element.created_at),
           updated_at: new Date(element.updated_at),
         });
-        //////////debugger;
+        ////////////debugger;
         if (element.project_id?.toString() === id) {
           if (viewingProject !== id) {
             setViewingProject(id);
@@ -355,7 +355,7 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
                 updated_at: new Date(prj.updated_at),
                 type: "dependendPrj",
               });
-              ////////////debugger;
+              //////////////debugger;
               links.push({
                 id: "link_" + prj.project_id,
                 source: element.project_id,

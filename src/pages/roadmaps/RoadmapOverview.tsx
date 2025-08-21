@@ -132,7 +132,7 @@ const RoadmapOverview = () => {
         requestPayload
       );
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       setProjects(result.data.projects);
     } catch (error) {
       console.error("Error applying filters:", error);
@@ -156,7 +156,7 @@ const RoadmapOverview = () => {
         requestPayload
       );
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       setProjectsWithDependencies(result.data.projects);
     } catch (error) {
       console.error("Error applying filters:", error);
@@ -182,7 +182,7 @@ const RoadmapOverview = () => {
     //setSearchQuery('');
     //setSelectedPhase('');
     //setSelectedDepartments('');
-    ////////debugger;
+    //////////debugger;
     selectedRoadmapView === "Milestone"
       ? fetchProjectsWithFilters(undefined, undefined, {
           status: worker,
@@ -316,7 +316,7 @@ const RoadmapOverview = () => {
         await FetchMasterDataPM("AdminDboard");
         await fetchProjectsWithFilters(undefined, undefined, {});
         await fetchProjectsWithDependenciesFilters(undefined, undefined, {});
-        localStorage.setItem("UserState", "RoadmapOverview");
+        //localStorage.setItem("UserState", "RoadmapOverview");
       })();
       return () => {};
     })();
@@ -426,7 +426,7 @@ const RoadmapOverview = () => {
                 selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
               }
               onChange={async function (selected: string[]): Promise<void> {
-                ////debugger;
+                //////debugger;
                 const worker: any = selected?.join(",");
                 setSelectedStatus(worker);
                 onStatusFilterAction(worker);

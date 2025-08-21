@@ -215,7 +215,7 @@ const TeamMembers = () => {
 
   const handleEdit = (member) => {
     //console.log('Edit member:', member);
-    ////////debugger;
+    //////////debugger;
     setSelectedMember(member);
     setIsEditing(true);
     setIsTeamMemberModalVisible(true);

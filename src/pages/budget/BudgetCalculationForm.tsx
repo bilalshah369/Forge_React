@@ -176,7 +176,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
   };
   const validateFields = () => {
     const validationErrors: { [key: string]: string } = {};
-    ////////////debugger;
+    //////////////debugger;
     if (!newRow.category_id)
       validationErrors.category = "Category is required.";
     if (!newRow.sub_category_id)
@@ -250,7 +250,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
 
   const handleDelete = async (recordId: number) => {
     //console.log(subCategoryId);
-    ////////////debugger;
+    //////////////debugger;
     const updatedRows = rows.filter((row) => row.id !== recordId);
     console.log(updatedRows.length);
     setRows(updatedRows);
@@ -301,7 +301,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
   };
   const handleCategoryChange = async (categoryId: number) => {
     ////console.log(category)
-    ////////////debugger;
+    //////////////debugger;
     const categorySelected = categories.find(
       (categ) => categ.category_id == categoryId
     );
@@ -437,7 +437,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
     if (onSubmit) handleAddRow();
   };
   const handleSubmit = () => {
-    //debugger;
+    ////debugger;
     if (newRow.total) {
       showAlert("Please add details by clicking on Add button.");
     } else if (rows.length == 0) {
@@ -504,7 +504,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
           1000
         )
       );
-      ////debugger;
+      //////debugger;
       setUnits(fetchedUnits);
       setDefaultRates(fetchedDefaultRates);
       setCategories(result.data?.category);
@@ -772,7 +772,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
                     //readOnly={disableEdit}
                     //onChange={handleChange}
                     onChange={(e) => {
-                      //debugger;
+                      ////debugger;
 
                       setNewRow({
                         ...newRow,
@@ -872,7 +872,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    //debugger;
+                    ////debugger;
                     const form = document.getElementById(
                       "budget-form"
                     ) as HTMLFormElement;

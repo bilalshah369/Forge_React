@@ -137,7 +137,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
   const isEditable = searchParams.get("isEditable") === "true";
   const status = parseInt(searchParams.get("status") ?? "");
   const [rows, setRows] = useState<any>([]);
-  //debugger;
+  ////debugger;
   //const isEditable = searchParams.get("isEditable");
   const [project, setProject] = useState<Project | null>(null);
   const [dependentProjects, setDependentProjects] = useState<any>();
@@ -1166,7 +1166,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
 
       const response = await GetUserPermission(decodeBase64(userID || ""));
       const parsedRes = JSON.parse(response);
-      ////debugger;
+      //////debugger;
       if (parsedRes.status === "success") {
         //console.log(`Permissions of ${userID} fetched successfully`, parsedRes);
         if (parsedRes.data.user_permissions.length > 0) {
@@ -2424,7 +2424,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                                   user.user_id === Number(e.target.value)
                               );
                               const newSteps = [...steps];
-                              //debugger;
+                              ////debugger;
                               newSteps[index].forwardTo = e.target.value;
                               newSteps[index].department_name =
                                 selectedUser?.department_name ||

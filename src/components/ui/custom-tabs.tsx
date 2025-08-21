@@ -24,7 +24,7 @@ export default function CustomTabs({ tabs, onClick }: TabsProps) {
             key={tab.to}
             //to={undefined}
             onClick={() => {
-              ////debugger;
+              //////debugger;
               if (onClick) {
                 onClick(tab.to);
               } else {

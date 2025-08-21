@@ -356,7 +356,7 @@ export const AddMilestoneModal: React.FC<AddMilestoneModalProps> = ({
   };
 
   const handleSubmit = async () => {
-    debugger;
+    //debugger;
     console.log("🚀 Starting handleSubmit...");
 
     if (!validateForm()) {
@@ -677,7 +677,7 @@ export const AddMilestoneModal: React.FC<AddMilestoneModalProps> = ({
       GetRole();
       fetchTeam(projectId);
       FetchProjectDetails(projectId);
-      ////////debugger;
+      //////////debugger;
       if (milestone) {
         setMilestoneData({
           milestone_id: milestone.milestone_id,

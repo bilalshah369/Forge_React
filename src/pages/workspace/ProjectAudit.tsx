@@ -198,7 +198,7 @@ const ProjectAudit = () => {
       await fetchColumnVisibility();
       await fetchProjectAudit(propProjectId, currentPage, rowsPerPage);
       await FetchInProgressProject(propProjectId);
-      await localStorage.setItem("UserState", "ProjectAudit");
+      //localStorage.setItem("UserState", "ProjectAudit");
     })();
   }, [location]); // Runs again on location change
   return (

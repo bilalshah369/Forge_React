@@ -100,13 +100,13 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
   const [editId, setEditId] = useState<string | null>(null);
   const [lastEdited, setLastEdited] = useState<string | null>(null);
   const handleChange = async (value: any, scale: any) => {
-    ////////////debugger;
+    //////////////debugger;
     setRange(value);
 
     if (value) {
       setStartDatePicker(value[0]?.toLocaleDateString("en-CA"));
       setEndDatePicker(value[1]?.toLocaleDateString("en-CA"));
-      ////////////debugger;
+      //////////////debugger;
       console.log("Selected Range:", value); // Logs selected range
       // Generate the array of dates with default values
       const TimesheetData: {
@@ -132,7 +132,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
         current.setDate(current.getDate() + 1);
       }
       console.log(TimesheetData);
-      ////debugger;
+      //////debugger;
       setTimesheetDataEntries(TimesheetData);
     }
   };
@@ -173,7 +173,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
   //   setEndDatePicker(endDateChanged.toLocaleDateString('en-CA'));
 
   //   console.log('Selected Range:', value);
-  //   ////debugger;
+  //   //////debugger;
   // };
   //const formRef = useRef<div>(null);
   // useEffect(() => {
@@ -209,7 +209,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
     totalHours1: string,
     index: number
   ): { start?: string; end?: string; total?: string } => {
-    ////debugger;
+    //////debugger;
     const st = (type === "start" ? value : startTime1)?.trim();
     const et = (type === "end" ? value : endTime1)?.trim();
     const th = (type === "total" ? value : totalHours1)?.trim();
@@ -308,7 +308,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
 
   useEffect(() => {
     if (visible && prefilledData.project_id) {
-      //////debugger;
+      ////////debugger;
       fetchTimesheet(prefilledData.project_id);
       const today = new Date();
       setTimesheetDataEntries([
@@ -326,7 +326,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
   const handleSubmit = async () => {
     try {
       console.log(timesheetDataEntries);
-      ////debugger;
+      //////debugger;
       timesheetDataEntries.map(async (obj: any, index) => {
         const data: {
           project_id: number;
@@ -444,7 +444,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
     onClose();
   };
   const handleDateChange = (date: any) => {
-    //debugger;
+    ////debugger;
     setRawStartDate(date);
     setStartDateDisplay(format(date, "MM-dd-yyyy"));
     setStartDate(format(date, "yyyy-MM-dd"));
@@ -484,7 +484,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
       current.setDate(current.getDate() + 1);
     }
     console.log(TimesheetData);
-    ////debugger;
+    //////debugger;
     setTimesheetDataEntries(TimesheetData);
 
     if (item.date) {

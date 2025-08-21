@@ -27,7 +27,7 @@ export const GetPMProjects = async (params?: {
   ProjectId?: string;
 }): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     // Extract PageNo and PageSize from params, defaulting to undefined if not provided
     const PageNo = params?.PageNo;
     const PageSize = params?.PageSize === 0 ? '' : params?.PageSize;
@@ -105,7 +105,7 @@ export const GetDashProjectsWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/projectDetails/get_dashboard_project`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -120,7 +120,7 @@ export const GetDashProjectsWithFilters = async (filters: {
     if (filters.status) {
       queryParams.append('status', filters.status);
     }
-    //////////debugger;
+    ////////////debugger;
     if (filters.PageNo) {
       queryParams.append('PageNo', filters.PageNo.toString());
     }
@@ -191,7 +191,7 @@ export const GetDashProjectsWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -230,7 +230,7 @@ export const GetDashResourceWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/chartsApis/get_resources_by_availability_range_table`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -245,7 +245,7 @@ export const GetDashResourceWithFilters = async (filters: {
     if (filters.status) {
       queryParams.append('status', filters.status);
     }
-    //////////debugger;
+    ////////////debugger;
     if (filters.PageNo) {
       queryParams.append('PageNo', filters.PageNo.toString());
     }
@@ -313,7 +313,7 @@ export const GetDashResourceWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -352,7 +352,7 @@ export const GetPMProjectsWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/projectDetails/get_pm_project`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -431,7 +431,7 @@ export const GetPMProjectsWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -471,7 +471,7 @@ export const GetPlanChangeProjects = async (params?: {
   PageSize?: number;
   ProjectId?: string;
 }): Promise<string> => {
-  //////////////////debugger;
+  ////////////////////debugger;
   try {
     // Extract PageNo and PageSize from params, defaulting to undefined if not provided
     const PageNo = params?.PageNo;
@@ -1310,7 +1310,7 @@ export const InsertIssueDecision = async (
 };
 export const AddCustomerUser = async (values: any): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/${
       values.customer_id ? 'master/insert_customer' : 'auth/Register'
     }`;
@@ -1329,7 +1329,7 @@ export const AddCustomerUser = async (values: any): Promise<string> => {
 };
 export const UpdateTerms = async (): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/master/common_task`;
     const uri = url;
     const token = await localStorage.getItem('Token');
@@ -1346,7 +1346,7 @@ export const UpdateTerms = async (): Promise<string> => {
 };
 export const UpdateRole = async (role: any): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/master/common_task`;
     const uri = url;
     const token = await localStorage.getItem('Token');

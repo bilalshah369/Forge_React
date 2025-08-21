@@ -247,7 +247,7 @@ const ClosedProjects = () => {
     // Extract pagination info from filters or set defaults
     const page = filters.page || currentPage;
     const pageSize = filters.pageSize || rowsPerPage;
-    ////////////////debugger;
+    //////////////////debugger;
     try {
       setdataLoading(true);
 
@@ -257,7 +257,7 @@ const ClosedProjects = () => {
 
       const response = await GetClosedProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -309,7 +309,7 @@ const ClosedProjects = () => {
   };
 
   const handleRowsPerPageChange = (newRowsPerPage: number) => {
-    ////////////debugger;
+    //////////////debugger;
     setRowsPerPage(newRowsPerPage);
     setCurrentPage(1);
     fetchProjectsWithFilters({
@@ -372,7 +372,7 @@ const ClosedProjects = () => {
       project_id: selectedProjectId,
       status: Number(selectedDecision) === 0 ? 5 : Number(selectedDecision),
     };
-    //debugger;
+    ////debugger;
     //console.log('Payload:', payload);
 
     try {

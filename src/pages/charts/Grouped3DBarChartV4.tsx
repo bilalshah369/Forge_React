@@ -205,7 +205,7 @@ const Grouped3DBarChartV4: React.FC<ChartProps> = ({ onClcked, data }) => {
   // >([]);
   useEffect(() => {
     const handleResize = () => {
-      //////debugger;
+      ////////debugger;
       if (chartRef.current) {
         setChartWidth(chartRef.current.offsetWidth || 400);
         setChartHeight(chartRef.current.offsetHeight || 400);

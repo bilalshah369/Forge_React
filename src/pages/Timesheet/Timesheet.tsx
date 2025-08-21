@@ -285,7 +285,7 @@ const Timesheet = () => {
       try {
         const response = await UpdateProjectApproval(payload);
         const parsedResponse = JSON.parse(response);
-        //////////debugger;
+        ////////////debugger;
         if (parsedResponse.status === "success") {
           if (statusId === "5") showAlert("Intake approved successfully");
           else if (statusId === "4") showAlert("Intake reviewed successfully");
@@ -348,7 +348,7 @@ const Timesheet = () => {
       const decrypted = decrypt(encrypted);
       console.log("Decrypted:", decrypted);
       fetchTimesheet();
-      localStorage.setItem("UserState", "TimeSheet");
+      //localStorage.setItem("UserState", "TimeSheet");
     })();
   }, [location]); // Runs again on location change
   return (

@@ -125,7 +125,7 @@ const NewIntake = () => {
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";
   const status = parseInt(searchParams.get("status") ?? "");
-  debugger;
+  //debugger;
   //const isEditable = searchParams.get("isEditable");
   const [project, setProject] = useState<Project | null>(null);
   const [dependentProjects, setDependentProjects] = useState<any>();
@@ -408,7 +408,7 @@ const NewIntake = () => {
 
   const fetchDependentProjects = async () => {
     try {
-      debugger;
+      //debugger;
       const response = await GetDependentProjects();
       const result = JSON.parse(response);
 
@@ -605,7 +605,7 @@ const NewIntake = () => {
   const handleDraft = async (values: any) => {
     try {
       let currentProjectId = await handleSaveAsDraft(values);
-      //debugger;
+      ////debugger;
       //console.log('currentProjectId ' + currentProjectId)
       //resetForm();
       if (currentProjectId) {
@@ -1036,7 +1036,7 @@ const NewIntake = () => {
         // Default to false if the prop is not provided
         setFormIsEditable(false);
       }
-      debugger;
+      //debugger;
       /////////////////////////////
       //masters
       //fetchSequence();
@@ -1267,7 +1267,7 @@ const NewIntake = () => {
               originalFileName: originalFileName,
               dependentProjects: selectedDependentProjects,
             };
-            //debugger;
+            ////debugger;
             if (mode === "draft") {
               handleDraft(values);
               //showAlert('Intake draft saved successfully');
@@ -2365,7 +2365,7 @@ const NewIntake = () => {
                                   user.user_id === Number(e.target.value)
                               );
                               const newSteps = [...steps];
-                              debugger;
+                              //debugger;
                               newSteps[index].forwardTo = e.target.value;
                               newSteps[index].department_name =
                                 selectedUser?.department_name ||

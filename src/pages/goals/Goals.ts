@@ -46,7 +46,7 @@ export const GetGoals = async (PageNo?: number, PageSize?: number, program?:stri
 
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    //////////////////debugger;
+    ////////////////////debugger;
     //const isActive = params.isActive ? params.isActive : true;
    
     //const baseUri = `${BASE_URL}/utils/get_goals?is_active=${isActive}`;

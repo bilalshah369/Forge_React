@@ -70,8 +70,8 @@ const transformChartData = (
   BurnData: any;
   ForcastData: any;
 } => {
-  ////debugger;
-  //////////////debugger;;
+  //////debugger;
+  ////////////////debugger;;
   // const chartData: (string | number)[][] = [['Status', 'Total Projects']];
   // const statusMap = new Map<string, string>(); // Store department_name -> department_id
   // const statusColorList: {name: string; color: string; value: string}[] = [];
@@ -99,10 +99,10 @@ const BurndownChart: React.FC<BurndownChartProps> = ({
   width = 800,
   dataBudget,
 }) => {
-  ////debugger;
+  //////debugger;
   const chartRef = useRef(null);
   const { DataLabels, BurnData, ForcastData } = transformChartData(dataBudget);
-  //////debugger;;
+  ////////debugger;;
   // Calculate chart data using useMemo to optimize performance
   const chartData = useMemo(() => {
     const totalHoursInSprint = BurnData[0] || 0;
@@ -148,7 +148,7 @@ const BurndownChart: React.FC<BurndownChartProps> = ({
   }, [BurnData, ForcastData]);
   // useEffect(() => {
   //   // const {DataLabels, BurnData, ForcastData} = transformChartData(dataBudget);
-  //   //////debugger;;
+  //   ////////debugger;;
 
   //   return () => {
   //     //chart.dispose();

@@ -319,7 +319,7 @@ const TeamMembersChangeRequest = () => {
 
   const handleEdit = (member) => {
     //console.log('Edit member:', member);
-    ////////debugger;
+    //////////debugger;
     setSelectedMember(member);
     setIsEditing(true);
     setIsTeamMemberModalVisible(true);
@@ -376,7 +376,7 @@ const TeamMembersChangeRequest = () => {
     }
   };
   const handleDeleteRequest = async (member: any) => {
-    ////////debugger;
+    //////////debugger;
     try {
       const payload = {
         project_id: projectId,

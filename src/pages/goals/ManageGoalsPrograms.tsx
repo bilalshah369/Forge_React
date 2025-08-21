@@ -654,7 +654,7 @@ const ManageGoalsPrograms: React.FC = () => {
       fetchGoalsForTable();
 
       fetchDepartments();
-      localStorage.setItem("UserState", "ManageGoalsPrograms");
+      //localStorage.setItem("UserState", "ManageGoalsPrograms");
     })();
   }, [location]); // Runs again on location change
 
@@ -1011,7 +1011,7 @@ const ManageGoalsPrograms: React.FC = () => {
                 dropdown_type={"single"}
                 selected_value={currentView}
                 onSingleSelect={function (worker: string): void {
-                  ////////////debugger;
+                  //////////////debugger;
                   setIsLoading(true);
                   setCurrentView(worker);
                   if (worker === "year") {
@@ -1114,7 +1114,7 @@ const ManageGoalsPrograms: React.FC = () => {
                 assignedPermission={permissions}
                 isColumnVisibilityDatabase={isColumnVisibility}
                 onActionDot={(worker: any) => {
-                  //////////////////debugger;
+                  ////////////////////debugger;
                   setEditGoal(worker);
                 }}
                 onActiveChange={(worker: any) => {
@@ -1137,7 +1137,7 @@ const ManageGoalsPrograms: React.FC = () => {
                 isActionName="Update"
                 isCreate={true}
                 onCreate={() => {
-                  ////////////////////debugger;
+                  //////////////////////debugger;
                   openModal();
                 }}
                 isFilter={false}

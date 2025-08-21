@@ -26,7 +26,7 @@ export const formatAmountWithoutDollarSign = (amount) => {
 };
 
 export const formatAmountWithDollarSign = (amount) => {
-  debugger;
+  //debugger;
   // Ensure the amount is a valid number
   amount=amount.replace(',');
   if (amount === null || amount === undefined || isNaN(amount)) {

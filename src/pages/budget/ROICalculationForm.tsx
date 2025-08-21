@@ -85,7 +85,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
     const updatedValues = { ...projectROIData, [field]: value };
     //console.log(updatedValues.total_capex);
     //console.log(updatedValues.total_opex);
-    //debugger;
+    ////debugger;
     const totalInvestment =
       parseFloat(updatedValues.total_capex?.toString()) +
       parseFloat(updatedValues.total_opex?.toString());
@@ -145,11 +145,11 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
     }
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    //debugger;
+    ////debugger;
     e.preventDefault(); // ✅ critical to prevent reload
     e.stopPropagation();
     try {
-      //debugger;
+      ////debugger;
 
       onClose(projectROIData, "submit");
 
@@ -159,7 +159,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
   const navigation = useNavigate();
   useEffect(() => {
     (async function () {
-      //debugger;
+      ////debugger;
       if (
         data.roi_percent !== 0 &&
         data.roi_percent !== 0 &&
@@ -238,7 +238,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
                     }
                     //onChange={handleChange}
                     onChange={(e) => {
-                      //debugger;
+                      ////debugger;
                       const value = e.target.value.replace(/[^0-9]/g, "") || "";
                       setProjectROIData({
                         ...projectROIData,
@@ -456,7 +456,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    //debugger;
+                    ////debugger;
                     const form = document.getElementById(
                       "roi-form"
                     ) as HTMLFormElement;

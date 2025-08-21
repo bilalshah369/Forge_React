@@ -21,7 +21,7 @@ const SVGProgressBar = ({
 }) => {
   const clampedPercent = Math.min(100, Math.max(0, percent));
   const progressWidth = (clampedPercent / 100) * width;
-  ////////////debugger;
+  //////////////debugger;
   return (
     <svg width={width} height={height}>
       {/* Background */}

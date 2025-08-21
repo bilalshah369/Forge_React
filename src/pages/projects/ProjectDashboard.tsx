@@ -41,6 +41,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import AdvancedDataTableMilestones from "@/components/ui/AdvancedDataTableMilestones";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 interface ProjectHistoryItem {
@@ -157,7 +158,7 @@ const ProjectDashboard = () => {
       //   return;
       // }
       //linkData.
-      //debugger;
+      ////debugger;
       const payload = linkData;
       const response = await AddExternalLinks(payload);
       const parsedRes = JSON.parse(response);
@@ -172,7 +173,7 @@ const ProjectDashboard = () => {
     }
   };
   const HandleSentTo = () => {
-    ////debugger;
+    //////debugger;
     if (allSelectedMilestone?.length > 0) {
       handleEstimatedDateChangeAction?.(
         allSelectedMilestone?.join(","),
@@ -292,7 +293,7 @@ const ProjectDashboard = () => {
         setProjectCurrentStatus(parsedRes.data.project[0]?.status_color);
         console.log("project detils", parsedRes.data.project);
         setMilestones(parsedRes.data.milestones);
-        ////////debugger;
+        //////////debugger;
         console.log("setMilestones", parsedRes.data.milestones);
         setTeamMembers(parsedRes.data.project_team);
         console.log("setTeamMembers", parsedRes.data.project_team);
@@ -302,7 +303,7 @@ const ProjectDashboard = () => {
         console.log("setRaids", parsedRes.data.raid);
         setDecisions(parsedRes.data.milestones_issue);
         setLastUpdateDate(parsedRes.data.project[0]?.updated_at);
-        //////debugger;
+        ////////debugger;
         if (parsedRes?.data.project_task?.length > 0) {
           // Find the maximum `created_at` date
           const mostRecentDate = parsedRes.data.project_task.reduce(
@@ -323,7 +324,7 @@ const ProjectDashboard = () => {
           setProject_task(mostRecentTask);
           setAccomplishment(mostRecentTask.accomplishment);
           setUpcomingTask(mostRecentTask.upcoming_task);
-          //debugger;
+          ////debugger;
         } else {
           setProject_task(new Task());
         }
@@ -377,7 +378,7 @@ const ProjectDashboard = () => {
       //console.log(response);
       const parsedRes = JSON.parse(response);
       if (parsedRes.status === "success") {
-        //////////debugger;
+        ////////////debugger;
         milestone_statusses.splice(0, milestone_statusses.length);
         var std = parsedRes.data.statuses;
         std.forEach((element: any) => {
@@ -421,7 +422,7 @@ const ProjectDashboard = () => {
       const response = await GetApprovers(prj_id);
       const result = JSON.parse(response);
 
-      ////debugger;
+      //////debugger;
       if (result.data.users) {
         setUsers(result.data.users);
       }
@@ -432,11 +433,11 @@ const ProjectDashboard = () => {
   };
   const fetchExternalLinks = async () => {
     try {
-      // //debugger;
+      // ////debugger;
       const res = await GetExternalLinks(parseInt(projectId), 1, 10);
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
-        //debugger;
+        ////debugger;
         setLinkData(parsedRes.data.project_links[0]);
       } else if (parsedRes.status === "Not Found") {
         setLinkData({
@@ -469,7 +470,7 @@ const ProjectDashboard = () => {
     sent_to: any,
     in_person?: string
   ) => {
-    ////debugger;
+    //////debugger;
     setLoading(true);
 
     var payload = {};
@@ -519,11 +520,11 @@ const ProjectDashboard = () => {
         sent_to: sent_to ?? "",
       };
       const response = await AddHistory(payload);
-      //////debugger;
+      ////////debugger;
       const parsedRes = JSON.parse(response);
-      //////////////debugger;
+      ////////////////debugger;
       if (parsedRes.status === "message") {
-        //////////////debugger;
+        ////////////////debugger;
         //console.log(' History Added succesfully');
         //await fetchMilestonesList(projectId?.toString());
         showAlert(parsedRes.message);
@@ -532,7 +533,7 @@ const ProjectDashboard = () => {
         //alert(val);
         setLoading(false);
       } else if (parsedRes.status === "error") {
-        //////////////debugger;
+        ////////////////debugger;
         //console.log(' History Added succesfully');
         //await fetchMilestonesList(projectId?.toString());
         showAlert(parsedRes.message);
@@ -549,7 +550,7 @@ const ProjectDashboard = () => {
     //setLoading(false);
   };
   const handleSelectChange = async (milestone_id: any, val: any) => {
-    //////////////debugger;
+    ////////////////debugger;
     setLoading(true);
     //console.log(`Selected value for item ${milestone_id}:`, val);
 
@@ -560,9 +561,9 @@ const ProjectDashboard = () => {
     };
     const response = await AddHistory(payload);
     const parsedRes = JSON.parse(response);
-    //////////////debugger;
+    ////////////////debugger;
     if (parsedRes.status === "message") {
-      //////////////debugger;
+      ////////////////debugger;
       //console.log(' History Added succesfully');
       //await fetchMilestonesList(projectId?.toString());
       showAlert(parsedRes.message);
@@ -570,7 +571,7 @@ const ProjectDashboard = () => {
 
       setLoading(false);
     } else if (parsedRes.status === "error") {
-      //////////////debugger;
+      ////////////////debugger;
       //console.log(' History Added succesfully');
       //await fetchMilestonesList(projectId?.toString());
       showAlert(parsedRes.message);
@@ -608,7 +609,7 @@ const ProjectDashboard = () => {
       accomplishment: val.accomplishment ?? "",
       is_active: true,
     };
-    //////debugger;
+    ////////debugger;
     const response = await AddTaskData(payload);
     const parsedRes = JSON.parse(response);
     if (parsedRes.status === "success") {
@@ -671,14 +672,14 @@ const ProjectDashboard = () => {
     //   return;
     // }
     try {
-      //debugger;
+      ////debugger;
       console.log(raid);
       const response = await InsertRaid(raid);
       const result = JSON.parse(response);
       setIsRaidtoneModalVisible(false);
       showAlert(result.message);
 
-      //////////debugger;
+      ////////////debugger;
       console.log("New raid:", result);
       await FetchallProjectData();
     } catch (error) {
@@ -791,7 +792,9 @@ const ProjectDashboard = () => {
             </span>
           </div>
         </div>
-
+        <h3 className="text-foreground text-lg font-semibold !text-blue-600">
+          Project Info.
+        </h3>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Project Details */}
           <div className="space-y-6">
@@ -926,7 +929,7 @@ const ProjectDashboard = () => {
             <h2 className="text-lg font-semibold text-blue-600">
               Project Milestones
             </h2>
-            <AdvancedDataTable
+            <AdvancedDataTableMilestones
               data={milestones}
               MasterMilestoneStatus={milestone_statusses}
               checkEnable={true}
@@ -1008,7 +1011,7 @@ const ProjectDashboard = () => {
                 worker3?: string,
                 worker4?: string
               ): Promise<void> {
-                ////debugger;
+                //////debugger;
                 await handleEstimatedDateChangeAction(
                   worker1,
                   worker2,
@@ -1029,21 +1032,19 @@ const ProjectDashboard = () => {
 
         {/* Bottom Section - Description and Tasks */}
         <div className="space-y-6">
-          <Card className="p-6">
-            <h3 className="text-lg font-medium text-foreground mb-2">
-              Project Description
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {project?.business_desc}
-            </p>
-          </Card>
+          <h3 className="text-foreground text-lg font-semibold !text-blue-600">
+            Project Description
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            {project?.business_desc}
+          </p>
 
-          <div className="bg-white rounded-lg shadow p-5 flex flex-col md:flex-row gap-6">
+          <div className="bg-white rounded-lg shadow-md shadow-blue-500/40 p-5 flex flex-col md:flex-row gap-6">
             {/* Recent Accomplishments */}
             <div className="flex flex-col w-full md:w-1/2">
-              <label className="font-medium text-gray-700 mb-1">
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 Recent Accomplishments
-              </label>
+              </h3>
               <textarea
                 className="border rounded p-2 min-h-[120px] resize-none"
                 placeholder="Enter accomplishments"
@@ -1063,9 +1064,9 @@ const ProjectDashboard = () => {
 
             {/* Upcoming Tasks */}
             <div className="flex flex-col w-full md:w-1/2">
-              <label className="font-medium text-gray-700 mb-1">
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 Upcoming Tasks
-              </label>
+              </h3>
               <textarea
                 className="border rounded p-2 min-h-[120px] resize-none"
                 placeholder="Enter upcoming task"
@@ -1413,7 +1414,7 @@ const ProjectDashboard = () => {
               className="space-y-4"
               id="raidForm"
               onSubmit={(e) => {
-                //debugger;
+                ////debugger;
                 e.preventDefault();
                 raid.project_id = parseInt(projectId);
                 // console.log(raid);
