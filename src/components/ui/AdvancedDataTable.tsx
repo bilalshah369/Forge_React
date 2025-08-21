@@ -49,6 +49,7 @@ import {
   Checkbox_unchecked_svg,
   Circle_svg,
   Clear_filter,
+  Clock_outline,
   List_filter,
   Plus_svg,
   Save_svg,
@@ -117,6 +118,12 @@ interface AdvancedDataTableProps {
   ) => void;
   MasterUsers?: any;
   onStatusChangeAction?: (worker1?: string, worker2?: string) => void;
+
+
+
+  isShowPending?: boolean;
+  onShowPending?: (worker?: string) => void;
+  numberOfPending?: number;
 }
 
 const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
@@ -157,7 +164,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
   onEstimatedChangeAction,
   MasterUsers,
   onStatusChangeAction,
-  MasterMilestoneStatus,
+  MasterMilestoneStatus,isShowPending,numberOfPending,onShowPending
 }) => {
   const [milestone_id, setMilestone_id] = useState("");
   const [isSentToModalVisible, setIsSentToModalVisible] = useState(false);
@@ -456,7 +463,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
         );
       case "project_id":
         return (
-          <div className="max-w-[100px]">
+          <div className="min-w-[60px]">
             <span className="text-md">{value || "-"}</span>
           </div>
         );
@@ -470,7 +477,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
         );
       case "project_name":
         return (
-          <div className="w-full min-w-[200px]">
+          <div className="w-full min-w-[250px]">
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Important: wrap your SVG with a focusable or pointer-targetable element */}
@@ -630,7 +637,10 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
       case "actions":
         return <>{typeof actions === "function" ? actions(item) : actions}</>;
       default:
-        return <span className="text-sm">{value || "-"}</span>;
+        return(
+         <div className="w-full min-w-[200px]">
+         <span className="text-sm">{value || "-"}</span>
+        </div>)
     }
   };
 
@@ -818,6 +828,39 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
             //   </Button>
             // </View>
           )}
+          {isShowPending && (
+        
+          <div className="relative inline-block">
+          
+           <Tooltip>
+                  <TooltipTrigger asChild>
+                    
+                    <button
+                      onClick={() => {
+                        console.log("View");
+                        // openDecisionModal(item.project_id);
+                        // setSelectedProjectName(item.project_name);
+                           onShowPending();
+            
+                      }}
+                    >
+                      <Clock_outline height={20} width={20} />
+                    </button>
+                    {/* Badge */}
+         
+                  </TooltipTrigger>
+                  <TooltipContent>{"Pending for Approval"}</TooltipContent>
+                </Tooltip>
+                 {true && (
+            <span className="absolute -top-3 -right-2 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full">
+              {numberOfPending}
+            </span>
+          )}
+                {/* Badge */}
+          
+               </div>
+        
+      )}
           <div className="relative">
             {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input

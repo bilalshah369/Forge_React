@@ -227,7 +227,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
   }) => {
     localStorage.setItem("UserEmail", encodeBase64(email.toLowerCase() || ""));
     localStorage.setItem("ID", encodeBase64(userId?.toString() || ""));
-    localStorage.setItem("UserState", "Adminpanel");
+    localStorage.setItem("UserState", "AdminDboard");
     localStorage.setItem("Token", "Bearer " + accessToken);
     localStorage.setItem("refreshToken", refreshToken || "");
     localStorage.setItem("lastInteraction", Date.now().toString());

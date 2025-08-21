@@ -22,7 +22,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Header() {
   const pageTitle = useTitle();
-  //debugger;
+  ////debugger;
   const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
   const [user_name_user, setUser_name_user] = useState<string>("");
@@ -69,7 +69,7 @@ export default function Header() {
         const UserType = decodeBase64(localStorage.getItem("UserType") ?? "");
 
         //console.log('Decoded UserType:', UserType);
-        ////////////debugger;
+        //////////////debugger;
         if (UserType === "3" || userrole === 3) {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
@@ -80,7 +80,7 @@ export default function Header() {
         } else if (UserType === "1" || userrole === 1) {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
-          localStorage.setItem("UserState", "CustomerList");
+          //localStorage.setItem("UserState", "CustomerList");
           localStorage.setItem("isAdmin", "yes");
           navigationRef("AdminDboard");
         } else if (UserType === "103" || userrole === 103) {
@@ -118,7 +118,7 @@ export default function Header() {
     }
   }, []);
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-border bg-card flex items-center justify-between px-6">
+    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
       <button
         className="lg:hidden flex items-center justify-center  rounded hover:bg-gray-100"
         onClick={toggleSidebar}

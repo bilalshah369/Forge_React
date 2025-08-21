@@ -510,7 +510,7 @@ const NewIntake = () => {
             // }, 2000);
             //resetForm();
             showAlert("Intake sent for review successfullly");
-            navigation("/IntakeList");
+            setTimeout(() => navigation("/IntakeList"), 1000);
           } else {
             showAlert(result.message);
           }
@@ -560,7 +560,7 @@ const NewIntake = () => {
     };
     try {
       if (selectedOptionApp === "2" && approvalPathidApp === "") {
-        showAlert("Please select a user to send for Approval");
+        alert("Please select a user to send for Approval");
       } else {
         let currentProjectId = await handleSaveAsDraft(values);
         //console.log('currentProjectId ' + currentProjectId)
@@ -591,7 +591,7 @@ const NewIntake = () => {
             } else {
               showAlert("Intake approved successfully");
             }
-            navigation("IntakeList");
+            setTimeout(() => navigation("/IntakeList"), 1000);
           } else {
             // Alert.alert("Failed to submit. Please try again.");
           }
@@ -2324,7 +2324,7 @@ const NewIntake = () => {
                         className="w-full mt-1 p-2 border rounded"
                         required
                         onChange={(e) => setApprovalPathidApp(e.target.value)}
-                        value={classification}
+                        value={approvalPathidApp}
                       >
                         <option value="">Select User</option>
                         {(approvers ?? []).map((item) => (

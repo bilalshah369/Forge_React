@@ -17,6 +17,7 @@ import { GetMasterDataPM } from "@/utils/PM";
 import { decodeBase64 } from "@/utils/securedata";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import IntakeApprovalModal from "../Modals/IntakeApprovalModal";
 export interface Header {
   label: string;
   key: string;
@@ -527,6 +528,7 @@ const IntakeList = () => {
           PageSize: rowsPerPage,
         });
       } else {
+        
         fetchProjects();
         setdataLoading(false);
       }
@@ -543,6 +545,9 @@ const IntakeList = () => {
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
           <AdvancedDataTable
+                isShowPending={true}
+          onShowPending={() => setIntakeApprovalModalVisible(true)}
+          numberOfPending={pendingApproval}
             isColumnVisibility={isColumnVisibility}
             actions={(item) => (
               <div className="flex space-x-2">
@@ -669,6 +674,11 @@ const IntakeList = () => {
             data_type={"Project"}
             assignedPermission={permissions}
           />
+           <IntakeApprovalModal
+        isOpen={intakeApprovalModalVisible}
+        onClose={() => {fetchPendingProjects();
+        fetchProjects();setIntakeApprovalModalVisible(false)}}
+      />
         </div>
       </div>
     </div>
