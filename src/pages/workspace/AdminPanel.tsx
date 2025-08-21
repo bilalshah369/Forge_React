@@ -90,6 +90,7 @@ export default function AdminPanel() {
     {
       icon: <FileSpreadsheet size={36} />,
       label: "Import Projects from Excel",
+      url: "/Adminpanel/IntakeUpload",
     },
     { icon: <UploadCloud size={36} />, label: "Import Resources from Excel" },
     {

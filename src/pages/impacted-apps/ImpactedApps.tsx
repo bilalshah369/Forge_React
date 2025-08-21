@@ -160,10 +160,10 @@ export const ImpactedApps: React.FC = () => {
                   onClick={() => {
                     if (
                       confirm(
-                        "Are you sure you want to delete this classification?"
+                        "Are you sure you want to delete this application?"
                       )
                     )
-                      handleDelete(item.classification_id);
+                      handleDelete(item.application_id);
                   }}
                 >
                   <Trash2 className="w-4 h-4 text-red-500" />

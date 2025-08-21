@@ -21,7 +21,7 @@ import { DeleteGoal, GetGoals, GetSearchedGoals } from "@/utils/Goals";
 import { GetDept } from "@/utils/Departments";
 import { FetchPermission } from "@/utils/Permission";
 import { GetColumnVisibility } from "@/utils/PM";
-import { GetPrograms } from "@/utils/ManageProgram";
+import { DeleteProgram, GetPrograms } from "@/utils/ManageProgram";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -35,6 +35,7 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import AlertBox from "@/components/ui/AlertBox";
 import { GoalsModal } from "./GoalsModal";
 import { Edit, Trash2 } from "lucide-react";
+import { ProgramsModal } from "./ProgramsModal";
 const now = new Date();
 const currentYear = now.getFullYear();
 
@@ -287,7 +288,7 @@ const ManageGoalsPrograms: React.FC = () => {
       label: "Action",
       key: "action",
       visible: true,
-      type: "",
+      type: "actions",
       column_width: "100",
       url: "ManageGoalsPrograms",
       order_no: 11,
@@ -313,11 +314,10 @@ const ManageGoalsPrograms: React.FC = () => {
   const [goalDataForTable, setGoalDataForTable] = useState<any[]>([]);
   const [ProgramData, setProgramData] = useState<any[]>([]);
   const [editGoal, setEditGoal] = useState<any | null>(null);
+  const [editProgram, setEditProgram] = useState<any | null>(null);
   const [headerChecked, setHeaderChecked] = useState(false);
   const [isColumnVisibility, setIsColumnVisibility] = useState<boolean>(true);
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(false);
-  const [modalVisibleAction, setModalVisibleAction] = useState<boolean>(false);
   const [start_date, setStartDate] = useState<string>("2025-01-01");
   const [end_date, setEndDate] = useState<string>("2025-12-31");
   const [currentView, setCurrentView] = useState<
@@ -694,6 +694,32 @@ const ManageGoalsPrograms: React.FC = () => {
     }
   };
 
+  const HandleDeleteProgram = async (program_id) => {
+    const body = {
+      program_id: program_id,
+    };
+    try {
+      const response = await DeleteProgram(body);
+      const parsedResponse = await JSON.parse(response);
+      if (parsedResponse.message === "success") {
+        /*  setApiMessage(parsedResponse.message);
+        setMessageModalVisible(true); */
+        showAlert("Program Deleted successfully");
+
+        fetchPrograms();
+      } else {
+        showAlert("Program Deleted");
+        fetchPrograms();
+        /* setApiMessage(parsedResponse.message);
+        setMessageModalVisible(true); */
+      }
+    } catch (error) {
+      setApiMessage(error.message);
+      setMessageModalVisible(true);
+      console.error("Error Deleting Goals:", error);
+    }
+  };
+
   const handleDeletePress = (goal_id_ref) => {
     console.log(goal_id_ref);
     setGoal_id(goal_id_ref);
@@ -730,13 +756,16 @@ const ManageGoalsPrograms: React.FC = () => {
   const [programModalVisible, setProgramModalVisible] = useState(false);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [selectedGoal, setSelectedGoal] = useState({ id: "", name: "" });
+
   const openCreateProgramModal = () => {
     setProgramModalVisible(true);
+    setEditProgram(null);
   };
 
   const closeCreateProgramModal = () => {
     setProgramModalVisible(false);
   };
+
   const handleCloseDialog = () => {
     setDialogVisible(false);
   };
@@ -748,10 +777,6 @@ const ManageGoalsPrograms: React.FC = () => {
 
   const [showPrograms, setShowPrograms] = useState<boolean>(false);
 
-  //const { width: screenWidth } = useWindowDimensions();
-  // if (isLoading) {
-  //   return <ActivityIndicator size={"small"} />;
-  // }
   return (
     <>
       <div className="w-full h-full">
@@ -884,7 +909,7 @@ const ManageGoalsPrograms: React.FC = () => {
               end_date={end_date}
             />
           ) : (
-            <div style={styles.card}>
+            <div>
               <label className="text-[16px] text-[#333] text-center">
                 No records
               </label>
@@ -932,6 +957,28 @@ const ManageGoalsPrograms: React.FC = () => {
               data={ProgramData}
               columns={headersPrograms}
               title="Programs"
+              actions={(item) => (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => {
+                      setEditProgram(item);
+                      setProgramModalVisible(true);
+                    }}
+                  >
+                    <Edit className="w-4 h-4 text-black" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (
+                        confirm("Are you sure you want to delete this program?")
+                      )
+                        HandleDeleteProgram(item.program_id);
+                    }}
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </button>
+                </div>
+              )}
               exportFileName="programs"
               isCreate={true}
               onCreate={openCreateProgramModal}
@@ -1004,7 +1051,14 @@ const ManageGoalsPrograms: React.FC = () => {
       />
 
       {/* programs modal */}
-
+      <ProgramsModal
+        isOpen={programModalVisible}
+        onClose={closeCreateProgramModal}
+        onCreate={() => {
+          fetchPrograms();
+        }}
+        editProgram={editProgram}
+      />
       {/* alert box */}
       <AlertBox
         visible={alertVisible}
@@ -1014,354 +1068,4 @@ const ManageGoalsPrograms: React.FC = () => {
     </>
   );
 };
-const shadowStyle = {
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.3,
-  shadowRadius: 5,
-  elevation: 5,
-};
-const styles = {
-  //
-  box1: {
-    flex: 2, // Takes more space
-    backgroundColor: "white",
-    //margin: 10,
-    ...shadowStyle,
-  },
-  boxFilter: {
-    flex: 1,
-    backgroundColor: "white",
-    marginHorizontal: 5,
-    borderRadius: 8,
-    alignItems: "flex-end", // Align children to the right
-    justifyContent: "center", // Optional: vertically center
-    padding: 10, // Optional: add some internal spacing
-  },
-  column: {
-    flex: 1, // Takes less space
-    justifyContent: "space-between",
-  },
-  box2: {
-    flex: 1, // Expands to take available space
-    backgroundColor: "white",
-    margin: 10,
-    ...shadowStyle,
-  },
-  box3: {
-    flex: 1, // Expands to take available space
-    backgroundColor: "white",
-    margin: 10,
-    ...shadowStyle,
-  },
-
-  card: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 12,
-    elevation: 5, // shadow for Android
-    shadowColor: "#000", // shadow for iOS
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    marginVertical: 20,
-    marginHorizontal: 16,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  message: {
-    fontSize: 16,
-    color: "#333",
-    textAlign: "center",
-  },
-
-  menuButton: {
-    fontSize: 18,
-    color: "#007BFF",
-  },
-  container: {
-    flex: 1,
-    padding: 10,
-    width: "100%",
-    // overflow: 'scroll',
-  },
-  contentWrapper: {
-    width: "100%",
-  },
-  heading: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-    marginTop: 10,
-    fontFamily: "Roboto",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  topBar: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    width: "100%",
-  },
-  leftButtons: {
-    flexDirection: "row",
-  },
-  centerButtons: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  rightButtons: {
-    flexDirection: "row",
-  },
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 8,
-    marginHorizontal: 5,
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: "#044086",
-    fontSize: 14,
-    fontFamily: "Roboto",
-  },
-  buttonText6: {
-    color: "#C4C4C4",
-  },
-  buttonIcon: {
-    padding: 5,
-    //justifyContent: 'center',
-  },
-  tableContainer: {
-    width: "90%",
-    alignSelf: "center",
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    //overflow: 'hidden',
-    elevation: 3, // Shadow for Android
-    shadowColor: "#000", // Shadow for iOS
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  headerRow: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingVertical: 8,
-    backgroundColor: "#f5f5f5",
-    color: "#757575",
-    textAlign: "center",
-    fontFamily: "Roboto",
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: "600",
-    lineHeight: 22,
-  },
-  headerCell: {
-    fontWeight: "bold",
-    fontSize: 12,
-    paddingHorizontal: 2,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  row: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "transparent",
-    paddingVertical: 6,
-  },
-  cell: {
-    fontSize: 12,
-    paddingHorizontal: 2,
-    textAlign: "left",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-  },
-  actionCell: {
-    justifyContent: "center",
-    padding: 0,
-  },
-  centeredView: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    flexGrow: 1,
-    paddingLeft: 20,
-  },
-  modalView: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 20,
-    width: "80%",
-    maxWidth: 500,
-    borderWidth: 3,
-    borderColor: "#c4c4c4",
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
-    //backgroundColor:'white',
-    //height:40,
-    color: "#044086",
-  },
-  // modalContent: {
-  //   marginBottom: 20,
-  // },
-  inputRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
-  inputRowDES: {
-    flexDirection: "row",
-    flex: 1,
-    marginBottom: 10,
-  },
-  input: {
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
-    backgroundColor: "white",
-    color: "#000",
-    //borderBottomWidth: 1.5,
-    borderBottomColor: "#044086",
-    borderWidth: 1,
-    //outlineStyle: 'none',
-    width: "100%",
-  },
-  inputT: {
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
-    backgroundColor: "white",
-    color: "#000",
-    //borderBottomWidth: 1.5,
-    borderBottomColor: "#044086",
-    borderWidth: 1,
-    //outlineStyle: 'none',
-    width: "155%",
-  },
-  inputDesc: {
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
-    backgroundColor: "white",
-    color: "#000",
-    //borderBottomWidth: 1.5,
-    borderBottomColor: "#044086",
-    borderWidth: 1,
-    //outlineStyle: 'none',
-    width: "200%",
-  },
-  fullWidthInput: {
-    marginVertical: 10,
-  },
-  cancelButton: {
-    backgroundColor: "#ddd",
-    marginRight: 10,
-  },
-  submitButton: {
-    backgroundColor: "#044086",
-  },
-  submitButtonText: {
-    color: "white",
-    fontSize: 16,
-    textAlign: "center",
-  },
-  buttonText1: {
-    color: "white",
-  },
-  buttonText2: {
-    color: "black",
-  },
-  inputContainer: {
-    marginHorizontal: 5,
-  },
-  inputLabel: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 5,
-    color: "#044086",
-  },
-  asterisk: {
-    color: "red",
-  },
-  picker: {
-    height: 40,
-    borderBottomColor: "#044086",
-    backgroundColor: "transparent",
-    overflow: "hidden",
-  },
-  pickerItem: {
-    fontSize: 14,
-  },
-  textArea: {
-    textAlignVertical: "top",
-    width: "100%",
-  },
-  fullWidth: {
-    width: "100%",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  titleText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "black",
-  },
-  sortIcon: {
-    marginLeft: 5,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    maxWidth: 300,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 10,
-    alignItems: "flex-start",
-  },
-  modalOption: {
-    padding: 5,
-    fontSize: 16,
-    color: "#007BFF",
-    textDecorationLine: "underline",
-    textAlign: "left",
-  },
-  paginationContainer: {
-    flexDirection: "row", // Align items horizontally
-    justifyContent: "flex-end", // Space out components
-    alignItems: "center", // Center align vertically
-    padding: 10, // Add some padding for spacing
-  },
-  searchInput: {
-    flex: 1,
-    height: 40, // Height of the input box
-    borderColor: "#ccc", // Light gray border
-    borderWidth: 1, // Thin border width
-    borderRadius: 8, // Rounded corners
-    paddingHorizontal: 10, // Padding inside the input
-    marginRight: 10, // Space between the input and filter button
-    backgroundColor: "#f9f9f9", // Subtle background color
-    fontSize: 16, // Text size
-    color: "#333", // Text color
-  },
-};
-
 export default ManageGoalsPrograms;

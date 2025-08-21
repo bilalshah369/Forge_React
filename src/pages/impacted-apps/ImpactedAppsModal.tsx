@@ -90,13 +90,7 @@ export const ApplicationModal: React.FC<ModalProps> = ({
           <DialogHeader className="items-center font-semibold text-lg">
             {editApplication ? "Edit Application" : "Add Application"}
           </DialogHeader>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-            className="p-4 w-full"
-          >
+          <div className="p-4 w-full">
             <div className="flex-row w-full">
               <RequiredLabel className="text-sm">
                 Application Name
@@ -125,14 +119,12 @@ export const ApplicationModal: React.FC<ModalProps> = ({
               <button
                 type="submit"
                 className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
-                onClick={() => {
-                  onCreate();
-                }}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
             </div>
-          </form>
+          </div>
         </DialogContent>
       </Dialog>
 

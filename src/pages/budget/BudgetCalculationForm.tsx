@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 interface BudgetRow {
   id: number;
   budget_detail_id: number;
-  project_id: number;
+  project_id: string;
   category_id: number;
   sub_category_id: number;
   category_name: string;
@@ -31,7 +31,7 @@ interface BudgetRow {
 }
 
 interface BudgetCalculationFormProps {
-  projectId: number;
+  projectId: string;
   projectName: string;
   isPopup?: boolean;
   //onClose?: () => void;
@@ -76,7 +76,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
     value: 0,
     total: 0,
     unit: 0,
-    department_id: "",
+    department_id: 0,
     department_name: "",
     description: "",
   });
@@ -231,7 +231,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
       qty: 0,
       value: 0,
       unit: 0,
-      department_id: "",
+      department_id: 0,
       department_name: "",
       description: "",
       total: 0,

@@ -1,40 +1,40 @@
 import AlertBox from "@/components/ui/AlertBox";
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import MultiFeatureDropdown from "@/components/ui/MultiFeatureDropdown";
 import MultiLevelDropdown from "@/components/ui/MultiLevelDropdown";
-import {
-  Department,
-  MultiSelectDepartment,
-} from "@/components/ui/MultiSelectDepartment";
+import { Department } from "@/components/ui/MultiSelectDepartment";
+import { DropdownItem } from "@/components/ui/MultiSelectDropdown";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
 import { GetDepartments } from "@/utils/Departments";
-import { InsertGoal } from "@/utils/Goals";
+import { GetGoals } from "@/utils/Goals";
+import { InsertProgram } from "@/utils/ManageProgram";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { DatePicker } from "rsuite";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreate?: () => void;
-  editGoal?: any;
+  editProgram?: any;
 }
 
-export const GoalsModal: React.FC<ModalProps> = ({
+export const ProgramsModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   onCreate,
-  editGoal = null,
+  editProgram = null,
 }) => {
   const [formData, setFormData] = React.useState({
+    program_id: undefined,
     goal_id: undefined,
-    goal_name: "",
+    program_name: "",
     description: "",
     target_year: "",
     status: true,
-    goal_owner: "",
-    stakeholders: "",
+    program_owner: "",
     start_date: "",
     end_date: "",
   });
@@ -54,6 +54,22 @@ export const GoalsModal: React.FC<ModalProps> = ({
     }
   };
 
+  const [goals, setGoals] = useState<DropdownItem[]>(null);
+  const fetchGoals = async () => {
+    try {
+      const res = await GetGoals();
+      const parsedRes = JSON.parse(res);
+      setGoals(
+        parsedRes.data.goals.map((goal: any) => ({
+          label: goal.goal_name,
+          value: goal.goal_id,
+        }))
+      );
+    } catch (error) {
+      console.error("Error in fetchGoals:", error);
+    }
+  };
+
   /* alert box */
   const [alertMessage, setAlertMessage] = React.useState("");
   const [alertVisible, setAlertVisible] = React.useState(false);
@@ -69,41 +85,42 @@ export const GoalsModal: React.FC<ModalProps> = ({
 
   React.useEffect(() => {
     fetchDepartments();
-    if (editGoal) {
-      console.log("Editing goal:", editGoal);
+    fetchGoals();
+    if (editProgram) {
+      console.log("Editing program:", editProgram);
       setFormData({
-        goal_id: editGoal.goal_id,
-        goal_name: editGoal.goal_name,
-        description: editGoal.description || "",
-        target_year: editGoal.target_year || "",
-        status: editGoal.is_active,
-        goal_owner: editGoal.goal_owner || "",
-        stakeholders: editGoal.stakeholders || "",
-        start_date: editGoal.start_date || "",
-        end_date: editGoal.end_date || "",
+        program_id: editProgram.program_id,
+        goal_id: editProgram.goal_id,
+        program_name: editProgram.program_name,
+        description: editProgram.description || "",
+        target_year: editProgram.target_year || "",
+        status: editProgram.is_active,
+        program_owner: editProgram.program_owner || "",
+        start_date: editProgram.start_date || "",
+        end_date: editProgram.end_date || "",
       });
     } else if (isOpen) {
       // Reset form when opening for add
       setFormData({
+        program_id: 0,
         goal_id: 0,
-        goal_name: "",
+        program_name: "",
         description: "",
         target_year: "",
         status: true,
-        goal_owner: "",
-        stakeholders: "",
+        program_owner: "",
         start_date: "",
         end_date: "",
       });
     }
-  }, [editGoal, isOpen]);
+  }, [editProgram, isOpen]);
 
   const handleSubmit = async () => {
     if (
-      !formData.goal_name ||
+      !formData.program_name ||
+      !formData.goal_id ||
       !formData.target_year ||
-      !formData.goal_owner ||
-      !formData.stakeholders ||
+      !formData.program_owner ||
       !formData.start_date ||
       !formData.end_date
     ) {
@@ -115,20 +132,22 @@ export const GoalsModal: React.FC<ModalProps> = ({
       return;
     }
     try {
-      const res = await InsertGoal(formData);
+      const res = await InsertProgram(formData);
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
-        onClose();
         showAlert(
-          editGoal ? "Goal updated successfully" : "Goal added successfully"
+          editProgram
+            ? "Program updated successfully"
+            : "Program added successfully"
         );
+        onClose();
       } else {
-        console.error("Error adding/editing classification:", parsedRes);
+        console.error("Error adding/editing program:", parsedRes);
       }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
-      showAlert("Failed to add/edit goal");
+      showAlert("Failed to add/edit program");
     }
   };
 
@@ -137,23 +156,23 @@ export const GoalsModal: React.FC<ModalProps> = ({
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="p-4 w-full">
           <DialogHeader className="items-center font-semibold text-lg">
-            {editGoal ? "Edit Goal" : "Add Goal"}
+            {editProgram ? "Edit Program" : "Add Program"}
           </DialogHeader>
           <div className="p-4 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex-col">
                 <RequiredLabel className="text-sm font-semibold">
-                  Goal Name
+                  Program Name
                 </RequiredLabel>
                 <input
                   className="p-2 border border-gray-300 rounded w-full"
                   type="text"
-                  name="goalName"
-                  value={formData.goal_name}
+                  name="programName"
+                  value={formData.program_name}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      goal_name: e.target.value,
+                      program_name: e.target.value,
                     })
                   }
                 />
@@ -185,17 +204,17 @@ export const GoalsModal: React.FC<ModalProps> = ({
               </div>
               <div className="flex-col">
                 <RequiredLabel className="text-sm font-semibold">
-                  Goal Owner
+                  Program Owner
                 </RequiredLabel>
                 <MultiLevelDropdown
-                  dropdown_id={"goalOwner"}
-                  placeholder={"Select Goal Owner"}
+                  dropdown_id={"programOwner"}
+                  placeholder={"Select Program Owner"}
                   dropdown_type={"single"}
-                  selected_value={formData.goal_owner}
+                  selected_value={formData.program_owner}
                   onSingleSelect={function (worker: string): void {
                     setFormData((prev) => ({
                       ...prev,
-                      goal_owner: worker,
+                      program_owner: worker,
                     }));
                   }}
                   onMultiSelect={function (worker: string): void {
@@ -206,23 +225,21 @@ export const GoalsModal: React.FC<ModalProps> = ({
               </div>
               <div className="flex-col">
                 <RequiredLabel className="text-sm font-semibold">
-                  Impacted Stakeholders
+                  Goal
                 </RequiredLabel>
-                <MultiSelectDepartment
-                  placeholder="Select Departments"
-                  departments={departments}
-                  selected={
-                    formData.stakeholders?.length > 0
-                      ? formData.stakeholders.split(",")
-                      : []
-                  }
-                  onChange={async function (selected: string[]): Promise<void> {
-                    const worker = selected?.join(",");
+                <MultiFeatureDropdown
+                  placeholder="Select Goal"
+                  MasterData={goals}
+                  selected_value={formData.goal_id}
+                  onSingleSelect={function (worker: string) {
                     setFormData((prev) => ({
                       ...prev,
-                      stakeholders: worker ?? "",
+                      goal_id: worker ?? "",
                     }));
                   }}
+                  onMultiSelect={() => {}}
+                  dropdown_id={"goal"}
+                  dropdown_type={"single"}
                 />
               </div>
               <div className="flex-col">
@@ -299,7 +316,7 @@ export const GoalsModal: React.FC<ModalProps> = ({
               <input
                 className="p-2 border border-gray-300 rounded w-full"
                 type="text"
-                name="goalName"
+                name="programName"
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({
@@ -318,7 +335,7 @@ export const GoalsModal: React.FC<ModalProps> = ({
                 Cancel
               </button>
               <button
-                type="button"
+                type="submit"
                 className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
                 onClick={handleSubmit}
               >

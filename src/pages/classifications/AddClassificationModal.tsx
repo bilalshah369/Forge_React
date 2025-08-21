@@ -69,12 +69,12 @@ export const ClassificationModal: React.FC<ModalProps> = ({
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
-        onClose();
         showAlert(
           editClassification
             ? "Classification updated successfully"
             : "Classification added successfully"
         );
+        onClose();
       } else {
         console.error("Error adding/editing classification:", parsedRes);
       }
@@ -91,13 +91,7 @@ export const ClassificationModal: React.FC<ModalProps> = ({
           <DialogHeader className="items-center font-semibold text-lg">
             {editClassification ? "Edit Classification" : "Add Classification"}
           </DialogHeader>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-            className="p-4 w-full"
-          >
+          <div className="p-4 w-full">
             <div className="flex-row w-full">
               <RequiredLabel className="text-sm">
                 Classification Name
@@ -124,16 +118,14 @@ export const ClassificationModal: React.FC<ModalProps> = ({
                 Cancel
               </button>
               <button
-                type="submit"
+                type="button"
                 className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
-                onClick={() => {
-                  onCreate();
-                }}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
             </div>
-          </form>
+          </div>
         </DialogContent>
       </Dialog>
 
