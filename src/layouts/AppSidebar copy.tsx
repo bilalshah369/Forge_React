@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -82,9 +81,6 @@ export function AppSidebar() {
   const location = useLocation();
   const currentPath = location.pathname.replace("/", "");
   const collapsed = state === "collapsed";
-  // const [selectedScreen, setSelectedScreen] = useState<string>(
-  //   localStorage.getItem("UserState")
-  // );
   const [dynamicModules, setDynamicModules] = useState<any[]>([]);
   const isActive = (path: string) => {
     return currentPath === path || currentPath.startsWith(path + "/");
@@ -147,19 +143,17 @@ export function AppSidebar() {
     }
   }, []);
   useEffect(() => {
-    //debugger;
-    //setSelectedScreen(localStorage.getItem("UserState"));
     fetchRoleModules();
   }, []);
   return (
     <Sidebar
       className={`${
-        collapsed ? "w-[2rem]" : "w-[13rem]"
+        collapsed ? "w-20" : "w-64"
       } transition-all duration-300 !bg-[#044086] [&>*]:!bg-[#044086] [&>*]:!bg-none`}
       collapsible="icon"
     >
       {/* Logo/Brand */}
-      <div className="p-4">
+      <div className="p-4 border-b border-sidebar-border/20">
         <div className="flex items-center justify-center gap-3">
           {/* <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">F</span>
@@ -185,54 +179,24 @@ export function AppSidebar() {
           )}
         </div>
       </div>
+
       <SidebarContent>
-        <SidebarGroup className="pl-2 pr-0 ">
-          <SidebarGroupContent
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, " +
-                "#044086" +
-                " 50%, " +
-                "white" +
-                " 50%)",
-            }}
-          >
-            <SidebarMenu
-              className="gap-0"
-              // style={{
-              //   backgroundImage:
-              //     "linear-gradient(90deg, " +
-              //     "blue" +
-              //     " 50%, " +
-              //     "white" +
-              //     " 50%)",
-              // }}
-            >
-              {dynamicModules.map((item, index) => {
-                //////debugger;
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {dynamicModules.map((item) => {
+                ////debugger;
                 console.log(dynamicModules);
-                const selectedScreen = localStorage.getItem("UserState");
                 const active = isActive(item.url);
-                //debugger;
-                var rdb1: number =
-                  dynamicModules[index + 1]?.url === selectedScreen ||
-                  dynamicModules[index]?.sub_modules[0]?.url === selectedScreen
-                    ? 25
-                    : 0;
-                var rdb2: number =
-                  dynamicModules[index - 1]?.url === selectedScreen ? 25 : 0;
+
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild className="p-0 bg-[#044086]">
+                    <SidebarMenuButton asChild className="p-0">
                       {active ? (
                         <NavLink
                           to={item.url}
                           end={item.url === "/"}
-                          className={`flex items-center gap-3 px-3 py-2.5 bg-white text-black hover:text-black${
-                            rdb2 > 0 ? "rounded-tr-full" : ""
-                          } rounded-l-full ${
-                            rdb1 > 0 ? "rounded-br-full" : ""
-                          } `}
+                          className="flex items-center gap-3 px-3 py-2.5 bg-gradient-to-br bg-white text-black hover:text-black"
                         >
                           {/* <item.icon className="h-5 w-5 flex-shrink-0" /> */}
                           {true ? (
@@ -367,23 +331,10 @@ export function AppSidebar() {
                       ) : (
                         <NavLink
                           to={item.url}
-                          onClick={(e) => {
-                            e.preventDefault(); // stop immediate navigation
-                            localStorage.setItem(
-                              "UserState",
-                              item.url?.toString()
-                            ); // update your state
-                            // then navigate after state update
-                            setTimeout(() => {
-                              navigationRef(item.url);
-                            }, 0);
-                          }}
                           end={item.url === "/"}
-                          className={`flex items-center gap-3 px-3 py-2.5 text-white hover:text-black ${
-                            rdb2 > 0 ? "rounded-tr-full" : ""
-                          } rounded-l-full ${
-                            rdb1 > 0 ? "rounded-br-full" : ""
-                          }`}
+                          className={
+                            "flex items-center gap-3 px-3 py-2.5 text-white hover:text-black"
+                          }
                         >
                           {/* <item.icon className="h-5 w-5 flex-shrink-0" /> */}
                           {true ? (

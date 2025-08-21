@@ -14,26 +14,30 @@ export default function MasterLayout() {
   }, [navigate]);
   return (
     <SidebarProvider defaultOpen={true}>
-      <div className="min-h-screen flex w-full">
-        <AppSidebar />
+      <AppSidebar />
 
-        <main className="flex-1 flex flex-col overflow-hidden">
-          {" "}
-          {/* Prevent scroll leak */}
-          {/* Header with trigger */}
-          {/* <header className="h-14 flex items-center border-b bg-background px-4">
+      <main
+        className="flex-1 flex flex-col overflow-hidden bg-white"
+        style={{ borderRadius: 10 }}
+      >
+        {" "}
+        {/* Prevent scroll leak */}
+        {/* Header with trigger */}
+        {/* <header className="h-14 flex items-center border-b bg-background px-4">
             <SidebarTrigger className="p-2">
               <Menu className="h-4 w-4" />
             </SidebarTrigger>
           </header> */}
-          <Header />
-          {/* Main content */}
-          <div className="flex-1 overflow-hidden">
-            {/* bg-gradient-to-br from-green-50 to-indigo-100 */}
-            <Outlet /> {/* children of the route will render here */}
-          </div>
-        </main>
-      </div>
+        <Header />
+        {/* Main content */}
+        <div
+          className="flex-1 overflow-auto"
+          style={{ borderRadius: 10, padding: 20 }}
+        >
+          {/* bg-gradient-to-br from-green-50 to-indigo-100 */}
+          <Outlet /> {/* children of the route will render here */}
+        </div>
+      </main>
     </SidebarProvider>
   );
 }
