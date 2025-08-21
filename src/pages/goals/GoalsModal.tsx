@@ -119,10 +119,10 @@ export const GoalsModal: React.FC<ModalProps> = ({
       const parsedRes = JSON.parse(res);
       if (parsedRes.status === "success") {
         onCreate();
+        onClose();
         showAlert(
           editGoal ? "Goal updated successfully" : "Goal added successfully"
         );
-        onClose();
       } else {
         console.error("Error adding/editing classification:", parsedRes);
       }
@@ -139,13 +139,7 @@ export const GoalsModal: React.FC<ModalProps> = ({
           <DialogHeader className="items-center font-semibold text-lg">
             {editGoal ? "Edit Goal" : "Add Goal"}
           </DialogHeader>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-            className="p-4 w-full"
-          >
+          <div className="p-4 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex-col">
                 <RequiredLabel className="text-sm font-semibold">
@@ -324,16 +318,14 @@ export const GoalsModal: React.FC<ModalProps> = ({
                 Cancel
               </button>
               <button
-                type="submit"
+                type="button"
                 className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
-                onClick={() => {
-                  onCreate();
-                }}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
             </div>
-          </form>
+          </div>
         </DialogContent>
       </Dialog>
 

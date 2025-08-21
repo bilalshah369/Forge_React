@@ -50,6 +50,7 @@ import ROICalculationForm from "../budget/ROICalculationForm";
 import { GoalsModal } from "../goals/GoalsModal";
 import { ClassificationModal } from "../classifications/AddClassificationModal";
 import { ApplicationModal } from "../impacted-apps/ImpactedAppsModal";
+import { ProgramsModal } from "../goals/ProgramsModal";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export interface Header {
@@ -128,7 +129,6 @@ const NewIntake = () => {
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";
   const status = parseInt(searchParams.get("status") ?? "");
-  debugger;
   //const isEditable = searchParams.get("isEditable");
   const [project, setProject] = useState<Project | null>(null);
   const [dependentProjects, setDependentProjects] = useState<any>();
@@ -141,9 +141,9 @@ const NewIntake = () => {
   const [goal, setGoal] = useState("");
   const [program, setProgram] = useState("");
   const [businessOwner, setBusinessOwner] = useState("");
-  const [businessOwnerDept, setBusinessOwnerDept] = useState<number>("");
+  const [businessOwnerDept, setBusinessOwnerDept] = useState<number>();
   const [projectOwner, setProjectOwner] = useState("");
-  const [projectOwnerDept, setProjectOwnerDept] = useState<number>("");
+  const [projectOwnerDept, setProjectOwnerDept] = useState<number>();
   const [projectManager, setProjectManager] = useState("");
   const [impactedFunction, setImpactedFunction] = useState("");
   const [impactedApp, setImpactedApp] = useState("");
@@ -411,7 +411,7 @@ const NewIntake = () => {
 
   const fetchDependentProjects = async () => {
     try {
-      debugger;
+      //debugger;
       const response = await GetDependentProjects();
       const result = JSON.parse(response);
 
@@ -608,7 +608,7 @@ const NewIntake = () => {
   const handleDraft = async (values: any) => {
     try {
       let currentProjectId = await handleSaveAsDraft(values);
-      //debugger;
+      ////debugger;
       //console.log('currentProjectId ' + currentProjectId)
       //resetForm();
       if (currentProjectId) {
@@ -655,15 +655,6 @@ const NewIntake = () => {
         }));
       setSteps(newSteps);
     }
-  };
-  const goalsModalClose = () => {
-    setGoalsVisible(false);
-    fetchGoals();
-  };
-
-  const programsModalClose = () => {
-    setProgramsVisible(false);
-    fetchPrograms(goalSelected);
   };
 
   const handleBusinessOwnerDept = (deptID: number) => {
@@ -963,11 +954,6 @@ const NewIntake = () => {
       alert("Failed to fetch the file");
     }
   };
-  const appsModalClose = () => {
-    setAppsVisible(false);
-    setApplications("");
-    fetchMasters();
-  };
 
   const downloadFile = async () => {
     const url = `${BASE_URL}/images/ROI_Template.xlsx`; // Replace with your API URL
@@ -1039,7 +1025,6 @@ const NewIntake = () => {
         // Default to false if the prop is not provided
         setFormIsEditable(false);
       }
-      debugger;
       /////////////////////////////
       //masters
       //fetchSequence();
@@ -1198,6 +1183,7 @@ const NewIntake = () => {
         </div> */}
         {/* onSubmit={handleSubmit} noValidate */}
         <form
+          id="intake-main-form"
           //method="POST"
           //noValidate
           onSubmit={(e) => {
@@ -1270,7 +1256,7 @@ const NewIntake = () => {
               originalFileName: originalFileName,
               dependentProjects: selectedDependentProjects,
             };
-            //debugger;
+            ////debugger;
             if (mode === "draft") {
               handleDraft(values);
               //showAlert('Intake draft saved successfully');
@@ -1354,6 +1340,7 @@ const NewIntake = () => {
                 <ClassificationModal
                   isOpen={classificationModal}
                   onClose={() => setClassificationVisible(false)}
+                  onCreate={fetchMasters}
                 />
               </div>
               <div className="col-span-1">
@@ -1408,7 +1395,11 @@ const NewIntake = () => {
                     </option>
                   ))}
                 </select>
-                <GoalsModal isOpen={goalsModal} onClose={goalsModalClose} />
+                <GoalsModal
+                  isOpen={goalsModal}
+                  onClose={() => setGoalsVisible(false)}
+                  onCreate={fetchGoals}
+                />
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
@@ -1439,6 +1430,11 @@ const NewIntake = () => {
                     </option>
                   ))}
                 </select>
+                <ProgramsModal
+                  isOpen={programsModal}
+                  onClose={() => setProgramsVisible(false)}
+                  onCreate={fetchPrograms}
+                />
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
@@ -1531,7 +1527,11 @@ const NewIntake = () => {
                     Impacted Application is required
                   </p>
                 )}
-                <ApplicationModal isOpen={appsModal} onClose={appsModalClose} />
+                <ApplicationModal
+                  isOpen={appsModal}
+                  onClose={() => setAppsVisible(false)}
+                  onCreate={fetchMasters}
+                />
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
@@ -2177,6 +2177,7 @@ const NewIntake = () => {
                 isNaN(status)) && (
                 <button
                   type="submit"
+                  form="intake-main-form"
                   className="flex items-center gap-2 border border-blue-800 text-blue-800 px-4 py-2 rounded hover:bg-blue-50 transition"
                   onClick={() => setMode("draft")}
                 >
@@ -2191,6 +2192,7 @@ const NewIntake = () => {
               {(status === 2 || status === 10 || isNaN(status)) && (
                 <button
                   type="submit"
+                  form="intake-main-form"
                   className="flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 transition"
                   onClick={() => {
                     setMode("review");
@@ -2207,6 +2209,7 @@ const NewIntake = () => {
                 isNaN(status)) && (
                 <button
                   type="submit"
+                  form="intake-main-form"
                   className="flex items-center gap-2 border border-blue-800 text-blue-800 px-4 py-2 rounded hover:bg-blue-50 transition"
                   onClick={() => {
                     setMode("approve");
@@ -2393,7 +2396,7 @@ const NewIntake = () => {
                                   user.user_id === Number(e.target.value)
                               );
                               const newSteps = [...steps];
-                              debugger;
+                              //debugger;
                               newSteps[index].forwardTo = e.target.value;
                               newSteps[index].department_name =
                                 selectedUser?.department_name ||
