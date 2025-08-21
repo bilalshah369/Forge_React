@@ -41,7 +41,11 @@ import { Classifications } from "./pages/classifications/Classifications";
 import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
 import { Designations } from "./pages/designation/Designations";
 import { Roles } from "./pages/roles/Roles";
+import ADIntegrationList from "./pages/masters/ADIntegrationList";
+import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
+import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
 import BudgetCategories from "./pages/budget-categories/BudgetCategories";
+import Resources from "./pages/profiles/Resources";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -92,11 +96,11 @@ const routesWithTitles = [
   //   title: "Active Directory (AD) Integrations",
   //   element: <ADIntegration />,
   // },
-  // {
-  //   path: "/ADIntegrationList",
-  //   title: "Active Directory (AD) Integrations",
-  //   element: <ADIntegrationList />,
-  // },
+  {
+    path: "/Adminpanel/ADIntegrationList",
+    title: "Active Directory (AD) Integrations",
+    element: <ADIntegrationList />,
+  },
   { path: "/Adminpanel", title: "Admin Panel", element: <AdminPanel /> },
   // {
   //   path: "/DualSectionList",
@@ -150,7 +154,7 @@ const routesWithTitles = [
   //   title: "Milestone Details",
   //   element: <MilestoneViewGantt />,
   // },
-  // { path: "/Resources", title: "Resources", element: <Resources /> },
+   { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
   {
     path: "/IntakeList",
     title: "Intake/Backlog List",
@@ -345,11 +349,11 @@ const routesWithTitles = [
   //   title: "Budget Categories",
   //   element: <BudgetCategory />,
   // },
-  // {
-  //   path: "/AlertsConfiguration",
-  //   title: "Configure Alerts",
-  //   element: <AlertsConfiguration />,
-  // },
+  {
+    path: "/Adminpanel/AlertsConfiguration",
+    title: "Configure Alerts",
+    element: <AlertsConfiguration />,
+  },
   // { path: "/AuditLog", title: "Audit Log", element: <AuditLog /> },
   // {
   //   path: "/ResourceUpload",
@@ -376,11 +380,12 @@ const routesWithTitles = [
   //   title: "Month-wise Budget Upload ",
   //   element: <MonthWiseBudgetUpload />,
   // },
-  // {
-  //   path: "/SubscriptionModel",
-  //   title: "Subscription Plans",
-  //   element: <SubscriptionModel />,
-  //},
+  {
+    path: "/Adminpanel/SubscriptionModel",
+
+    title: "Subscription Plans",
+    element: <SubscriptionModel />,
+  },
   //{ path: "/CustomLabels", title: "Edit Labels", element: <CustomLabels /> },
 ];
 const App = () => {

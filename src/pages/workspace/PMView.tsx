@@ -744,6 +744,7 @@ const PMView = () => {
                 )}
               </div>
             )}
+             isfilter1={true}
             data={projects}
             columns={headers}
             title="PMView"
