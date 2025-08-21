@@ -18,7 +18,7 @@ export default function MasterLayout() {
 
       <main
         className="flex-1 flex flex-col overflow-hidden bg-white"
-        style={{ borderRadius: 10 }}
+        style={{ borderRadius: 0 }}
       >
         {" "}
         {/* Prevent scroll leak */}
@@ -31,8 +31,8 @@ export default function MasterLayout() {
         <Header />
         {/* Main content */}
         <div
-          className="flex-1 overflow-auto"
-          style={{ borderRadius: 10, padding: 20 }}
+          className="flex-1 overflow-auto p-4"
+          style={{ borderRadius: 10 }}
         >
           {/* bg-gradient-to-br from-green-50 to-indigo-100 */}
           <Outlet /> {/* children of the route will render here */}

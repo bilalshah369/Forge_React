@@ -154,13 +154,13 @@ export function AppSidebar() {
   return (
     <Sidebar
       className={`${
-        collapsed ? "w-[2rem]" : "w-[13rem]"
+        collapsed ? "!w-[2.5rem]" : "w-[13rem]"
       } transition-all duration-300 !bg-[#044086] [&>*]:!bg-[#044086] [&>*]:!bg-none`}
       collapsible="icon"
     >
       {/* Logo/Brand */}
-      <div className="p-4">
-        <div className="flex items-center justify-center gap-3">
+      <div >
+        <div className="flex items-center justify-center gap-3 space-y-4">
           {/* <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">F</span>
           </div> */}
@@ -172,14 +172,14 @@ export function AppSidebar() {
             <img
               src={AppImages.ForgeHeader}
               alt="Forge Logo"
-              className="h-12 mx-auto mb-6 object-contain"
+              className="h-12 items-center justify-center mt-2"
             />
           )}
           {collapsed && (
             // <span className="text-sidebar-foreground font-bold text-lg">
             //   FORGE
             // </span>
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center mt-2">
               <span className="text-white font-bold text-sm">F</span>
             </div>
           )}
@@ -228,7 +228,7 @@ export function AppSidebar() {
                         <NavLink
                           to={item.url}
                           end={item.url === "/"}
-                          className={`flex items-center gap-3 px-3 py-2.5 bg-white text-black hover:text-black${
+                          className={`flex items-center gap-3 px-3 py-2.5 bg-white text-black hover:bg-white hover:text-black${
                             rdb2 > 0 ? "rounded-tr-full" : ""
                           } rounded-l-full ${
                             rdb1 > 0 ? "rounded-br-full" : ""
@@ -379,7 +379,7 @@ export function AppSidebar() {
                             }, 0);
                           }}
                           end={item.url === "/"}
-                          className={`flex items-center gap-3 px-3 py-2.5 text-white hover:text-black ${
+                          className={`flex items-center gap-3 px-3 py-2.5 text-white hover:bg-white hover:text-black ${
                             rdb2 > 0 ? "rounded-tr-full" : ""
                           } rounded-l-full ${
                             rdb1 > 0 ? "rounded-br-full" : ""

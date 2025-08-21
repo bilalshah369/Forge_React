@@ -695,9 +695,9 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
     { label: "Completed", value: "completed", color: "bg-blue-400" },
   ];
   return (
-    <div className="p-4">
+    <div >
       {/* Header with Title and Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex gap-4">
           {/* <StatusMultiSelect
             statuses={statusOptions}
@@ -970,7 +970,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               {visibleColumns.map((column) => (
                 <TableHead
                   key={column.key}
-                  className="!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 "
+                  className={`!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 ${column.type==='actions'? "sticky-col":""}`}
                   onClick={() => handleSort(column.key)}
                 >
                   <div className="flex items-center justify-between gap-2 text-white">
@@ -995,9 +995,9 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               </TableRow>
             ) : (
               data.map((item, index) => (
-                <TableRow key={index} className="hover:bg-muted/50">
+                <TableRow key={index} className="hover:bg-muted/50 ">
                   {visibleColumns.map((column) => (
-                    <TableCell key={column.key} className="py-3">
+                    <TableCell key={column.key} className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
                       {renderCellContent(item, column, index)}
                     </TableCell>
                   ))}
@@ -1009,7 +1009,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
       </div>
 
       {/* Pagination */}
-      {TotalPageCount > 1 && (
+      {true && (
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
           <div className="text-sm text-muted-foreground">
             Page {PageNo} of {TotalPageCount} • Showing {data?.length} of{" "}

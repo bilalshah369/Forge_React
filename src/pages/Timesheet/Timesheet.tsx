@@ -378,7 +378,7 @@ const Timesheet = () => {
                         name="alpha-a-box-outline"
                         height={22}
                         width={22}
-                        fill={"black"}
+                        className="[&_path]:fill-white"
 
                         // Show select for this index
                       />

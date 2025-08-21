@@ -19,6 +19,7 @@ import {
   GetMasterDataPM,
   GetPMProjects,
 } from "@/utils/PM";
+import { DollarSignIcon } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -649,7 +650,7 @@ const PMView = () => {
                         );
                       }}
                     >
-                      <Details_line_svg fill="blue" height={20} width={20} />
+                      <Details_line_svg fill="white" height={20} width={20}/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Audit Log"}</TooltipContent>
@@ -666,7 +667,7 @@ const PMView = () => {
                             );
                           }}
                         >
-                          <ProjectPlanSVG height={22} width={22} />
+                          <ProjectPlanSVG height={22} width={22} className="[&_path]:fill-white"/>
                         </button>
                       </TooltipTrigger>
                       <TooltipContent>{"Update Project Plan"}</TooltipContent>
@@ -689,7 +690,7 @@ const PMView = () => {
                           );
                         }}
                       >
-                        <Update_project_statusSVG height={22} width={22} />
+                        <Update_project_statusSVG height={22} width={22} className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Update Status"}</TooltipContent>
@@ -714,7 +715,7 @@ const PMView = () => {
                           );
                         }}
                       >
-                        <ChangeRequestSVG height={22} width={22} />
+                        <ChangeRequestSVG height={22} width={22} className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Change Request"}</TooltipContent>
@@ -736,7 +737,7 @@ const PMView = () => {
                             `/PMView/BudgetPlanner?projectId=${item.project_id}`
                           );
                         }}>
-                        <DollarSign height={22} width={22} />
+                        <DollarSignIcon height={22} width={22}  />
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Update Budget"}</TooltipContent>
