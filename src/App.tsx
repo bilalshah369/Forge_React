@@ -45,6 +45,7 @@ import ADIntegrationList from "./pages/masters/ADIntegrationList";
 import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
 import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
 import BudgetCategories from "./pages/budget-categories/BudgetCategories";
+import Resources from "./pages/profiles/Resources";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -153,7 +154,7 @@ const routesWithTitles = [
   //   title: "Milestone Details",
   //   element: <MilestoneViewGantt />,
   // },
-  // { path: "/Resources", title: "Resources", element: <Resources /> },
+   { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
   {
     path: "/IntakeList",
     title: "Intake/Backlog List",
