@@ -230,7 +230,7 @@ const ADIntegrationList = () => {
 
                         }}
                       >
-                        <EditSVG height={22} width={22} />
+                        <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Edit"}</TooltipContent>
@@ -243,7 +243,7 @@ const ADIntegrationList = () => {
                                             if(confirm("Are you sure you want to delete this Integration"))handleDeleteAD(parseInt(item.integration_customer_id ?? '', 10));
                                           }}
                                         >
-                                          <DeleteSVG height={22} width={22} />
+                                          <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
                                         </button>
                                       </TooltipTrigger>
                                       <TooltipContent>{"Delete"}</TooltipContent>

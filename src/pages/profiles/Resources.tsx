@@ -18,12 +18,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Briefcase_outline_svg, DeleteSVG, EditSVG, Plus_svg, ProjectPhaseSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
-import { GetAllResourcesALL, GetResources } from "@/utils/Resource";
-import { GetAllRoles, getDesignation } from "@/utils/Users";
+import { ConfirmMultipleUsers, DeleteMultipleUsers, GetAllResourcesALL, GetResources, updateMultipleUsersDepartment, updateMultipleUsersRole } from "@/utils/Resource";
+import { DeleteUser, GetAllRoles, getDesignation } from "@/utils/Users";
 import { FetchPermission } from "@/utils/Permission";
 import { decodeBase64 } from "@/utils/securedata";
 import AdvancedDataTableResource from "@/components/ui/AdvancedDataTableResource";
 import AddResourceModal from "../Modals/AddResourceModal";
+import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
 export interface Header {
   label: string;
   key: string;
@@ -48,6 +49,13 @@ export interface UserRole {
 }
 const Resources = () => {
     const [isColumnVisibility, setIsColumnVisibility] = useState<boolean>(true);
+     const [isAssignDeptModal, setIsAssignDeptModal] = useState<boolean>(false);
+      const [isAssignRoleModal, setIsAssignRoleModal] = useState<boolean>(false);
+         const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
+            const [isConfirmModal, setIsConfirmModal] = useState<boolean>(false);
+            const [isConfirmRemoveModal, setIsConfirmRemoveModal] = useState<boolean>(false);
+     const [selectedDeptID, setSelectedDeptID] = useState<string>('');
+     const [selectedRoleID, setSelectedRoleID] = useState<string>('');
       const [currentPage, setCurrentPage] = useState(1); // Current page
   const [rowsPerPage, setRowsPerPage] = useState(10); // Rows per page
   const [totalPages, setTotalPages] = useState(0); // Total pages
@@ -124,7 +132,7 @@ const [users, setUsers] = useState<any[]>([]);
     {
       label: 'Department',
       key: 'department_name',
-      visible: false,
+      visible: true,
       type: 'department',
       column_width: '150',
       url: 'Resources',
@@ -133,7 +141,7 @@ const [users, setUsers] = useState<any[]>([]);
     {
       label: 'Designation',
       key: 'designation_name',
-      visible: false,
+      visible: true,
       type: 'department',
       column_width: '150',
       url: 'Resources',
@@ -142,7 +150,7 @@ const [users, setUsers] = useState<any[]>([]);
     {
       label: 'Reporting Manager',
       key: 'manager_name',
-      visible: false,
+      visible: true,
       type: '',
       column_width: '200',
       url: 'Resources',
@@ -160,7 +168,7 @@ const [users, setUsers] = useState<any[]>([]);
     {
       label: 'Approval Limit',
       key: 'approval_limit',
-      visible: false,
+      visible: true,
       type: 'cost',
       column_width: '200',
       url: 'Resources',
@@ -169,7 +177,7 @@ const [users, setUsers] = useState<any[]>([]);
     {
       label: 'Is a user',
       key: 'is_user',
-      visible: false,
+      visible: true,
       type: 'boolean',
       column_width: '200',
       url: 'Resources',
@@ -413,6 +421,172 @@ const fetchAllRole = async () => {
   };
   const [editResource, setEditResource] = useState<any | null>(null);
   const [isAddUserModalVisible, setisAddUserModalVisible] = useState(false);
+    const handleDeleteMultipleUsers = async (ids:any) => {
+    const usersToDelete = users.filter(user =>
+      ids.includes(user.resource_id),
+    );
+    const hasAdmin = usersToDelete.some(user => user.role_id === 3);
+    if (hasAdmin) {
+      showAlert('Admin user account cannot be deleted');
+
+      return;
+    }
+
+    const payload = {
+      user_ids: ids,
+    };
+    //console.log('Multiple User Department Payload', payload);
+    try {
+      const response = await DeleteMultipleUsers(payload);
+      const parsedRes = JSON.parse(response);
+      if (parsedRes.status === 'success') {
+        //console.log('All the users you slected are now succesfully deleted');
+        //set
+        //setisMultipleDeleteModalVisible(false);
+        const message = parsedRes.message;
+        showAlert(message);
+        fetchUser();
+      } else {
+        console.error('Failed to delete user:', parsedRes.message);
+        const message = parsedRes.message;
+        showAlert(message);
+      }
+    } catch (err: any) {
+      //console.log('There is something wrong', err);
+      const message = err.message;
+      showAlert(message);
+    }
+  };
+  const handleUpdateMultipleUsersDepartment = async () => {
+    const payload = {
+      department_id: selectedDeptID,
+      user_ids: allSelectedUsersID,
+    };
+    debugger;
+    //console.log('Multiple User Department Payload', payload);
+    try {
+      const response = await updateMultipleUsersDepartment(payload);
+      const parsedRes = JSON.parse(response);
+      if (parsedRes.status === 'success') {
+        //console.log(
+        //   'All the users you selected are now assigned the selected Department',
+        //);
+        //set
+        setIsAssignDeptModal(false);
+        const message = parsedRes.message;
+        showAlert(message);
+        //setAllSelectedUsersID([]);
+        fetchUser();
+      } else {
+        console.error(
+          'Failed to assign this Department to user:',
+          parsedRes.message,
+        ); // Handle failure
+        const message = parsedRes.message;
+        showAlert(message);
+      }
+    } catch (err: any) {
+      //console.log('There is something wrong', err);
+      const message = err.message;
+      showAlert(message);
+    }
+  };
+  const handleUpdateMultipleUsersRole = async () => {
+    const payload = {
+      role_id: selectedRoleID,
+      user_ids: allSelectedUsersID,
+    };
+    //console.log('Multiple User Role Assigning Payload', payload);
+    try {
+      const response = await updateMultipleUsersRole(payload);
+      const parsedRes = JSON.parse(response);
+      if (parsedRes.status === 'success') {
+        //console.log(
+        //  'All the users you selected are now assigned the selected Role',
+        // );
+        setIsAssignRoleModal(false);
+        const message = parsedRes.message;
+        showAlert(message);
+        fetchUser();
+      } else {
+        console.error('Failed to assign this role to user:', parsedRes.message); // Handle failure
+        const message = parsedRes.message;
+        showAlert(message);
+      }
+    } catch (err: any) {
+      //console.log('There is something wrong', err);
+      const message = err.message;
+      showAlert(message);
+    }
+  };
+  const handleConfirmMultipleUsers = async () => {
+    for (let index = 0; index < allSelectedUsersID.length; index++) {
+      const element = allSelectedUsersID[index];
+      const payload = {
+        resource_id: element,
+      };
+      //console.log('Multiple User Department Payload', payload);
+      try {
+        const response = await ConfirmMultipleUsers(payload); // API call to delete user
+        const parsedRes = JSON.parse(response);
+        if (parsedRes.status === 'success') {
+          //console.log(
+          //  'All the users you slected are now succesfully confirmed',
+          // );
+          //set
+          //setisMultipleConfirmModalVisible(false); // Close the modal after successful deletion
+          const message = parsedRes.message;
+          showAlert(message);
+          await fetchReporting();
+          await fetchUser();
+        } else {
+          fetchUser();
+          //setisMultipleConfirmModalVisible(false);
+          const message = parsedRes.message;
+          showAlert(message);
+          console.error('Failed to confirm user:', parsedRes.message); // Handle failure
+        }
+      } catch (err: any) {
+        //console.log('There is something wrong', err);
+        showAlert(err.message);
+        //setMessageModalVisible(true);
+      }
+    }
+  };
+  const handleNotConfirmMultipleUsers = async () => {
+    for (let index = 0; index < allSelectedUsersID.length; index++) {
+      const element = allSelectedUsersID[index];
+      const userIdF = users.filter(m => m.resource_id === element)[0]?.user_id;
+      const payload = {
+        user_ids: [userIdF],
+      };
+      //console.log('Multiple User Department Payload', payload);
+      try {
+        const response = await DeleteUser(payload); // API call to delete user
+        const parsedRes = JSON.parse(response);
+        if (parsedRes.status === 'success') {
+          //console.log(
+          //  'All the users you slected are now succesfully confirmed',
+          // );
+          //set
+          setIsConfirmRemoveModal(false); // Close the modal after successful deletion
+          const message = parsedRes.message;
+          showAlert(message);
+          fetchUser();
+        } else {
+          fetchUser();
+          setIsConfirmRemoveModal(false);
+          const message = parsedRes.message;
+          showAlert(message);
+          console.error('Failed to confirm user:', parsedRes.message); // Handle failure
+        }
+      } catch (err: any) {
+        //console.log('There is something wrong', err);
+        //setApiMessage(err.message);
+        //setMessageModalVisible(true);
+      }
+    }
+  };
   const location = useLocation();
   const navigation = useNavigate();
   useEffect(() => {
@@ -431,7 +605,7 @@ const fetchAllRole = async () => {
     <div className="w-full h-full">
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
-            {allSelectedUsersID.join(",")}
+            {/* {allSelectedUsersID.join(",")} */}
             <div className="flex flex-wrap items-center gap-3 p-4">
       {/* Add Resource */}
       <button onClick={()=>{setEditResource(null);
@@ -441,31 +615,82 @@ const fetchAllRole = async () => {
       </button>
 
       {/* Delete */}
-      <button className="flex items-center gap-2 px-3 py-2 rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button
+      
+      
+      onClick={()=>{if (allSelectedUsersID.length === 0) {
+              showAlert(
+                'Please select at least one resource to delete.',
+              );
+              setAllSelectedUsersID([]);
+              return;
+            } 
+            setIsDeleteModal(true);}} className="flex items-center gap-2 px-3 py-2 rounded-md bg-red-50 text-red-600 hover:bg-red-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
         <DeleteSVG height={16} width={16} />
         Delete
       </button>
 
       {/* Assign Department */}
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button
+      onClick={()=>{
+        if (allSelectedUsersID.length === 0) {
+              showAlert(
+                'Please select at least one user to assign a department.',
+              );
+              setAllSelectedUsersID([]);
+              return;
+            } 
+            setIsAssignDeptModal(true);
+      }}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
         <Briefcase_outline_svg  height={16} width={16} />
         Assign Department
       </button>
 
       {/* Assign Role */}
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button
+      onClick={()=>{
+        if (allSelectedUsersID.length === 0) {
+              showAlert(
+                'Please select at least one user to assign a role.',
+              );
+              setAllSelectedUsersID([]);
+              return;
+            } 
+            setIsAssignRoleModal(true);
+      }}
+      
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
          <Briefcase_outline_svg  height={16} width={16} />
         Assign Role
       </button>
 
       {/* Confirm as User */}
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button 
+     onClick={()=>{if (allSelectedUsersID.length === 0) {
+              showAlert(
+                'Please select at least one resource to confirm as user.',
+              );
+              setAllSelectedUsersID([]);
+              return;
+            } 
+            setIsConfirmModal(true);}}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
          <Briefcase_outline_svg  height={16} width={16} />
         Confirm as User
       </button>
 
       {/* Remove as User */}
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button
+      onClick={()=>{if (allSelectedUsersID.length === 0) {
+              showAlert(
+                'Please select at least one resource to remove as user.',
+              );
+              setAllSelectedUsersID([]);
+              return;
+            } 
+            setIsConfirmRemoveModal(true);}}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-50 text-blue-700 hover:bg-gray-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
          <Briefcase_outline_svg  height={16} width={16} />
         Remove as User
       </button>
@@ -490,10 +715,25 @@ const fetchAllRole = async () => {
             setisAddUserModalVisible(true);
                       }}
                     >
-                      <EditSVG height={22} width={22} />
+                      <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>{"Change Project Phase"}</TooltipContent>
+                  <TooltipContent>{"Edit"}</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log("View", item);
+                       // handleDelete(parseInt(item.resource_id ?? '', 10));
+                        //handleUserSelection(item.resource_id);
+                        setIsDeleteModal(true);
+                      }}
+                    >
+                      <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Delete"}</TooltipContent>
                 </Tooltip>
               </div>
             )}
@@ -509,6 +749,7 @@ const fetchAllRole = async () => {
             isCreate={false}
             onCreate={() => navigation("/NewIntake")}
             isPagingEnable={true}
+            isColumnVisibility={false}
             PageNo={currentPage}
             TotalPageCount={totalPages}
             rowsOnPage={rowsPerPage}
@@ -523,11 +764,181 @@ const fetchAllRole = async () => {
         </div>
      
         <AddResourceModal isOpen={isAddUserModalVisible} 
-        onClose={function (): void {
+        onClose={function (str:any): void {
                   //throw new Error("Function not implemented.");
+                  
+                  {str!==""?showAlert(str):""};
+                  fetchUser();
                   setisAddUserModalVisible(false);
               } }  userRole={userRole} reportingManagers={Repusers}
          initialData={editResource ?? undefined}/>
+
+
+
+         {isAssignDeptModal && <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-lg font-bold text-blue-900 text-center mb-4">
+          Are you sure you want to assign a department to {allSelectedUsersID.length} users?
+        </h2>
+
+        <MultiSelectDepartment
+                                        placeholder="Select Function"
+                                        departments={departments}
+                                        selected={
+                                          selectedDeptID?.toString()?.length > 0
+                                            ? selectedDeptID?.toString()?.split(",")
+                                            : []
+                                        }
+                                        onChange={async function (
+                                          selected: string[]
+                                        ): Promise<void> {
+                                          const worker = selected?.join(",");
+                                          setSelectedDeptID(worker);
+                                          
+                
+                                        }}
+                                        multi={false}
+                                      />
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsAssignDeptModal(false);fetchUser();}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+          disabled={allSelectedUsersID.length>0}
+            onClick={()=>{handleUpdateMultipleUsersDepartment()}}
+            className="px-5 py-2 bg-blue-900 text-white font-semibold rounded hover:bg-blue-800"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>}
+
+
+    {isAssignRoleModal && <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-lg font-bold text-blue-900 text-center mb-4">
+          Are you sure you want to assign a role to {allSelectedUsersID.length} users?
+        </h2>
+
+        <select
+                        className="w-full mt-1 p-2 border rounded"
+                        required
+                        onChange={(e) =>  setSelectedRoleID(e.target.value)}
+                        value={selectedRoleID}
+                      >
+                        <option value="">Select Role</option>
+                        {(userRole ?? []).map((item) => (
+                          <option
+                            key={item.role_id}
+                            value={item.role_id?.toString()}
+                          >
+                            {item.role_name}
+                          </option>
+                        ))}
+                      </select>
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsAssignRoleModal(false);fetchUser();}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+          disabled={selectedRoleID===""}
+            onClick={()=>{handleUpdateMultipleUsersRole()}}
+            className="px-5 py-2 bg-blue-900 text-white font-semibold rounded hover:bg-blue-800"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>}
+
+    {isDeleteModal && <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-lg font-bold text-blue-900 text-center mb-4">
+          Are you sure you want to delete {allSelectedUsersID.length} users?
+        </h2>
+
+        
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsDeleteModal(false);}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+          
+          disabled={selectedRoleID===""}
+            onClick={()=>{handleDeleteMultipleUsers(allSelectedUsersID)}}
+            className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
+          >
+            Delete Users
+          </button>
+        </div>
+      </div>
+    </div>}
+
+    {isConfirmModal && <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-lg font-bold text-blue-900 text-center mb-4">
+          Are you sure you want to confirm {allSelectedUsersID.length} resource as user?
+        </h2>
+
+        
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsConfirmModal(false);}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+          
+          //disabled={selectedRoleID===""}
+            onClick={()=>{handleConfirmMultipleUsers()}}
+            className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
+          >
+            Confirm as Users
+          </button>
+        </div>
+      </div>
+    </div>}
+    {isConfirmRemoveModal && <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-lg font-bold text-blue-900 text-center mb-4">
+          Are you sure you want to remove {allSelectedUsersID.length} resource as user?
+        </h2>
+
+        
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsConfirmRemoveModal(false);}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+          
+          //disabled={selectedRoleID===""}
+            onClick={()=>{handleNotConfirmMultipleUsers()}}
+            className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
+          >
+            Remove as Users
+          </button>
+        </div>
+      </div>
+    </div>}
         <AlertBox
           visible={alertVisible}
           onCloseAlert={closeAlert}

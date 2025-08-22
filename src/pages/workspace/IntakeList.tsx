@@ -567,7 +567,7 @@ const IntakeList = () => {
                           );
                         }}
                       >
-                        <EditSVG height={22} width={22} />
+                        <EditSVG height={22} width={22} fill="white" className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Edit"}</TooltipContent>
@@ -584,7 +584,7 @@ const IntakeList = () => {
                           handleDelete(item.project_id);
                         }}
                       >
-                        <DeleteSVG height={22} width={22} />
+                        <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Delete"}</TooltipContent>

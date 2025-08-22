@@ -878,6 +878,7 @@ const ProjectView = () => {
       const result = JSON.parse(resp);
       if (result?.data?.budget && Array.isArray(result.data.budget)) {
         setIsBudgetEditable(false);
+        setRows(result.data.budget);
       }
     } catch (error) {
       console.error("Error fetching budget data:", error);
@@ -1179,6 +1180,27 @@ const ProjectView = () => {
       setLoading(false); // End loading
     }
   };
+
+
+const [goals, setGoals] = useState([]);
+  const [programData, setProgramData] = useState<any>([]);
+  const fetchMasters = async () => {
+      try {
+        const response = await GetMasterData();
+        const result = JSON.parse(response);
+        
+        if (result.data.goals) {
+          setGoals(result.data.goals);
+        }
+        if (result.data.programs) {
+          setProgramData(result.data.programs);
+        }
+       
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        //setGoals([]);
+      }
+    };
   const location = useLocation();
   //const status = location.params?.status ?? null;
 
@@ -1187,7 +1209,7 @@ const ProjectView = () => {
   useEffect(() => {
     (async function () {
       fetchUserPermission();
-
+await fetchMasters();
       if (projectId) {
         await FetchallProj(projectId) // Assuming the query param is empty for now
           .then((response) => {
@@ -1200,7 +1222,7 @@ const ProjectView = () => {
             setRaids(data.raid);
             setCustomFields(data.project_custom_fields);
             setProject_task(data.project_task);
-            setRows(data.budget_details);
+          //  setRows(data.budget_details);
             const matchedProject = data.project[0];
             // const projects = parsedResponse?.data?.projects || [];
             // const matchedProject = projects.find(
@@ -1211,8 +1233,9 @@ const ProjectView = () => {
             //setInitialValues({
             setNameTitle(matchedProject.project_name || ""); // Default to empty string if missing
             setClassification(matchedProject.classification_name || ""); // Default to empty string if missing
-            setGoalSelected(matchedProject.goal_name || "");
-            setProgram(matchedProject.program_name || "");
+            setGoalSelected(matchedProject.goal_id);
+            setProgram(matchedProject.program_id);
+            debugger;
             setBusinessOwner(
               matchedProject.business_stakeholder_user_name || ""
             );
@@ -1319,11 +1342,11 @@ const ProjectView = () => {
               {/* Row 2 */}
               <div className="col-span-1">
                 <label className="block text-sm font-bold ">Goal</label>
-                <p className="mt-1 p-2 ">{goalSelected || "-"}</p>
+                <p className="mt-1 p-2 ">{goals?.find(m=>m.goal_id===goalSelected)?.goal_name || "-"}</p>
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-bold ">Program</label>
-                <p className="mt-1 p-2 ">{program || "-"}</p>
+                <p className="mt-1 p-2 ">{programData?.find(m=>m.program_id===program)?.program_name || "-"}</p>
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-bold ">Project Size</label>

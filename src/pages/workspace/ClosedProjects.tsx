@@ -423,7 +423,7 @@ const ClosedProjects = () => {
                         setSelectedProjectName(item.project_name);
                       }}
                     >
-                      <ProjectPhaseSVG height={22} width={22} />
+                      <ProjectPhaseSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Change Project Phase"}</TooltipContent>

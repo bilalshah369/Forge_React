@@ -418,7 +418,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
           <div className="">
             <div>
               <a
-                href="#"
+                
                 onClick={() => {
                   //debugger;
                   const isSelected = allSelectedIDs.includes(parseInt(value));
@@ -470,7 +470,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
         );
       case "user_name":
         return (
-          <div className="w-full min-w-[200px]">
+          <div className="w-full min-w-[220px]">
             <Tooltip>
               <TooltipTrigger asChild>
                 {/* Important: wrap your SVG with a focusable or pointer-targetable element */}
@@ -662,7 +662,8 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
       case "actions":
         return <>{typeof actions === "function" ? actions(item) : actions}</>;
       default:
-        return <span className="text-sm">{value || "-"}</span>;
+        return  (<div className="w-full min-w-[150px]">
+        <span className="text-sm">{value || "-"}</span></div>)
     }
   };
 
@@ -719,7 +720,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
   return (
     <div className="p-4">
       {/* Header with Title and Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
         <div className="flex gap-4">
           {/* <StatusMultiSelect
             statuses={statusOptions}
@@ -951,7 +952,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
       </div>
 
       {/* Table */}
-      <div className="overflow-auto w-full">
+      <div className="overflow-auto w-full  ">
         {/* You can adjust width as needed */}
         <Table className="table-auto w-full">
           <TableHeader className="h-auto">
@@ -959,7 +960,8 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
               {visibleColumns.map((column) => (
                 <TableHead
                   key={column.key}
-                  className="!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 "
+                                  className={`!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 ${column.type==='actions'? "sticky-col":""}`}
+
                   onClick={() => handleSort(column.key)}
                 >
                   <div className="flex items-center justify-between gap-2 text-white">
@@ -986,7 +988,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
               data.map((item, index) => (
                 <TableRow key={index} className="hover:bg-muted/50">
                   {visibleColumns.map((column) => (
-                    <TableCell key={column.key} className="py-3">
+                     <TableCell key={column.key} className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
                       {renderCellContent(item, column, index)}
                     </TableCell>
                   ))}

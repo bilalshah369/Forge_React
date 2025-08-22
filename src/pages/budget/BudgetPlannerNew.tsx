@@ -377,7 +377,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
                                       name="alpha-a-box-outline"
                                       height={22}
                                       width={22}
-                                      fill={'black'}
+                                     className="[&_path]:fill-white"
                                       //style={styles.IconAction}
                                       // Show select for this index
                                     />
@@ -399,7 +399,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
           setBudgetModalVisible(true);
                       }}
                     >
-                      <EditSVG height={22} width={22} />
+                      <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Edit"}</TooltipContent>
@@ -420,7 +420,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
                         }
                       }}
                     >
-                      <DeleteSVG height={22} width={22} />
+                      <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Delete"}</TooltipContent>

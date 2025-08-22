@@ -1,4 +1,5 @@
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { AddResource } from "@/utils/Resource";
 import { getDesignation, GetUserDept } from "@/utils/Users";
 import React, { useEffect, useState } from "react";
  interface UserRole {
@@ -40,7 +41,7 @@ export interface User {
 }
 interface ResourceModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (str:any) => void;
   initialData?: any;
    userRole: UserRole[];
    reportingManagers: User[];
@@ -54,6 +55,7 @@ const AddResourceModal: React.FC<ResourceModalProps> = ({
   onSave,userRole,reportingManagers
 }) => {
   const [formData, setFormData] = useState({
+    resource_id:'',
    first_name: '',
     last_name: '',
     email: '',
@@ -71,7 +73,9 @@ const [designationList, setDesignationList] = useState<any[]>();
   // Load initialData when modal opens
   useEffect(() => {
     if (initialData) {
+      debugger;
       setFormData({
+        resource_id:initialData.resource_id || '',
         first_name: initialData.first_name || '',
         last_name: initialData.last_name || '',
         email: initialData.email || '',
@@ -86,6 +90,7 @@ const [designationList, setDesignationList] = useState<any[]>();
       });
     } else {
       setFormData({
+         resource_id: '',
         first_name: '',
         last_name: '',
         email: '',
@@ -110,14 +115,51 @@ const [designationList, setDesignationList] = useState<any[]>();
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+const addUser = async (payload: any) => {
+   
 
+    try {
+      payload.customer_id = parseInt(localStorage.getItem('Customer_ID'));
+      payload.is_super_admin = true;
+      payload.resource_type_id = payload.role_id;
+      //console.log(payload);
+      const response = await AddResource(payload);
+      ////////////debugger;
+      const parsedResponse = JSON.parse(response);
+      if (parsedResponse.status === 'success') {
+        /*  setApiMessage(parsedResponse.message); */
+        /*  setMessageModalVisible(true); */
+        /*  const successMessage = isUpdating
+          ? 'Resource updated successfully'
+          : 'Resource added successfully'; */
+        onClose(parsedResponse.message);
+
+        /* //console.log(successMessage);
+        showAlert(successMessage); */
+        
+      } else {
+        onClose(parsedResponse.message);
+        /* setMessageModalVisible(true); */
+      }
+    } catch (err) {
+      /*  setApiMessage(err.message);
+      setMessageModalVisible(true); */
+      /* showAlert(parsedResponse.message); */
+      //console.log('Error Fetching Users', err);
+    }
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     debugger;
+     
+                if (initialData && initialData.resource_id) {
+                  formData.resource_id = initialData.resource_id;
+                }
+                addUser(formData);
     if (onSave) {
-      onSave(formData);
+      //onSave(formData);
     }
-    onClose();
+    //onClose();
   };
     const fetchDesignation = async () => {
     try {
@@ -159,8 +201,8 @@ const [designationList, setDesignationList] = useState<any[]>();
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
         <h2 className="text-lg font-bold text-center mb-4">Add New Resource</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
@@ -316,15 +358,15 @@ const [designationList, setDesignationList] = useState<any[]>();
             
             <select
               name="designation"
-              value={formData.designation}
+              value={formData.designation?.toString()}
               onChange={handleChange}
               className="w-full border rounded-md px-3 py-2 mt-1"
             >
               <option value="">Select Designation</option>
                {(designationList ?? []).map((item) => (
                     <option
-                      key={item.designation}
-                      value={item.designation?.toString()}
+                      //key={item.designation}
+                      value={item.designation_id?.toString()}
                     >
                       {`${item.designation_name}`}
                     </option>
@@ -349,7 +391,7 @@ const [designationList, setDesignationList] = useState<any[]>();
             <button
               type="button"
               className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
-              onClick={onClose}
+              onClick={()=>{onClose("")}}
             >
               Cancel
             </button>

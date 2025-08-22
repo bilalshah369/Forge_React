@@ -28,7 +28,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Clear_filter } from "@/assets/Icons";
+import { Clear_filter, DeleteSVG, EditSVG } from "@/assets/Icons";
 import { AutoComplete, DateRangePicker } from "rsuite";
 import GanttGoalsProgramsProjects from "./GanttGoalProgramProject";
 import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
@@ -965,7 +965,7 @@ const ManageGoalsPrograms: React.FC = () => {
                       setProgramModalVisible(true);
                     }}
                   >
-                    <Edit className="w-4 h-4 text-black" />
+                    <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
                   </button>
                   <button
                     onClick={() => {
@@ -975,7 +975,7 @@ const ManageGoalsPrograms: React.FC = () => {
                         HandleDeleteProgram(item.program_id);
                     }}
                   >
-                    <Trash2 className="w-4 h-4 text-red-500" />
+                     <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
                   </button>
                 </div>
               )}
@@ -1006,7 +1006,7 @@ const ManageGoalsPrograms: React.FC = () => {
                         setModalVisible(true);
                       }}
                     >
-                      <Edit className="w-4 h-4 text-black" />
+                      <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                     <button
                       onClick={() => {
@@ -1016,7 +1016,7 @@ const ManageGoalsPrograms: React.FC = () => {
                           HandleDeleteGoal(item.goal_id);
                       }}
                     >
-                      <Trash2 className="w-4 h-4 text-red-500" />
+                      <DeleteSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </div>
                 )}

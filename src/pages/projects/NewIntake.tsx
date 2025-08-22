@@ -39,6 +39,7 @@ import {
   Delete_svg,
   Download_svg,
   Eye_svg,
+  ReviewSVG,
   Save_svg,
   Send_approve_svg,
   Send_review_svg,
@@ -2199,7 +2200,7 @@ const NewIntake = () => {
                     //setIsReviewPopupVisible(true);
                   }}
                 >
-                  <Send_review_svg className="h-5 w-5" />
+                  <ReviewSVG fill="white" className="h-5 w-5 [&_path]:fill-white" />
                   Send for Review
                 </button>
               )}
