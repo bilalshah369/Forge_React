@@ -48,6 +48,11 @@ import BudgetCategories from "./pages/budget-categories/BudgetCategories";
 import Resources from "./pages/profiles/Resources";
 import IntakeUpload from "./pages/upload-pages/IntakeUpload";
 import { ThemeProvider } from "./themes/ThemeProvider";
+import ResourceUpload from "./pages/upload-pages/ResourceUpload";
+import ProjectProgressUpload from "./pages/upload-pages/ProjectProgressUpload";
+import ProjectPlanUpload from "./pages/upload-pages/ProjectPlanUpload";
+import EditFieldLabels from "./pages/edit-field-labels/EditFieldLabels";
+import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -307,6 +312,26 @@ const routesWithTitles = [
     title: "Create Intake from File Upload",
     element: <IntakeUpload />,
   },
+  {
+    path: "/Adminpanel/ResourceUpload",
+    title: "Upload Resources",
+    element: <ResourceUpload />,
+  },
+  {
+    path: "/Adminpanel/ProjectPlanUpload",
+    title: "Project Plan Upload",
+    element: <ProjectPlanUpload />,
+  },
+  {
+    path: "/Adminpanel/ProjectProgressUpload",
+    title: "Project Progress Upload",
+    element: <ProjectProgressUpload />,
+  },
+  {
+    path: "/Adminpanel/edit-field-labels",
+    title: "Edit Labels",
+    element: <EditFieldLabels />,
+  },
   // {
   //   path: "/ApproveChangeRequest",
   //   title: "Approve Project Change",
@@ -358,24 +383,9 @@ const routesWithTitles = [
   },
   // { path: "/AuditLog", title: "Audit Log", element: <AuditLog /> },
   // {
-  //   path: "/ResourceUpload",
-  //   title: "Upload Resources",
-  //   element: <ResourceUpload />,
-  // },
-  // {
   //   path: "/IdleTimeoutProvider",
   //   title: "IdleTimeoutProvider",
   //   element: <IdleTimeoutProvider />,
-  // },
-  // {
-  //   path: "/ProjectPlanUpload",
-  //   title: "Project Plan Upload",
-  //   element: <ProjectPlanUpload />,
-  // },
-  // {
-  //   path: "/ProjectProgressUpdate",
-  //   title: "Project Progress Upload",
-  //   element: <ProjectProgressUpdate />,
   // },
   // {
   //   path: "/MonthWiseBudgetUpload",
@@ -388,7 +398,6 @@ const routesWithTitles = [
     title: "Subscription Plans",
     element: <SubscriptionModel />,
   },
-  //{ path: "/CustomLabels", title: "Edit Labels", element: <CustomLabels /> },
 ];
 const App = () => {
   // routesWithTitles.ts
@@ -402,7 +411,13 @@ const App = () => {
           <TitleProvider>
             <ThemeProvider>
   <Routes>
-              <Route element={<MasterLayout />}>
+              <Route
+                element={
+                  <LabelProvider customerId="">
+                    <MasterLayout />
+                  </LabelProvider>
+                }
+              >
                 <Route
                   path="/home"
                   //element={<HomePage />}

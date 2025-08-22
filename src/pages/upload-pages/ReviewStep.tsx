@@ -141,9 +141,9 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
       <p className="text-base text-gray-600 text-center mb-3">
         Review the imported data below before submitting.
       </p>
-      <div className="flex-grow mb-4 overflow-auto">
+      <div className="flex-grow mb-4">
         <div className="overflow-x-auto">
-          <div className="border border-gray-300 rounded overflow-hidden">
+          <div className="border border-gray-300 rounded">
             {/* Table Header */}
             <div className="flex bg-gray-100 border-b border-gray-300">
               {headers.map((header, index) => (

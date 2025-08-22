@@ -17,8 +17,36 @@ import {
   Flower2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLabels } from "../edit-field-labels/LabelContext";
 
 export default function AdminPanel() {
+  const { labels } = useLabels();
+  const labelDesignation = labels["designation"] || {
+    display: "Designation",
+    placeholder: "Enter Designation",
+    dropdown: "Select Designation",
+  };
+  const labelDepartment = labels["department"] || {
+    display: "Department",
+    placeholder: "Enter Department",
+    dropdown: "Select Department",
+  };
+  const labelRoles = labels["role_name"] || {
+    display: "Role",
+    placeholder: "Enter Role",
+    dropdown: "Select Role",
+  };
+  const labelClassification = labels["classification_name"] || {
+    display: "Classification",
+    placeholder: "Enter Classification",
+    dropdown: "Select Classification",
+  };
+  const labelApplication = labels["application_name"] || {
+    display: "Impacted Application",
+    placeholder: "Enter Application",
+    dropdown: "Select Application",
+  };
+
   const items = [
     {
       icon: <Building2 size={36} />,
@@ -41,20 +69,24 @@ export default function AdminPanel() {
       label: "Resources",
       url: "/Adminpanel/resources",
     },
-    { icon: <Badge size={36} />, label: "Roles", url: "/Adminpanel/roles" },
+    {
+      icon: <Badge size={36} />,
+      label: labelRoles.plural,
+      url: "/Adminpanel/roles",
+    },
     {
       icon: <Dot size={36} />,
-      label: "Impacted Application",
+      label: labelApplication.display,
       url: "/Adminpanel/impacted-applications",
     },
     {
       icon: <FileText size={36} />,
-      label: "Classifications",
+      label: labelClassification.plural,
       url: "/Adminpanel/Classifications",
     },
     {
       icon: <User size={36} />,
-      label: "Designations",
+      label: labelDesignation.plural,
       url: "/Adminpanel/designations",
     },
     {
@@ -92,14 +124,20 @@ export default function AdminPanel() {
       label: "Import Projects from Excel",
       url: "/Adminpanel/IntakeUpload",
     },
-    { icon: <UploadCloud size={36} />, label: "Import Resources from Excel" },
+    {
+      icon: <UploadCloud size={36} />,
+      label: "Import Resources from Excel",
+      url: "/Adminpanel/ResourceUpload",
+    },
     {
       icon: <UploadCloud size={36} />,
       label: "Project Plan Upload from Excel",
+      url: "/Adminpanel/ProjectPlanUpload",
     },
     {
       icon: <UploadCloud size={36} />,
       label: "Project Progress Upload from Excel",
+      url: "/Adminpanel/ProjectProgressUpload",
     },
   ];
 

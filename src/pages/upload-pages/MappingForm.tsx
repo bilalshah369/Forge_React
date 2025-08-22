@@ -498,15 +498,12 @@ const MappingForm: React.FC<MappingFormProps> = ({
 
     const { data, errors } = validateData();
     setValidationErrors(errors);
-    setShowErrors(true);
 
     if (errors.length > 0) {
-      const proceed = confirm(
-        `Found ${errors.length} data validation errors. Review them below. Proceed anyway?`
+      alert(
+        `Found ${errors.length} data validation errors. Please review and fix them before proceeding.`
       );
-      if (proceed) {
-        onComplete(data, mapping, filteredExcelData, masterData);
-      }
+      setShowErrors(true);
     } else {
       onComplete(data, mapping, filteredExcelData, masterData);
     }
