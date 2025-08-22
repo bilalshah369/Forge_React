@@ -21,7 +21,11 @@ interface LabelContextType {
   labels: Labels;
   updateLabel: (
     labelId: string,
-    updatedLabelData: { label_name: string; is_active: boolean }
+    updatedLabelData: {
+      label_name: string;
+      label_desc: string;
+      is_active: boolean;
+    }
   ) => Promise<void>;
 }
 
