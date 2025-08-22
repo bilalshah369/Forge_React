@@ -5,6 +5,7 @@ import { GetAllResourcesTimesheets } from "./TImeSheets";
 import { format } from "date-fns";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import ExportExcel from "@/services/ExportExcel";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface Props {
   resourceId?: string;
@@ -104,7 +105,7 @@ const ResourceTimesheetReport: React.FC<Props> = ({
       parent_department_id: selectedDepartments && selectedDepartments,
     }).then(() => setTableLoading(false));
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     setLoading(true);
     setTableLoading(true);
@@ -169,7 +170,7 @@ const ResourceTimesheetReport: React.FC<Props> = ({
           ) : (
             <div className="w-full bg-white rounded">
               <table className="w-full table-auto border-collapse">
-                <thead className="bg-blue-900 text-white">
+                <thead className=" text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                   <tr>
                     <th className="p-2 text-left">#</th>
                     <th className="p-2 text-left">Resource</th>
@@ -215,7 +216,7 @@ const ResourceTimesheetReport: React.FC<Props> = ({
                             <div className="border rounded p-2 shadow-sm bg-white">
                               {item.projects.length > 0 ? (
                                 <table className="w-full table-auto mt-2">
-                                  <thead className="bg-blue-700 text-white">
+                                  <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                     <tr>
                                       <th className="p-2">S.No.</th>
                                       <th className="p-2">Project Name</th>
@@ -297,7 +298,7 @@ const ResourceTimesheetReport: React.FC<Props> = ({
                                               <td colSpan={7} className="p-2">
                                                 <div className="border rounded p-2 shadow-sm bg-gray-50">
                                                   <table className="w-full table-auto">
-                                                    <thead className="bg-blue-500 text-white">
+                                                    <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                                       <tr>
                                                         <th className="p-2">
                                                           S.No.

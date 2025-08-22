@@ -62,6 +62,7 @@ import { get_projects_autocomplete } from "@/utils/PM";
 import { useNavigate } from "react-router-dom";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface AdvancedDataTableProps {
   data: any[];
@@ -717,6 +718,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
     { label: "At Risk", value: "at-risk", color: "bg-yellow-400" },
     { label: "Completed", value: "completed", color: "bg-blue-400" },
   ];
+  const {theme}=useTheme();
   return (
     <div className="p-4">
       {/* Header with Title and Actions */}
@@ -958,7 +960,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
           <TableHeader className="h-auto">
             <TableRow>
               {visibleColumns.map((column) => (
-                <TableHead
+                <TableHead style={{ backgroundColor: theme.colors.drawerBackgroundColor }}
                   key={column.key}
                                   className={`!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 ${column.type==='actions'? "sticky-col":""}`}
 
@@ -988,7 +990,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
               data.map((item, index) => (
                 <TableRow key={index} className="hover:bg-muted/50">
                   {visibleColumns.map((column) => (
-                     <TableCell key={column.key} className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
+                     <TableCell key={column.key} style={{backgroundColor: column.type==="actions"? theme.colors.drawerBackgroundColor:'white'}} className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
                       {renderCellContent(item, column, index)}
                     </TableCell>
                   ))}
@@ -1056,6 +1058,7 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
                     size="sm"
                     onClick={() => onPageChange(pageNumber)}
                     className="w-8 h-8 p-0"
+                    style={{ backgroundColor: theme.colors.drawerBackgroundColor,color:'white' }}
                   >
                     {pageNumber}
                   </Button>

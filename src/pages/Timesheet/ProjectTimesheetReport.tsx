@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { GetAllProjectsTimesheets } from "./TImeSheets";
+import { useTheme } from "@/themes/ThemeProvider";
 interface Timesheet {
   timesheet_id: number;
   date: string;
@@ -139,7 +140,7 @@ const ProjectTimesheetReport: React.FC<Props> = ({
       parent_department_id: selectedDepartments && selectedDepartments,
     }).then(() => setLoading(false));
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     setLoading(true);
     fetchProjectData({
@@ -184,7 +185,7 @@ const ProjectTimesheetReport: React.FC<Props> = ({
           </div>
 
           <table className="min-w-full bg-white shadow rounded-md">
-            <thead className="bg-blue-900 text-white">
+            <thead className=" text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
               <tr>
                 <th className="w-12 px-2 py-2">#</th>
                 <th className="w-40 px-2 py-2">Proj. ID</th>
@@ -252,7 +253,7 @@ const ProjectTimesheetReport: React.FC<Props> = ({
                       <td colSpan={8} className="px-4 py-2">
                         {project.resources.length > 0 ? (
                           <table className="w-full border mt-2 text-sm">
-                            <thead className="bg-blue-700 text-white">
+                            <thead className=" text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                               <tr>
                                 <th className="px-2 py-1">S.No.</th>
                                 <th className="px-2 py-1">Resource Name</th>
@@ -306,7 +307,7 @@ const ProjectTimesheetReport: React.FC<Props> = ({
                                       <td colSpan={5}>
                                         {resource.timesheets.length > 0 ? (
                                           <table className="w-full mt-2 border text-xs">
-                                            <thead className="bg-blue-600 text-white">
+                                            <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                               <tr>
                                                 <th className="px-2 py-1">
                                                   S.No.

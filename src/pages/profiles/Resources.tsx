@@ -25,6 +25,8 @@ import { decodeBase64 } from "@/utils/securedata";
 import AdvancedDataTableResource from "@/components/ui/AdvancedDataTableResource";
 import AddResourceModal from "../Modals/AddResourceModal";
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import AdComponent from "../masters/AdComponent";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -47,6 +49,9 @@ export interface UserRole {
   role_level: string | number; // Depending on how the role_level is represented
   is_active: boolean;
 }
+export const Spinner: React.FC = () => (
+  <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+);
 const Resources = () => {
     const [isColumnVisibility, setIsColumnVisibility] = useState<boolean>(true);
      const [isAssignDeptModal, setIsAssignDeptModal] = useState<boolean>(false);
@@ -54,6 +59,7 @@ const Resources = () => {
          const [isDeleteModal, setIsDeleteModal] = useState<boolean>(false);
             const [isConfirmModal, setIsConfirmModal] = useState<boolean>(false);
             const [isConfirmRemoveModal, setIsConfirmRemoveModal] = useState<boolean>(false);
+              const [isADModalVisible, setIsADModalVisible] = useState(false);
      const [selectedDeptID, setSelectedDeptID] = useState<string>('');
      const [selectedRoleID, setSelectedRoleID] = useState<string>('');
       const [currentPage, setCurrentPage] = useState(1); // Current page
@@ -446,14 +452,17 @@ const fetchAllRole = async () => {
         const message = parsedRes.message;
         showAlert(message);
         fetchUser();
+        setIsDeleteModal(false);
       } else {
         console.error('Failed to delete user:', parsedRes.message);
         const message = parsedRes.message;
         showAlert(message);
+        setIsDeleteModal(false);
       }
     } catch (err: any) {
       //console.log('There is something wrong', err);
       const message = err.message;
+      setIsDeleteModal(false);
       showAlert(message);
     }
   };
@@ -482,12 +491,14 @@ const fetchAllRole = async () => {
           'Failed to assign this Department to user:',
           parsedRes.message,
         ); // Handle failure
+         setIsAssignDeptModal(false);
         const message = parsedRes.message;
         showAlert(message);
       }
     } catch (err: any) {
       //console.log('There is something wrong', err);
       const message = err.message;
+       setIsAssignDeptModal(false);
       showAlert(message);
     }
   };
@@ -511,11 +522,13 @@ const fetchAllRole = async () => {
       } else {
         console.error('Failed to assign this role to user:', parsedRes.message); // Handle failure
         const message = parsedRes.message;
+             setIsAssignRoleModal(false);
         showAlert(message);
       }
     } catch (err: any) {
       //console.log('There is something wrong', err);
       const message = err.message;
+           setIsAssignRoleModal(false);
       showAlert(message);
     }
   };
@@ -539,15 +552,19 @@ const fetchAllRole = async () => {
           showAlert(message);
           await fetchReporting();
           await fetchUser();
+          setIsConfirmModal(false);
         } else {
           fetchUser();
           //setisMultipleConfirmModalVisible(false);
           const message = parsedRes.message;
+           setIsConfirmModal(false);
           showAlert(message);
+          
           console.error('Failed to confirm user:', parsedRes.message); // Handle failure
         }
       } catch (err: any) {
         //console.log('There is something wrong', err);
+        setIsConfirmModal(false);
         showAlert(err.message);
         //setMessageModalVisible(true);
       }
@@ -573,6 +590,7 @@ const fetchAllRole = async () => {
           const message = parsedRes.message;
           showAlert(message);
           fetchUser();
+         setIsConfirmRemoveModal(false);
         } else {
           fetchUser();
           setIsConfirmRemoveModal(false);
@@ -584,11 +602,13 @@ const fetchAllRole = async () => {
         //console.log('There is something wrong', err);
         //setApiMessage(err.message);
         //setMessageModalVisible(true);
+         setIsConfirmRemoveModal(false); 
       }
     }
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
        checkPermission();
@@ -696,7 +716,10 @@ const fetchAllRole = async () => {
       </button>
 
       {/* Sync AD */}
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
+      <button
+      onClick={()=>{
+            setIsADModalVisible(true);}}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition text-sm shadow-lg shadow-gray-500/40 hover:-translate-y-1 hover:shadow-2xl">
          <Briefcase_outline_svg  height={16} width={16} />
         Sync AD
       </button>
@@ -810,7 +833,7 @@ const fetchAllRole = async () => {
           <button
           disabled={allSelectedUsersID.length>0}
             onClick={()=>{handleUpdateMultipleUsersDepartment()}}
-            className="px-5 py-2 bg-blue-900 text-white font-semibold rounded hover:bg-blue-800"
+            className="px-5 py-2  text-white font-semibold rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             Submit
           </button>
@@ -852,7 +875,7 @@ const fetchAllRole = async () => {
           <button
           disabled={selectedRoleID===""}
             onClick={()=>{handleUpdateMultipleUsersRole()}}
-            className="px-5 py-2 bg-blue-900 text-white font-semibold rounded hover:bg-blue-800"
+            className="px-5 py-2 text-white font-semibold rounded" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             Submit
           </button>
@@ -877,7 +900,7 @@ const fetchAllRole = async () => {
           </button>
           <button
           
-          disabled={selectedRoleID===""}
+         // disabled={selectedRoleID===""}
             onClick={()=>{handleDeleteMultipleUsers(allSelectedUsersID)}}
             className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
           >
@@ -906,7 +929,7 @@ const fetchAllRole = async () => {
           
           //disabled={selectedRoleID===""}
             onClick={()=>{handleConfirmMultipleUsers()}}
-            className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
+            className="px-5 py-2 text-white font-semibold rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             Confirm as Users
           </button>
@@ -936,6 +959,34 @@ const fetchAllRole = async () => {
           >
             Remove as Users
           </button>
+        </div>
+      </div>
+    </div>}
+    {isADModalVisible && <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-3/4 overflow-y-auto p-6">
+       
+<AdComponent closeModal={function (): void {
+              setIsADModalVisible(false);
+            } } fetchUser={function (): void {
+              fetchUser();
+            } } />
+        
+
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={()=>{setIsADModalVisible(false);}}
+            className="px-5 py-2 bg-gray-200 text-black font-semibold rounded hover:bg-gray-300"
+          >
+            close
+          </button>
+          {/* <button
+          
+          //disabled={selectedRoleID===""}
+            onClick={()=>{handleConfirmMultipleUsers()}}
+            className="px-5 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-500"
+          >
+            Confirm as Users
+          </button> */}
         </div>
       </div>
     </div>}

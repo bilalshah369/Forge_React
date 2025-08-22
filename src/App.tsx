@@ -47,6 +47,7 @@ import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
 import BudgetCategories from "./pages/budget-categories/BudgetCategories";
 import Resources from "./pages/profiles/Resources";
 import IntakeUpload from "./pages/upload-pages/IntakeUpload";
+import { ThemeProvider } from "./themes/ThemeProvider";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -399,7 +400,8 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <TitleProvider>
-            <Routes>
+            <ThemeProvider>
+  <Routes>
               <Route element={<MasterLayout />}>
                 <Route
                   path="/home"
@@ -433,6 +435,8 @@ const App = () => {
         
           <Route path="*" element={<NotFound />} /> */}
             </Routes>
+            </ThemeProvider>
+          
           </TitleProvider>
         </BrowserRouter>
       </TooltipProvider>

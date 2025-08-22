@@ -5,14 +5,16 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { setNavigator } from "../utils/navigationService";
 import { useEffect } from "react";
+import { useTheme } from "@/themes/ThemeProvider";
 
 export default function MasterLayout() {
   const navigate = useNavigate();
-
+const {theme}=useTheme();
   useEffect(() => {
     setNavigator(navigate);
   }, [navigate]);
   return (
+    <div style={{padding:10,backgroundColor:theme.colors.drawerBackgroundColor}}>
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
 
@@ -38,6 +40,6 @@ export default function MasterLayout() {
           <Outlet /> {/* children of the route will render here */}
         </div>
       </main>
-    </SidebarProvider>
+    </SidebarProvider></div>
   );
 }

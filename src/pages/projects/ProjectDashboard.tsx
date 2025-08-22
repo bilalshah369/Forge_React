@@ -41,6 +41,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 interface ProjectHistoryItem {
@@ -688,6 +689,7 @@ const ProjectDashboard = () => {
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       const reloadData = async () => {
@@ -1389,7 +1391,7 @@ const ProjectDashboard = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-900"
+                  className=" text-white font-semibold px-4 py-2 rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Save
                 </button>
@@ -1669,7 +1671,7 @@ const ProjectDashboard = () => {
                   onClick={() =>
                     document.getElementById("raidForm").requestSubmit()
                   }
-                  className="bg-blue-900 text-white px-4 py-2 rounded font-bold"
+                  className="text-white px-4 py-2 rounded font-bold" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Submit
                 </button>

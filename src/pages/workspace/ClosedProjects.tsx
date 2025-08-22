@@ -16,6 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ProjectPhaseSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -400,6 +401,8 @@ const ClosedProjects = () => {
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
+
   useEffect(() => {
     (async function () {
       FetchMasterDataPM("ClosedProjects");
@@ -550,7 +553,8 @@ const ClosedProjects = () => {
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+                  className="px-4 py-2 rounded text-white" 
+style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Save
                 </button>

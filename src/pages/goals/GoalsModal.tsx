@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/MultiSelectDepartment";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
+import { useTheme } from "@/themes/ThemeProvider";
 import { GetDepartments } from "@/utils/Departments";
 import { InsertGoal } from "@/utils/Goals";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
@@ -66,7 +67,7 @@ export const GoalsModal: React.FC<ModalProps> = ({
     setAlertVisible(false);
     setAlertMessage("");
   };
-
+const {theme} =useTheme();
   React.useEffect(() => {
     fetchDepartments();
     if (editGoal) {
@@ -319,7 +320,7 @@ export const GoalsModal: React.FC<ModalProps> = ({
               </button>
               <button
                 type="button"
-                className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
+                className="px-6 py-2 text-white rounded" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={handleSubmit}
               >
                 Submit

@@ -7,6 +7,7 @@ import { GetMasterData } from "../../utils/PM";
 import { InsertBulkIntake } from "../../utils/Intake";
 import AlertBox from "../../components/ui/AlertBox";
 import { Download_svg } from "../../assets/Icons";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -83,7 +84,7 @@ const IntakeUpload: React.FC = () => {
     setAlertVisible(false);
     setAlertMessage("");
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     const fetchMasters = async () => {
       try {
@@ -226,8 +227,8 @@ const IntakeUpload: React.FC = () => {
       </button>
       <button
         className={`flex-1 py-2 px-3 text-sm font-medium rounded border ${
-          step === 3 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"
-        }`}
+          step === 3 ? " text-white" : "bg-gray-200 text-gray-700"
+        }`} style={{backgroundColor:theme.colors.drawerBackgroundColor}}
         onClick={() => mappedData.length > 0 && setStep(3)}
         disabled={step < 3}
       >

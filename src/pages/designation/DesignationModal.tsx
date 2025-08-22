@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
+import { useTheme } from "@/themes/ThemeProvider";
 import { AddAndEditDesignation } from "@/utils/Designation";
 import React from "react";
 
@@ -37,7 +38,7 @@ export const DesignationModal: React.FC<ModalProps> = ({
     setAlertVisible(false);
     setAlertMessage("");
   };
-
+const {theme} =useTheme();
   React.useEffect(() => {
     if (editDesignation) {
       setFormData({
@@ -125,7 +126,7 @@ export const DesignationModal: React.FC<ModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
+                className="px-6 py-2 text-white rounded"  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={() => {
                   onCreate();
                 }}

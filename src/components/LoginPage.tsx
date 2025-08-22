@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import warehouseImage from "@/assets/warehouse-inventory.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const LoginPage = () => {
+  const {theme} =useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const LoginPage = () => {
 
                   <Button
                     type="submit"
-                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-base transition-colors"
+                    className="w-full h-12  text-white font-medium rounded-lg text-base transition-colors" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                   >
                     Login
                   </Button>

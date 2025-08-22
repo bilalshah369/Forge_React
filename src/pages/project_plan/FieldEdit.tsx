@@ -6,6 +6,7 @@ import { Close_svg, Edit_svg } from "../../assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { GetChangeRequestPreview } from "../../utils/ApprovedProjects";
 import MultiSelectDropdown from "@/components/ui/MultiSelectDropdown";
+import { useTheme } from "@/themes/ThemeProvider";
 interface FieldEditProp {
   label_id: string;
   project_id: number;
@@ -135,7 +136,7 @@ export default function FieldEdit({
       console.error("Error saving:", err);
     }
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     getPreviewValue();
   }, [label_id]);
@@ -255,7 +256,7 @@ export default function FieldEdit({
             <button
               type="button"
               onClick={handleSave}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className=" text-white px-4 py-2 rounded" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
             >
               Save
             </button>

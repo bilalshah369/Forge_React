@@ -1,6 +1,7 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Briefcase_outline_svg,
   ChangeRequestSVG,
   Details_line_svg,
   DollarSign,
@@ -13,6 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "@/themes/ThemeProvider";
 import { GetProjectApproval } from "@/utils/Intake";
 import {
   GetDashProjectsWithFilters,
@@ -599,6 +601,7 @@ const PMView = () => {
   };
 
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       //await fetchColumnVisibility();
@@ -639,7 +642,7 @@ const PMView = () => {
           <AdvancedDataTable
             isColumnVisibility={isColumnVisibility}
             actions={(item) => (
-              <div className="flex space-x-2">
+              <div className="flex space-x-2" >
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
@@ -737,7 +740,7 @@ const PMView = () => {
                             `/PMView/BudgetPlanner?projectId=${item.project_id}`
                           );
                         }}>
-                        <DollarSignIcon height={22} width={22}  />
+                        <Briefcase_outline_svg height={22} width={22} className="[&_path]:fill-white"/>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>{"Update Budget"}</TooltipContent>

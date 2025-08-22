@@ -38,6 +38,7 @@ import MultiSelectDropdown from "@/components/ui/MultiSelectDropdown";
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
 import MultifeatureGanttMilestone from "./MultifeatureGanttMilestone";
 import MultifeatureGanttProjectDependencies from "./MultifeatureGanttProjectDependencies";
+import { useTheme } from "@/themes/ThemeProvider";
 const now = new Date();
 
 const customRanges = [
@@ -93,6 +94,7 @@ const RoadmapOverview = () => {
   const [selectedRoadmapView, setSelectedRoadmapView] = useState<
     "Milestone" | "Project Dependencies"
   >("Milestone");
+  const {theme}=useTheme();
   const [currentView, setCurrentView] = useState<string>("month");
   const [loading, setLoading] = useState<boolean>(true);
   const [projects, setProjects] = useState<any>([]);
@@ -338,6 +340,7 @@ const RoadmapOverview = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+                style={selectedRoadmapView==="Milestone" ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
               >
                 Milestone View
               </button>
@@ -356,6 +359,8 @@ const RoadmapOverview = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+                                style={selectedRoadmapView==="Project Dependencies" ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
+
               >
                 Dependency View
               </button>

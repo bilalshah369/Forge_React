@@ -4,6 +4,7 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import AlertBox from "@/components/ui/AlertBox";
 import ConfirmationBox from "@/components/ui/ConfirmationBox";
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { useTheme } from "@/themes/ThemeProvider";
 import {
   GetBudgetCategories,
   GetBudgetDetails,
@@ -576,6 +577,7 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
     }
   };
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       loadBudgetData(projectId);
@@ -878,8 +880,8 @@ const BudgetCalculationForm: React.FC<BudgetCalculationFormProps> = ({
                     ) as HTMLFormElement;
 
                     if (form) handleSubmit(); // ✅ triggers the form's submit handler
-                  }}
-                  className="bg-blue-800 text-white px-4 py-2 rounded"
+                  }} 
+                  className="text-white px-4 py-2 rounded" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Submit
                 </button>

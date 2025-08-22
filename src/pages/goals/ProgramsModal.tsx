@@ -7,6 +7,7 @@ import { Department } from "@/components/ui/MultiSelectDepartment";
 import { DropdownItem } from "@/components/ui/MultiSelectDropdown";
 import RequiredLabel from "@/components/ui/required-label";
 import { toast } from "@/hooks/use-toast";
+import { useTheme } from "@/themes/ThemeProvider";
 import { GetDepartments } from "@/utils/Departments";
 import { GetGoals } from "@/utils/Goals";
 import { InsertProgram } from "@/utils/ManageProgram";
@@ -82,7 +83,7 @@ export const ProgramsModal: React.FC<ModalProps> = ({
     setAlertVisible(false);
     setAlertMessage("");
   };
-
+const {theme} =useTheme();
   React.useEffect(() => {
     fetchDepartments();
     fetchGoals();
@@ -336,7 +337,7 @@ export const ProgramsModal: React.FC<ModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-800 text-white rounded hover:bg-blue-700"
+                className="px-6 py-2 text-white rounded"  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={handleSubmit}
               >
                 Submit

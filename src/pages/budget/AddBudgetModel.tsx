@@ -4,6 +4,7 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import AlertBox from "@/components/ui/AlertBox";
 import ConfirmationBox from "@/components/ui/ConfirmationBox";
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { useTheme } from "@/themes/ThemeProvider";
 import {
   GetBudgetCategories,
   GetBudgetDetails,
@@ -585,6 +586,7 @@ const validateForm = () => {
     }
   };
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       fetchCategoriesAndDetails();
@@ -869,7 +871,7 @@ const validateForm = () => {
                   //   if (form) //handleAddRow();
                   //   form.requestSubmit(); // ✅ triggers the form's submit handler
                   // }}
-                  className="bg-blue-800 text-white px-4 py-2 rounded"
+                  className=" text-white px-4 py-2 rounded" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Save
                 </button>

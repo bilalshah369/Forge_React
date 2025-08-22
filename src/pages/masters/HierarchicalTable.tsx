@@ -7,6 +7,7 @@ import { FetchPermission } from "@/utils/Permission";
 import {ChromePicker} from 'react-color'; // Web Color Picker
 import AlertBox from "@/components/ui/AlertBox";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useTheme } from "@/themes/ThemeProvider";
 interface Department {
   department_id?: number;
   customer_id: number;
@@ -415,6 +416,7 @@ debugger;
     };
 const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
         checkPermission();
@@ -430,7 +432,8 @@ const location = useLocation();
   <button
   type="button"
     onClick={() =>{setParentDepartmentName(""); openAddModal(null)}} // pass null since it's a new one
-    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+    className="flex items-center gap-2 px-4 py-2  text-white rounded-lg shadow transition"
+    style={{backgroundColor:theme.colors.drawerBackgroundColor}}
   >
     <Plus_svg width={20} height={20} className="text-white [&_path]:fill-white"  />
     Add New Department
@@ -547,8 +550,8 @@ const location = useLocation();
                 Cancel
               </button>
               <button
-                onClick={handleAddDepartment}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
+                onClick={handleAddDepartment} style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                className="px-4 py-2 text-white rounded"
               >
                 {isEditing ? "Save" : "Add"}
               </button>

@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "@/themes/ThemeProvider";
 import {
   GetApprovedProjects,
   GetApprovedProjectsWithFilters,
@@ -506,6 +507,7 @@ const ApprovedProjectList = () => {
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       FetchMasterDataPM("ApprovedProjectList");
@@ -675,7 +677,7 @@ const ApprovedProjectList = () => {
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+                    className="px-4 py-2 rounded text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                   >
                     Save
                   </button>

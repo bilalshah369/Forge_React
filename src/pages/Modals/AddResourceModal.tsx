@@ -1,4 +1,5 @@
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { useTheme } from "@/themes/ThemeProvider";
 import { AddResource } from "@/utils/Resource";
 import { getDesignation, GetUserDept } from "@/utils/Users";
 import React, { useEffect, useState } from "react";
@@ -194,6 +195,7 @@ const addUser = async (payload: any) => {
       console.error('Error fetching departments:', err);
     }
   };
+  const {theme} =useTheme();
  useEffect(() => {
     fetchDesignation();
     fetchDepartments();
@@ -397,7 +399,7 @@ const addUser = async (payload: any) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+              className="px-4 py-2 rounded text-white hover:bg-blue-700" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
             >
               Save
             </button>

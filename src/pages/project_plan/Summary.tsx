@@ -27,6 +27,7 @@ import AddTeamMemberModal from "../Modals/AddTeamMemberModal";
 import ProjectView from "../projects/ProjectView";
 import AlertBox from "@/components/ui/AlertBox";
 import { GetApprovers } from "@/utils/PM";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -161,6 +162,7 @@ const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
     }
   };
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       fetchApprovers(projectId);
@@ -231,7 +233,7 @@ const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
                   MasterData
                     ? "bg-blue-600 hover:bg-blue-700"
                     : "bg-gray-400 cursor-not-allowed"
-                }`}
+                }`}  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={() => {
                   handleSubmitUser(
                     send_to,
@@ -334,7 +336,7 @@ const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
               </button>
               <button
                 onClick={handleSubmit}
-                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+                className="px-4 py-2 rounded text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
               >
                 Save
               </button>

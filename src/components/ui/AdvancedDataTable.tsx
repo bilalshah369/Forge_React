@@ -63,6 +63,7 @@ import { get_projects_autocomplete } from "@/utils/PM";
 import { useNavigate } from "react-router-dom";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface AdvancedDataTableProps {
   data: any[];
@@ -197,6 +198,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
   const [searchQuery, setSearchQuery] = useState(searchText || "");
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const navigation = useNavigate();
+  const {theme} =useTheme();
   const typeMapping: { [key: string]: string } = {
     "1": "Risk",
     "2": "Issue",
@@ -968,9 +970,10 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
           <TableHeader className="h-auto">
             <TableRow>
               {visibleColumns.map((column) => (
-                <TableHead
+                <TableHead style={{ backgroundColor: theme.colors.drawerBackgroundColor }}
+
                   key={column.key}
-                  className={`!h-auto font-semibold cursor-pointer bg-[#044086] whitespace-nowrap px-4 py-2 ${column.type==='actions'? "sticky-col":""}`}
+                  className={`!h-auto font-semibold cursor-pointer  whitespace-nowrap px-4 py-2 ${column.type==='actions'? "sticky-col":""}`}
                   onClick={() => handleSort(column.key)}
                 >
                   <div className="flex items-center justify-between gap-2 text-white">
@@ -997,7 +1000,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               data.map((item, index) => (
                 <TableRow key={index} className="hover:bg-muted/50 ">
                   {visibleColumns.map((column) => (
-                    <TableCell key={column.key} className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
+                    <TableCell key={column.key} style={{backgroundColor: column.type==="actions"? theme.colors.drawerBackgroundColor:'white'}}  className={`py-3 ${column.type==='actions'? "sticky-col":""}`}>
                       {renderCellContent(item, column, index)}
                     </TableCell>
                   ))}
@@ -1065,6 +1068,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                     size="sm"
                     onClick={() => onPageChange(pageNumber)}
                     className="w-8 h-8 p-0"
+                    style={{ backgroundColor: theme.colors.drawerBackgroundColor,color:'white' }}
                   >
                     {pageNumber}
                   </Button>

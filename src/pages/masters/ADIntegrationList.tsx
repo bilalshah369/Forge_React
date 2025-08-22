@@ -17,6 +17,7 @@ import { DeleteSVG, EditSVG, ProjectPhaseSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
 import { AddADForCustomer, DeleteAD, GetADIntegrationsForCustomer, GetADList } from "@/utils/Integration";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -199,6 +200,7 @@ const ADIntegrationList = () => {
   const [apiKey, setApiKey] = useState<string>("");
    const [integrationCustId, setIntegrationCustId] = useState('');
      const [integrationId, setIntegrationId] = useState('');
+     const {theme} =useTheme();
   useEffect(() => {
     (async function () {
         fetchADList();
@@ -431,7 +433,7 @@ const ADIntegrationList = () => {
           <button
           type="submit"
             onClick={()=>{setSubmitted(true)}}
-            className="px-4 py-2 rounded-md bg-blue-700 text-white hover:bg-blue-800"
+            className="px-4 py-2 rounded-md text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             Save
           </button>

@@ -18,6 +18,7 @@ import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
 import { GetCustomerNotifications, UpadteCustomerNotification } from "@/utils/Notification";
 import MultiSelectDropdown from "@/components/ui/MultiSelectDropdown";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -168,6 +169,7 @@ const AlertsConfiguration = () => {
       //alert("Failed to update alert.");
     }
   };
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
    fetchAlerts();
@@ -314,7 +316,7 @@ const AlertsConfiguration = () => {
           >
             Cancel
           </button>
-          <button className="px-5 py-2 rounded-md bg-[#044086] text-white hover:bg-[#0550b8]" onClick={()=>{updateAlert(alert)}}>
+          <button  className="px-5 py-2 rounded-md text-white " style={{backgroundColor:theme.colors.drawerBackgroundColor}} onClick={()=>{updateAlert(alert)}}>
             Save
           </button>
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { format, addMonths, parseISO, startOfMonth, isValid } from "date-fns";
 import { InsertActualBudgetMultiple } from "@/utils/BudgetPlan";
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface BudgetPlannerResourceProps {
   rate: any;
@@ -142,6 +143,7 @@ const handleSubmit = async (values: any) => {
 
   const isMonthsChanged = () =>
     months.some((m, i) => m.value !== initialMonths[i].value);
+  const {theme} =useTheme();
 useEffect(() => {
   const updatedMonths: {
     id?: string;
@@ -262,7 +264,7 @@ useEffect(() => {
           )}
           <button
             onClick={() => {console.log("Save budgets:", months);handleSubmit(months);}}
-            className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+            className="px-4 py-2 rounded-md text-white hover:bg-blue-700" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             Save
           </button>

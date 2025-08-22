@@ -27,6 +27,7 @@ import {
 import { DatePicker, DateRangePicker } from "rsuite";
 import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface TimesheetModalProps {
   visible: boolean;
@@ -305,7 +306,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
     // });
     return {};
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     if (visible && prefilledData.project_id) {
       //////debugger;
@@ -742,7 +743,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
                 Close
               </button>
               <button
-                className="px-5 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900"
+                className="px-5 py-2  text-white rounded-md " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={() => {
                   handleSubmit();
                 }}

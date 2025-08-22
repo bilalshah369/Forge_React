@@ -5,6 +5,7 @@ import {
   fieldMapping,
   ReadableField,
 } from "./IntakeData";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface ReviewStepProps {
   mappedData: IntakeData[];
@@ -25,6 +26,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
   onSubmit,
   onBack,
 }) => {
+  const {theme} =useTheme();
   const handleSubmit = () => {
     onSubmit(mappedData);
   };
@@ -194,7 +196,7 @@ const ReviewStep: React.FC<ReviewStepProps> = ({
           Back
         </button>
         <button
-          className="flex-1 py-3 rounded font-bold bg-blue-800 text-white hover:bg-blue-900 transition-colors"
+          className="flex-1 py-3 rounded font-bold  text-white transition-colors" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           onClick={handleSubmit}
         >
           Submit

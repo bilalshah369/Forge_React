@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -126,7 +127,7 @@ const BudgetCategory = () => {
       setLoading(false);
     }
   };
-
+const {theme} =useTheme();
   useEffect(() => {
     const initializeData = async () => {
       // await fetchCategory();
@@ -464,7 +465,7 @@ const BudgetCategory = () => {
       ) : (
         <div className="overflow-x-auto max-h-[500px]">
           <table className="min-w-full border border-gray-200">
-            <thead className="bg-[#044086]">
+            <thead style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
               <tr>
                 <th className="py-2 px-4 text-white font-bold text-left w-1/2">
                   Name
@@ -511,7 +512,8 @@ const BudgetCategory = () => {
               Cancel
             </button>
             <button
-              className="px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 text-white rounded hover:bg-blue-600" 
+style={{backgroundColor:theme.colors.drawerBackgroundColor}}
               onClick={() => {
                 if (category.parent_category_id) {
                   handleAddSubcategory();
@@ -550,7 +552,7 @@ const BudgetCategory = () => {
               Cancel
             </button>
             <button
-              className="px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-600" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
               onClick={() => {
                 if (selectedItem.parent_category_id !== null) {
                   handleUpdateSubCategory();

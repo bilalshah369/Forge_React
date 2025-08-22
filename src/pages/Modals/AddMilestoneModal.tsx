@@ -25,6 +25,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "@/themes/ThemeProvider";
 
 interface AddMilestoneModalProps {
   visible: boolean;
@@ -671,6 +672,7 @@ export const AddMilestoneModal: React.FC<AddMilestoneModalProps> = ({
   //   }
   // }, [milestone]);
   const [submitted, setSubmitted] = useState(false);
+  const {theme} =useTheme();
   useEffect(() => {
     if (visible) {
       FetchMilestones(projectId);
@@ -948,7 +950,7 @@ export const AddMilestoneModal: React.FC<AddMilestoneModalProps> = ({
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-6 py-2  text-white rounded"  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={() => {
                   setSubmitted(true);
                 }}

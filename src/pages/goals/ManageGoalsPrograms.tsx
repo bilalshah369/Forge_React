@@ -36,6 +36,7 @@ import AlertBox from "@/components/ui/AlertBox";
 import { GoalsModal } from "./GoalsModal";
 import { Edit, Trash2 } from "lucide-react";
 import { ProgramsModal } from "./ProgramsModal";
+import { useTheme } from "@/themes/ThemeProvider";
 const now = new Date();
 const currentYear = now.getFullYear();
 
@@ -647,6 +648,7 @@ const ManageGoalsPrograms: React.FC = () => {
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       checkPermission();
@@ -929,6 +931,8 @@ const ManageGoalsPrograms: React.FC = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+style={!showPrograms ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
+
               >
                 Goals
               </button>
@@ -945,6 +949,7 @@ const ManageGoalsPrograms: React.FC = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+                style={showPrograms ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
               >
                 Programs
               </button>

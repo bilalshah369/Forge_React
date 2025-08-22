@@ -5,6 +5,9 @@ import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 import gantt from "dhtmlx-gantt";
 import { GetUserPermission } from "@/utils/Users";
 import { decodeBase64 } from "@/utils/securedata";
+import { useTheme } from "@/themes/ThemeProvider";
+import { useNavigate } from "react-router-dom";
+import { navigationRef } from "@/utils/navigationService";
 
 declare global {
   interface Window {
@@ -32,7 +35,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
   const [currentView, setCurrentView] = useState(chat_view);
   const [viewingProject, setViewingProject] = useState("");
   const [permissions, setPermissions] = useState<number[]>([]);
-  //const { theme } = useTheme();
+  const { theme } = useTheme();
 
   const fetchUserPermission = async () => {
     try {
@@ -85,6 +88,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
     gantt.detachEvent(gantt._myClickHandler);
   }
   gantt._myClickHandler = gantt.attachEvent("onTaskClick", function (id, e) {
+    debugger;
     const scrollState = gantt.getScrollState();
     let task1 = gantt.getTask(id);
     console.log("Task Clicked:", task1);
@@ -235,6 +239,17 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
     const activeElement = document.querySelector(".gantt_cell:hover");
     return activeElement?.innerHTML?.includes("showingtool") || false;
   });
+gantt.attachEvent("onCellClick", function (id, column, e) {
+  if (column === "text") {
+    if (gantt.isTaskExists(id)) {
+      const task = gantt.getTask(id);
+      // Example: redirect to a project details page
+      window.location.href = `/projects/${task.id}`;
+    }
+    return false; // prevent default gantt action
+  }
+  return true;
+});
 
   const loadTasks = () => {
     const tasks: any[] = [];
@@ -369,14 +384,14 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
     }
     gantt.render();
   };
-
+const navigation = useNavigate();
   useEffect(() => {
     console.log("ganttContainer.current at mount:", ganttContainer.current);
     if (!ganttContainer.current) {
       console.error("MultifeatureGanttMilestone container is null at mount");
       return;
     }
-
+  
     // Configure Gantt settings
     gantt.config.date_format = "%Y-%m-%d";
     gantt.config.readonly = true;
@@ -621,21 +636,30 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
 
     window.handleStatusClick = (projectId: string, status: string) => {
       if (status !== "5") {
-        navigate("ProjectProgressOverview", { projectId });
+        navigation(
+                      `/PMView/ProjectProgressOverview?projectId=${projectId}`
+                    );
       }
     };
 
     window.handleProjectClick = (projectId: string, type: string) => {
+      debugger;
       if (type !== "milestone") {
-        navigate("ProjectPreview", {
-          projectId,
-          isApproved: true,
-          redirect: "MilestoneViewGantt",
-        });
+        // navigate("ProjectPreview", {
+        //   projectId,
+        //   isApproved: true,
+        //   redirect: "MilestoneViewGantt",
+        // });
+         
+        navigation(
+                        `/PMView/ProjectView?projectId=${projectId}`
+                      );
+                      
       }
     };
 
     return () => {
+      debugger;
       console.log("Cleaning up MultifeatureGanttMilestone");
       try {
         gantt.clearAll();
@@ -656,6 +680,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
         gantt.detachEvent("onGanttScroll");
         gantt.detachEvent("onGanttReady");
         gantt.detachEvent("onBeforeTooltip");
+         gantt.detachEvent("onCellClick");
         isInitialized.current = false;
       } catch (error) {
         console.error("Error cleaning up MultifeatureGanttMilestone:", error);
@@ -761,7 +786,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
             color: black;
           }
           .custom-header {
-            background-color: blue !important;
+            background-color: ${theme.colors.drawerBackgroundColor} !important;
             color: white !important;
             font-weight: bold;
           }

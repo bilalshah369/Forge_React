@@ -253,6 +253,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
     );
     getLabelInfo("", "Bearer " + accessToken);
     await fetchAndStoreLabels("");
+    debugger;
     localStorage.setItem("UserType", encodeBase64(userrole.toString()));
     localStorage.setItem("file_name", file_name || "");
 

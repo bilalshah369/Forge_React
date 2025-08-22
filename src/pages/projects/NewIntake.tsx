@@ -52,6 +52,7 @@ import { GoalsModal } from "../goals/GoalsModal";
 import { ClassificationModal } from "../classifications/AddClassificationModal";
 import { ApplicationModal } from "../impacted-apps/ImpactedAppsModal";
 import { ProgramsModal } from "../goals/ProgramsModal";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export interface Header {
@@ -1017,6 +1018,7 @@ const NewIntake = () => {
   const datePickerRefGoLiveDate = useRef(null);
   const impactedFunctionRef = useRef(null);
   const impactedAppRef = useRef(null);
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       if (typeof isEditable === "boolean") {
@@ -2179,7 +2181,7 @@ const NewIntake = () => {
                 <button
                   type="submit"
                   form="intake-main-form"
-                  className="flex items-center gap-2 border border-blue-800 text-blue-800 px-4 py-2 rounded hover:bg-blue-50 transition"
+                  className="flex items-center gap-2 border border-blue-800 text-blue-800 px-4 py-2 rounded transition"
                   onClick={() => setMode("draft")}
                 >
                   <Save_svg className="h-5 w-5" />
@@ -2194,7 +2196,7 @@ const NewIntake = () => {
                 <button
                   type="submit"
                   form="intake-main-form"
-                  className="flex items-center gap-2 bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-900 transition"
+                  className="flex items-center gap-2  text-white px-4 py-2 rounded transition" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                   onClick={() => {
                     setMode("review");
                     //setIsReviewPopupVisible(true);
@@ -2211,13 +2213,13 @@ const NewIntake = () => {
                 <button
                   type="submit"
                   form="intake-main-form"
-                  className="flex items-center gap-2 border border-blue-800 text-blue-800 px-4 py-2 rounded hover:bg-blue-50 transition"
+                  className="flex items-center gap-2 border text-white px-4 py-2 rounded  transition" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                   onClick={() => {
                     setMode("approve");
                     //setIsApprovalPopupVisible(true);
                   }}
                 >
-                  <Send_approve_svg className="h-5 w-5" />
+                  <Send_approve_svg  className="h-5 w-5 [&_path]:fill-white"/>
                   Send for Approval
                 </button>
               )}

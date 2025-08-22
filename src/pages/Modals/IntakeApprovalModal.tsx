@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ApproveSVG, RejectSVG, ReviewSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
  interface UserRole {
   role_id: number;
   role_name: string;
@@ -300,6 +301,7 @@ isOpen,onClose
   };
    const location = useLocation();
     const navigation = useNavigate();
+    const {theme} =useTheme();
  useEffect(() => {
      fetchProjects();
     // fetchDepartments();
@@ -328,7 +330,7 @@ isOpen,onClose
                     );
                       }}
                     >
-                      <ReviewSVG height={22} width={22} />
+                      <ReviewSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Review"}</TooltipContent>
@@ -349,7 +351,7 @@ isOpen,onClose
                     >
                       <ApproveSVG
                                               height={22}
-                                              width={22}
+                                              width={22} className="[&_path]:fill-white"
                                             />
                     </button>
                   </TooltipTrigger>
@@ -370,7 +372,7 @@ isOpen,onClose
                     );
                       }}
                     >
-                      <RejectSVG height={22} width={22} />
+                      <RejectSVG height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Reject"}</TooltipContent>
@@ -436,7 +438,7 @@ isOpen,onClose
                     sequenceId,
                     comment,
                   )}}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 py-2  text-white rounded"  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
               >
                 Submit
               </button>

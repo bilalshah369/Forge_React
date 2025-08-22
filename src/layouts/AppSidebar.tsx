@@ -45,6 +45,7 @@ import {
   Roadmap_svg,
   User_view_svg,
 } from "@/assets/Icons";
+import { useTheme } from "@/themes/ThemeProvider";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const items = [
   { title: "Dashboard", url: "/AdminDboard", icon: LayoutDashboard },
@@ -78,6 +79,7 @@ interface Module {
   url: string;
 }
 export function AppSidebar() {
+  const {theme, setTheme, currentTheme} = useTheme();
   const { state } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname.replace("/", "");
@@ -155,8 +157,8 @@ export function AppSidebar() {
     <Sidebar
       className={`${
         collapsed ? "!w-[2.5rem]" : "w-[13rem]"
-      } transition-all duration-300 !bg-[#044086] [&>*]:!bg-[#044086] [&>*]:!bg-none`}
-      collapsible="icon"
+      } transition-all duration-300 `}
+      collapsible="icon" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
     >
       {/* Logo/Brand */}
       <div >
@@ -191,7 +193,7 @@ export function AppSidebar() {
             style={{
               backgroundImage:
                 "linear-gradient(90deg, " +
-                "#044086" +
+                theme.colors.drawerBackgroundColor+
                 " 50%, " +
                 "white" +
                 " 50%)",
@@ -223,7 +225,7 @@ export function AppSidebar() {
                   dynamicModules[index - 1]?.url === selectedScreen ? 25 : 0;
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild className="p-0 bg-[#044086]">
+                    <SidebarMenuButton asChild className="" style={{backgroundColor:active?'white':theme.colors.drawerBackgroundColor}}>
                       {active ? (
                         <NavLink
                           to={item.url}
@@ -379,7 +381,7 @@ export function AppSidebar() {
                             }, 0);
                           }}
                           end={item.url === "/"}
-                          className={`flex items-center gap-3 px-3 py-2.5 text-white hover:bg-white hover:text-black ${
+                          className={`flex items-center gap-3 px-3 py-2.5 text-white hover:!bg-white hover:text-black ${
                             rdb2 > 0 ? "rounded-tr-full" : ""
                           } rounded-l-full ${
                             rdb1 > 0 ? "rounded-br-full" : ""

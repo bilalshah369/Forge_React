@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
 import {
   GetApprovedProjects,
   InsertMember,
@@ -326,6 +327,7 @@ export default function AddTeamMemberModal({
     }
   };
   const [submitted, setSubmitted] = useState(false);
+  const {theme} =useTheme();
   useEffect(() => {
     if (isOpen) {
       debugger;
@@ -551,7 +553,7 @@ export default function AddTeamMemberModal({
               </button>
               <button
                 type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-6 py-2 text-white rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={() => {
                   setSubmitted(true);
                 }}

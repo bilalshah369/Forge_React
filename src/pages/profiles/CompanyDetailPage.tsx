@@ -1,5 +1,6 @@
 import AlertBox from "@/components/ui/AlertBox";
 import { SubmitDetails } from "@/services/rest_api_service";
+import { useTheme } from "@/themes/ThemeProvider";
 import { GetCustomers, GetCustomersImage, GetMailer, UpdateCustomer, UpdateMailer } from "@/utils/Customer";
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -398,6 +399,7 @@ const payload = {
 
  const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
        handleFetchCustomers();
@@ -608,9 +610,7 @@ const payload = {
           <button
             onClick={handleSave}
             disabled={submitting}
-            className={`px-6 py-2 rounded-lg text-white ${
-              submitting ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-            }`}
+            className={`px-6 py-2 rounded-lg text-white `} style={{backgroundColor:theme.colors.drawerBackgroundColor}}
           >
             {submitting ? "Saving..." : "Save"}
           </button>

@@ -11,17 +11,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Account_cog_svg } from "@/assets/Icons";
+import { Account_cog_svg, Circle_svg } from "@/assets/Icons";
 import { PostAsync } from "@/services/rest_api_service";
 import { decodeBase64, encodeBase64 } from "@/utils/securedata";
 import { navigationRef } from "@/utils/navigationService";
 import NotificationBar from "@/components/ui/notificationBar";
 import { useTitle } from "./PageTitleContext";
+import { useTheme } from "@/themes/ThemeProvider";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Header() {
   const pageTitle = useTitle();
+  const { setTheme } = useTheme();
+
+  const themes = [
+    { key: "purple", color: "purple" },
+    { key: "dark", color: "green" },
+    { key: "darkGrey", color: "darkgrey" },
+    { key: "blue", color: "blue" },
+  ];
+  const [isAdmin, setIsAdmin] = useState("");
   ////debugger;
   const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
@@ -108,6 +118,7 @@ export default function Header() {
       const last = localStorage.getItem("lastName");
       const storedCompany = localStorage.getItem("company_name");
       setCompany_name_user(storedCompany ?? "");
+      setIsAdmin(decodeBase64(localStorage.getItem("UserType")));
       if (storedImage) {
         setUserImage(storedImage); // Ensure image is only updated when needed
       }
@@ -131,9 +142,9 @@ export default function Header() {
         </SidebarTrigger>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">F</span>
+            <span className="text-primary-foreground font-bold text-sm">{company_name_user?.substring(0,1)}</span>
           </div>
-          <span className="text-primary font-bold text-xl">FORGE</span>
+          <span className="text-primary font-bold text-xl">{company_name_user}</span>
         </div>
       </div>
 
@@ -146,7 +157,7 @@ export default function Header() {
         </h1>
       </div>
       <div className="flex items-center gap-4">
-        {true && (
+        {isAdmin==="1" && (
           <div
             onClick={() => {
               //setTheme("blue");
@@ -163,9 +174,9 @@ export default function Header() {
           </div>
         )}
 
-        <span className="text-md font-medium text-foreground">
+        {/* <span className="text-md font-medium text-foreground">
           {company_name_user}
-        </span>
+        </span> */}
         <NotificationBar />
 
         {/* <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
@@ -195,12 +206,27 @@ export default function Header() {
               </div>
 
               {/* Status Dots */}
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-purple-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 <div className="w-3 h-3 rounded-full bg-gray-400"></div>
                 <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-              </div>
+              </div> */}
+              <div className="flex items-center gap-2">
+      {themes.map((t) => (
+        <button
+          key={t.key}
+          onClick={() => setTheme(t.key as any)}
+          className="p-2 rounded-full hover:scale-110 transition-transform"
+        >
+          <Circle_svg
+            height={20}
+            width={20}
+            fill={t.color}
+          />
+        </button>
+      ))}
+    </div>
 
               {/* Progress Bar */}
               <div className="w-full bg-muted rounded-full h-2">

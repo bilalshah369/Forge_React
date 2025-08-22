@@ -3,6 +3,7 @@ import { Gantt, ViewMode, Task } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 
 import { Circle_svg } from "../../assets/Icons";
+import { useTheme } from "@/themes/ThemeProvider";
 
 // Define interfaces for data and props
 interface Project {
@@ -76,7 +77,7 @@ const GanttGoalsProgramsProjects: React.FC<GanttProps> = ({
   const [expandedPrograms, setExpandedPrograms] = useState<
     Record<string, boolean>
   >({});
-
+const {theme} =useTheme();
   // Map DHTMLX view scales to gantt-task-react ViewMode
   const getViewMode = (scale: GanttProps["chat_view"]): ViewMode => {
     switch (scale) {
@@ -281,7 +282,7 @@ const GanttGoalsProgramsProjects: React.FC<GanttProps> = ({
         width: "100%",
         minWidth: "800px",
         minHeight: `${data?.length * 35}px`,
-        maxHeight: "700px",
+        maxHeight: "100%",
         fontFamily: "Roboto",
       }}
     >
@@ -465,7 +466,7 @@ const GanttGoalsProgramsProjects: React.FC<GanttProps> = ({
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
           }
           .custom-header {
-            background-color: blue !important;
+            background-color: ${theme.colors.drawerBackgroundColor} !important;
             color: white !important;
             font-weight: 600;
             align-items: center;

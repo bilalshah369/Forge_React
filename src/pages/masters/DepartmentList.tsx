@@ -19,6 +19,7 @@ import { StartProject } from "@/utils/ApprovedProjects";
 import HierarchicalTable from "./HierarchicalTable";
 import TreeChartWeb from "../charts/Trees/TreeChartWeb";
 import TreeMapView from "../TeamMap/TreeMapView";
+import { useTheme } from "@/themes/ThemeProvider";
 // import {} from "../TeamMap/TreeMapView.js"
 export interface Header {
   label: string;
@@ -132,6 +133,7 @@ const DepartmentList = () => {
 
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {  
      
@@ -154,6 +156,8 @@ const DepartmentList = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+                
+style={selectedView === "Tree View" ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
               >
                 Tree View
               </button>
@@ -167,6 +171,7 @@ const DepartmentList = () => {
                     ? "bg-blue-800 text-white"
                     : "bg-white text-gray-800"
                 }`}
+                style={selectedView === "Chart View" ?{backgroundColor:theme.colors.drawerBackgroundColor}:{backgroundColor:'white'}}
               >
                 Chart View
               </button>

@@ -22,6 +22,7 @@ import {
   InsertCustomField,
 } from "@/utils/ApprovedProjects";
 import AddTeamMemberModal from "../Modals/AddTeamMemberModal";
+import { useTheme } from "@/themes/ThemeProvider";
 export interface Header {
   label: string;
   key: string;
@@ -337,6 +338,8 @@ const CustomData = () => {
   };
   const location = useLocation();
   const navigation = useNavigate();
+  const {theme} =useTheme();
+
   useEffect(() => {
     (async function () {
       FetchCustom(projectId);
@@ -490,7 +493,7 @@ const CustomData = () => {
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      className="px-6 py-2 text-white rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                       onClick={() => {
                         setSubmitted(true);
                       }}

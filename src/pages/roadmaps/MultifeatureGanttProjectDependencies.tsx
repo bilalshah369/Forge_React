@@ -5,6 +5,8 @@ import "dhtmlx-gantt/codebase/dhtmlxgantt.css";
 import gantt from "dhtmlx-gantt";
 import { GetUserPermission } from "@/utils/Users";
 import { decodeBase64 } from "@/utils/securedata";
+import { useTheme } from "@/themes/ThemeProvider";
+import { navigationRef } from "@/utils/navigationService";
 
 declare global {
   interface Window {
@@ -32,7 +34,7 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
   const [currentView, setCurrentView] = useState(chat_view);
   const [viewingProject, setViewingProject] = useState("");
   const [permissions, setPermissions] = useState<number[]>([]);
-  //const {theme} = useTheme();
+  const {theme} = useTheme();
 
   const fetchUserPermission = async () => {
     try {
@@ -627,9 +629,12 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
     }
 
     window.handleStatusClick = (projectId: string, status: string) => {
-      // if (status !== '5') {
-      //   navigate('ProjectProgressOverview', {projectId});
-      // }
+      if (status !== '5') {
+       
+        navigationRef(
+                      `/PMView/ProjectProgressOverview?projectId=${projectId}`
+                    );
+      }
     };
 
     window.handleProjectClick = (projectId: string, type: string) => {
@@ -639,6 +644,9 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
         //   isApproved: true,
         //   redirect: 'MilestoneViewGantt',
         // });
+        navigationRef(
+                        `/PMView/ProjectView?projectId=${projectId}`
+                      );
       }
     };
 
@@ -771,7 +779,7 @@ const MultifeatureGanttProjectDependencies: React.FC<ChartProps> = ({
             color: black;
           }
           .custom-header {
-            background-color: blue !important;
+            background-color: ${theme.colors.drawerBackgroundColor} !important;
             color: white !important;
             font-weight: bold;
           }

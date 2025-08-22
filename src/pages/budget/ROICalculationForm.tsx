@@ -5,6 +5,7 @@ import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
 import AlertBox from "@/components/ui/AlertBox";
 import ConfirmationBox from "@/components/ui/ConfirmationBox";
 import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { useTheme } from "@/themes/ThemeProvider";
 import { GetROIDetails } from "@/utils/Intake";
 import { formatAmountWithoutDollarSign } from "@/utils/util";
 import { useEffect, useState } from "react";
@@ -157,6 +158,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
     } catch (error) {}
   };
   const navigation = useNavigate();
+  const {theme} =useTheme();
   useEffect(() => {
     (async function () {
       //debugger;
@@ -468,7 +470,7 @@ const ROICalculationForm: React.FC<ProjectROIFormModalProps> = ({
 
                     if (form) form.requestSubmit(); // ✅ triggers the form's submit handler
                   }}
-                  className="bg-blue-800 text-white px-4 py-2 rounded"
+                  className="text-white px-4 py-2 rounded"  style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 >
                   Submit
                 </button>
