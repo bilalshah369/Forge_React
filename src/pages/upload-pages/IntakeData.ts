@@ -74,7 +74,7 @@ export interface IntakeData {
   start_date: string;
   end_date: string;
   golive_date: string;
-  roi: string;
+  roi: number;
   business_desc: string;
   scope_definition: string;
   key_assumption: string;
@@ -103,7 +103,7 @@ export const fieldMapping: Record<string, keyof IntakeData> = {
   "Start Date": "start_date",
   "End Date": "end_date",
   "Go-live Date": "golive_date",
-  ROI: "roi",
+  roi: "roi",
   "Business Description": "business_desc",
   "Scope Definition": "scope_definition",
   "Key Assumption": "key_assumption",

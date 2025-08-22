@@ -50,6 +50,8 @@ import IntakeUpload from "./pages/upload-pages/IntakeUpload";
 import ResourceUpload from "./pages/upload-pages/ResourceUpload";
 import ProjectProgressUpload from "./pages/upload-pages/ProjectProgressUpload";
 import ProjectPlanUpload from "./pages/upload-pages/ProjectPlanUpload";
+import EditFieldLabels from "./pages/edit-field-labels/EditFieldLabels";
+import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -324,6 +326,11 @@ const routesWithTitles = [
     title: "Project Progress Upload",
     element: <ProjectProgressUpload />,
   },
+  {
+    path: "/Adminpanel/edit-field-labels",
+    title: "Edit Labels",
+    element: <EditFieldLabels />,
+  },
   // {
   //   path: "/ApproveChangeRequest",
   //   title: "Approve Project Change",
@@ -390,7 +397,6 @@ const routesWithTitles = [
     title: "Subscription Plans",
     element: <SubscriptionModel />,
   },
-  //{ path: "/CustomLabels", title: "Edit Labels", element: <CustomLabels /> },
 ];
 const App = () => {
   // routesWithTitles.ts
@@ -403,7 +409,13 @@ const App = () => {
         <BrowserRouter>
           <TitleProvider>
             <Routes>
-              <Route element={<MasterLayout />}>
+              <Route
+                element={
+                  <LabelProvider customerId="">
+                    <MasterLayout />
+                  </LabelProvider>
+                }
+              >
                 <Route
                   path="/home"
                   //element={<HomePage />}
