@@ -187,7 +187,7 @@ export function AppSidebar() {
           )}
         </div>
       </div>
-      <SidebarContent>
+      <SidebarContent className="scrollbar-hide">
         <SidebarGroup className="pl-2 pr-0 ">
           <SidebarGroupContent
             style={{
@@ -517,6 +517,96 @@ export function AppSidebar() {
                         </NavLink>
                       )}
                     </SidebarMenuButton>
+                    {/* 🔽 Submenus */}
+                    {/* <div  className="" style={{backgroundColor:active?'white':theme.colors.drawerBackgroundColor}}> */}
+  {item.sub_modules.length > 0 && (
+    <div className="ml-6 flex flex-col gap-0">
+      {item.sub_modules.map((submodule: Submodule, indexSub: number) => {
+        debugger;
+        const subActive = isActive(submodule.url);
+        var rdbSub2: number =
+                        item?.sub_modules[indexSub - 1]?.url ===
+                          selectedScreen ||
+                        (indexSub === 0 &&
+                          dynamicModules[index]?.url === selectedScreen)
+                          ? 25
+                          : 0;
+          var rdbSub1: number =
+                        item?.sub_modules[indexSub + 1]?.url ===
+                        selectedScreen
+                          ? 25
+                          : 0;
+                      
+               return subActive ? (
+       
+          <NavLink
+            key={submodule.module_id}
+            to={submodule.url}
+            onClick={(e) => {
+              e.preventDefault();
+              localStorage.setItem("UserState", submodule.url?.toString());
+              setTimeout(() => {
+                navigationRef(submodule.url);
+              }, 0);
+            }}
+           style={{backgroundColor:subActive?'white':theme.colors.drawerBackgroundColor}}
+            //for subactive 
+             className={`flex items-center gap-3 px-3 py-2.5 bg-white text-black hover:bg-white hover:text-black${
+                            rdbSub2 > 0 ? "rounded-tr-full" : ""
+                          } rounded-l-full ${
+                            rdbSub1 > 0 ? "rounded-br-full" : ""
+                          } `}
+
+
+
+
+            
+          >
+      
+            <span className="font-bold">{">"}</span>
+            {!collapsed && (
+                            <span className="truncate text-black hover:text-black">
+                              {submodule.module_name}
+                            </span>
+                          )}
+            
+          </NavLink>):(<NavLink
+            key={submodule.module_id}
+            to={submodule.url}
+            style={{backgroundColor:subActive?'white':theme.colors.drawerBackgroundColor}}
+            onClick={(e) => {
+              e.preventDefault();
+              localStorage.setItem("UserState", submodule.url?.toString());
+              setTimeout(() => {
+                navigationRef(submodule.url);
+              }, 0);
+            }}
+           
+
+//for other 
+                           className={`flex items-center gap-3 px-3 py-2.5 text-white hover:!bg-white hover:text-black ${
+                            rdbSub2 > 0 ? "rounded-tr-full" : ""
+                          } rounded-l-full ${
+                            rdbSub1 > 0 ? "rounded-br-full" : ""
+                          }`}
+
+
+            
+          >
+      
+            <span className="font-bold">{">"}</span>
+            {!collapsed && (
+                            <span className="truncate text-white hover:text-black">
+                              {submodule.module_name}
+                            </span>
+                          )}
+            
+          </NavLink>
+        );
+      })}
+    </div>
+  )}
+  {/* </div> */}
                   </SidebarMenuItem>
                 );
               })}

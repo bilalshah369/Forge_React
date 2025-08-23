@@ -27,7 +27,7 @@ export const GetAsync_with_token = async (uri, Token) => {
     });
     // Check if response is not OK (e.g., 403, 401)
     // if (!response.ok) {
-    debugger;
+    //debugger;
     if (response.status === 403) {
       // Handle expired token
       const refreshToken = await localStorage.getItem("refreshToken");

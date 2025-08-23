@@ -58,6 +58,7 @@ import { decodeBase64 } from "@/utils/securedata";
 import { GetExternalLinks } from "./ProjectProgress";
 import FieldEdit from "../project_plan/FieldEdit";
 import { format } from "date-fns";
+import ApproveFieldEdit from "../project_plan/ApproveFieldEdit";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export interface Header {
@@ -1291,8 +1292,8 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
             //setInitialValues({
             setNameTitle(matchedProject.project_name || ""); // Default to empty string if missing
             setClassification(matchedProject.classification_name || ""); // Default to empty string if missing
-            setGoalSelected(matchedProject.goal_name || "");
-            setProgram(matchedProject.program_name || "");
+            setGoalSelected(matchedProject.goal_id || "");
+            setProgram(matchedProject.program_id || "");
             setBusinessOwner(
               matchedProject.business_stakeholder_user_name || ""
             );
@@ -1325,13 +1326,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                 : "--"
             );
             setProjectSize(
-              matchedProject.project_size === "1"
-                ? "Large"
-                : matchedProject.project_size === "2"
-                ? "Medium"
-                : matchedProject.project_size === "3"
-                ? "Small"
-                : "--"
+              matchedProject.project_size || "--"
             );
             setStartDate(matchedProject.start_date || "");
             setEndDate(matchedProject.end_date || "");
@@ -1398,6 +1393,17 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                    {showApproval && (
+                <ApproveFieldEdit
+                  field_id="project_name"
+                  isRequired={false}
+                  default_text={nameTitle ?? ''}
+                  is_edit={true}
+                  text_style={undefined}
+                   project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={users}
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1421,6 +1427,19 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       text_style={undefined}
                     />
                   )}
+                    {showApproval && (
+                <ApproveFieldEdit
+                  field_id="classification"
+                  isRequired={false}
+                   default_text={
+                        classification ?? "No Classification Selected"
+                      }
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={classifications}
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1433,9 +1452,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       idKey="id"
                       labelKey="value"
                       default_text={
-                        priorityData?.find(
-                          (item) => item.id === project.priority
-                        )?.value || "--"
+                       priority || "--"
                       }
                       is_edit={true}
                       text_style={undefined}
@@ -1444,6 +1461,19 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={priorityData}
                     />
                   )}
+                       {showApproval && (
+                <ApproveFieldEdit
+                  field_id="priority"
+                  isRequired={false}
+                  default_text={
+                    priority  || 'No Priority Selected'
+                  }
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={priorityData}
+                />
+              )}
                 </div>
               </div>
 
@@ -1471,6 +1501,24 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="goal_name"
                     />
                   )}
+
+                   {showApproval && (
+                <ApproveFieldEdit
+                  field_id="goal_id"
+                  isRequired={false}
+                   default_text={
+                        goals.find(
+                          (goal) =>
+                            goal.goal_id?.toString() ===
+                            goalSelected?.toString()
+                        )?.goal_name || "No goal selected"
+                      }
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={goals}
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1493,6 +1541,21 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="program_name"
                     />
                   )}
+
+                  {showApproval && (
+                <ApproveFieldEdit
+                  field_id="program_id"
+                  isRequired={false}
+                  default_text={
+                        programData.find((obj) => obj.program_id === program)
+                          ?.program_name || "No program selected"
+                      }
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={programData}
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1516,6 +1579,21 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="value"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                  field_id="project_size"
+                  isRequired={false}
+                  default_text={
+                        projectSizeData?.find(
+                          (item) => item.id === parseInt(projectSize ?? "")
+                        )?.value || "--"
+                      }
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={projectSizeData}
+                />
+              )}
                 </div>
               </div>
 

@@ -9,7 +9,7 @@ import {
 import { ApplicationModal } from "./ImpactedAppsModal";
 import AlertBox from "@/components/ui/AlertBox";
 
-export const ImpactedApps: React.FC = () => {
+ const ImpactedApps: React.FC = () => {
   const [applications, setApplications] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editApplication, setEditApplication] = React.useState(null);
@@ -154,7 +154,7 @@ export const ImpactedApps: React.FC = () => {
                     setModalVisible(true);
                   }}
                 >
-                  <Edit className="w-4 h-4 text-black" />
+                  <Edit className="w-4 h-4 text-white" />
                 </button>
                 <button
                   onClick={() => {
@@ -166,7 +166,7 @@ export const ImpactedApps: React.FC = () => {
                       handleDelete(item.application_id);
                   }}
                 >
-                  <Trash2 className="w-4 h-4 text-red-500" />
+                  <Trash2 className="w-4 h-4 text-white" />
                 </button>
               </div>
             )}
@@ -210,3 +210,4 @@ export const ImpactedApps: React.FC = () => {
     </>
   );
 };
+export default ImpactedApps;

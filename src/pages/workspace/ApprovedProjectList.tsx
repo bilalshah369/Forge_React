@@ -17,6 +17,7 @@ import {
 import { GetMasterDataPM, GetPlanChangeProjects } from "@/utils/PM";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PlanApprovalModal from "../Modals/PlanApprovalModal";
 export interface Header {
   label: string;
   key: string;
@@ -249,6 +250,8 @@ const ApprovedProjectList = () => {
   const [selectedPhases, setSelectedPhases] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [pendingApproval, setPendingApproval] = useState<number>(0);
+    const [intakeApprovalModalVisible, setIntakeApprovalModalVisible] =
+    useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [project_id, setProject_id] = useState("");
   const fetchProjects = async (page = currentPage, pageSize = rowsPerPage) => {
@@ -537,6 +540,9 @@ const ApprovedProjectList = () => {
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
           <AdvancedDataTable
+          isShowPending={true}
+          onShowPending={() => setIntakeApprovalModalVisible(true)}
+          numberOfPending={pendingApproval}
             actions={(item) => (
               <div className="flex space-x-2">
                 <Tooltip>
@@ -690,6 +696,11 @@ const ApprovedProjectList = () => {
             onCloseAlert={closeAlert}
             message={message}
           />
+           <PlanApprovalModal
+        isOpen={intakeApprovalModalVisible}
+        onClose={() => {fetchPendingProjects();
+        fetchProjects();setIntakeApprovalModalVisible(false)}}
+      />
         </div>
       </div>
     </div>

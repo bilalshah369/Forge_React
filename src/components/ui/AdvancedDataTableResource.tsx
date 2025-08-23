@@ -1052,16 +1052,20 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
                 }
 
                 return (
-                  <Button
-                    key={pageNumber}
-                    variant={PageNo === pageNumber ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => onPageChange(pageNumber)}
-                    className="w-8 h-8 p-0"
-                    style={{ backgroundColor: theme.colors.drawerBackgroundColor,color:'white' }}
-                  >
-                    {pageNumber}
-                  </Button>
+                  <button
+  onClick={() => onPageChange(pageNumber)}
+  className={`w-8 h-8 p-0 text-sm rounded-md border 
+    ${PageNo === pageNumber 
+      ? "text-white" 
+      : "bg-white text-black hover:bg-gray-100"
+    }`}
+  style={PageNo === pageNumber 
+    ? { backgroundColor: theme.colors.drawerBackgroundColor } 
+    : {}
+  }
+>
+  {pageNumber}
+</button>
                 );
               })}
             </div>

@@ -439,7 +439,7 @@ const {theme} =useTheme();
                       ▶
                     </span>
                   )}
-                  <span style={{ paddingLeft: task.project ? "20px" : "0" }}>
+                  <span className="truncate" style={{ paddingLeft: task.project ? "20px" : "0" }}>
                     {task.name}
                   </span>
                 </div>

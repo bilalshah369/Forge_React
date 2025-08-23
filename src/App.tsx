@@ -1,3 +1,4 @@
+import React, { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,51 +9,98 @@ import NotFound from "./pages/NotFound";
 import CreateAccount from "./pages/CreateAccount";
 import ForgotPassword from "./pages/ForgotPassword";
 import MasterLayout from "./layouts/MasterLayout";
-import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import { SidebarProvider } from "./components/ui/sidebar";
-import Dashboard1 from "./pages/reports/Dashboard1";
-import Dashboard2 from "./pages/reports/Dashboard2";
-import Dashboard3 from "./pages/reports/Dashboard3";
-import Dashboard4 from "./pages/reports/Dashboard4";
-import PMView from "./pages/workspace/PMView";
-import IntakeList from "./pages/workspace/IntakeList";
-import ApprovedProjectList from "./pages/workspace/ApprovedProjectList";
-import ClosedProjects from "./pages/workspace/ClosedProjects";
-import AdminPanel from "./pages/workspace/AdminPanel";
-import RaidTracker from "./pages/raid/RaidTracker";
-import RoadmapOverview from "./pages/roadmaps/RoadmapOverview";
-import ManageGoalsPrograms from "./pages/goals/ManageGoalsPrograms";
-import Timesheet from "./pages/Timesheet/Timesheet";
-import TimesheetReportPage from "./pages/Timesheet/TimesheetReportPage";
+// import HomePage from "./pages/HomePage";
+// import AboutPage from "./pages/AboutPage";
+// import Dashboard1 from "./pages/reports/Dashboard1";
+// import Dashboard2 from "./pages/reports/Dashboard2";
+// import Dashboard3 from "./pages/reports/Dashboard3";
+// import Dashboard4 from "./pages/reports/Dashboard4";
+// import PMView from "./pages/workspace/PMView";
+// import IntakeList from "./pages/workspace/IntakeList";
+// import ApprovedProjectList from "./pages/workspace/ApprovedProjectList";
+// import ClosedProjects from "./pages/workspace/ClosedProjects";
+// import AdminPanel from "./pages/workspace/AdminPanel";
+// import RaidTracker from "./pages/raid/RaidTracker";
+// import RoadmapOverview from "./pages/roadmaps/RoadmapOverview";
+// import ManageGoalsPrograms from "./pages/goals/ManageGoalsPrograms";
+// import Timesheet from "./pages/Timesheet/Timesheet";
+// import TimesheetReportPage from "./pages/Timesheet/TimesheetReportPage";
+// import TitleWrapper from "@/layouts/TitleWrapper";
+// import { TitleProvider } from "./layouts/PageTitleContext";
+// import NewIntake from "./pages/projects/NewIntake";
+// import ProjectAudit from "./pages/workspace/ProjectAudit";
+// import { RegistrationWizard } from "./pages/project_plan/RegistrationWizard";
+// import ProjectView from "./pages/projects/ProjectView";
+// import ProjectDashboard from "./pages/projects/ProjectDashboard";
+// import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
+// import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
+// import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
+// import DepartmentList from "./pages/masters/DepartmentList";
+// import DesignationChart from "./pages/TeamMap/DesignationChart";
+// import { Classifications } from "./pages/classifications/Classifications";
+// import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
+// import { Designations } from "./pages/designation/Designations";
+// import { Roles } from "./pages/roles/Roles";
+// import ADIntegrationList from "./pages/masters/ADIntegrationList";
+// import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
+// import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
+// import BudgetCategories from "./pages/budget-categories/BudgetCategories";
+// import Resources from "./pages/profiles/Resources";
+// import IntakeUpload from "./pages/upload-pages/IntakeUpload";
+// import { ThemeProvider } from "./themes/ThemeProvider";
+// import ResourceUpload from "./pages/upload-pages/ResourceUpload";
+// import ProjectProgressUpload from "./pages/upload-pages/ProjectProgressUpload";
+// import ProjectPlanUpload from "./pages/upload-pages/ProjectPlanUpload";
+// import EditFieldLabels from "./pages/edit-field-labels/EditFieldLabels";
+// import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
+
+
+
 import TitleWrapper from "@/layouts/TitleWrapper";
 import { TitleProvider } from "./layouts/PageTitleContext";
-import NewIntake from "./pages/projects/NewIntake";
-import ProjectAudit from "./pages/workspace/ProjectAudit";
-import { RegistrationWizard } from "./pages/project_plan/RegistrationWizard";
-import ProjectView from "./pages/projects/ProjectView";
-import ProjectDashboard from "./pages/projects/ProjectDashboard";
-import { ChangeRequestWizard } from "./pages/project_plan/ChangeRequestWizard";
-import BudgetPlannerNew from "./pages/budget/BudgetPlannerNew";
-import CompanyDetailPage from "./pages/profiles/CompanyDetailPage";
-import DepartmentList from "./pages/masters/DepartmentList";
-import DesignationChart from "./pages/TeamMap/DesignationChart";
-import { Classifications } from "./pages/classifications/Classifications";
-import { ImpactedApps } from "./pages/impacted-apps/ImpactedApps";
-import { Designations } from "./pages/designation/Designations";
-import { Roles } from "./pages/roles/Roles";
-import ADIntegrationList from "./pages/masters/ADIntegrationList";
-import SubscriptionModel from "./pages/Subscription/SubscriptionModel";
-import AlertsConfiguration from "./pages/masters/AlertsConfiguration";
-import BudgetCategories from "./pages/budget-categories/BudgetCategories";
-import Resources from "./pages/profiles/Resources";
-import IntakeUpload from "./pages/upload-pages/IntakeUpload";
 import { ThemeProvider } from "./themes/ThemeProvider";
-import ResourceUpload from "./pages/upload-pages/ResourceUpload";
-import ProjectProgressUpload from "./pages/upload-pages/ProjectProgressUpload";
-import ProjectPlanUpload from "./pages/upload-pages/ProjectPlanUpload";
-import EditFieldLabels from "./pages/edit-field-labels/EditFieldLabels";
 import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
+const HomePage = lazy(() => import("./pages/HomePage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const Dashboard1 = lazy(() => import("./pages/reports/Dashboard1"));
+const Dashboard2 = lazy(() => import("./pages/reports/Dashboard2"));
+const Dashboard3 = lazy(() => import("./pages/reports/Dashboard3"));
+const Dashboard4 = lazy(() => import("./pages/reports/Dashboard4"));
+const PMView = lazy(() => import("./pages/workspace/PMView"));
+const IntakeList = lazy(() => import("./pages/workspace/IntakeList"));
+const ApprovedProjectList = lazy(() => import("./pages/workspace/ApprovedProjectList"));
+const ClosedProjects = lazy(() => import("./pages/workspace/ClosedProjects"));
+const AdminPanel = lazy(() => import("./pages/workspace/AdminPanel"));
+const RaidTracker = lazy(() => import("./pages/raid/RaidTracker"));
+const RoadmapOverview = lazy(() => import("./pages/roadmaps/RoadmapOverview"));
+const ManageGoalsPrograms = lazy(() => import("./pages/goals/ManageGoalsPrograms"));
+const Timesheet = lazy(() => import("./pages/Timesheet/Timesheet"));
+const TimesheetReportPage = lazy(() => import("./pages/Timesheet/TimesheetReportPage"));
+const NewIntake = lazy(() => import("./pages/projects/NewIntake"));
+const ProjectAudit = lazy(() => import("./pages/workspace/ProjectAudit"));
+const RegistrationWizard = lazy(() => import("./pages/project_plan/RegistrationWizard"));
+const ProjectView = lazy(() => import("./pages/projects/ProjectView"));
+const ProjectDashboard = lazy(() => import("./pages/projects/ProjectDashboard"));
+const ChangeRequestWizard = lazy(() => import("./pages/project_plan/ChangeRequestWizard"));
+const BudgetPlannerNew = lazy(() => import("./pages/budget/BudgetPlannerNew"));
+const CompanyDetailPage = lazy(() => import("./pages/profiles/CompanyDetailPage"));
+const DepartmentList = lazy(() => import("./pages/masters/DepartmentList"));
+const DesignationChart = lazy(() => import("./pages/TeamMap/DesignationChart"));
+const Classifications = lazy(() => import("./pages/classifications/Classifications"));
+const ImpactedApps = lazy(() => import("./pages/impacted-apps/ImpactedApps"));
+const Designations = lazy(() => import("./pages/designation/Designations"));
+const Roles = lazy(() => import("./pages/roles/Roles"));
+const ADIntegrationList = lazy(() => import("./pages/masters/ADIntegrationList"));
+const SubscriptionModel = lazy(() => import("./pages/Subscription/SubscriptionModel"));
+const AlertsConfiguration = lazy(() => import("./pages/masters/AlertsConfiguration"));
+const BudgetCategories = lazy(() => import("./pages/budget-categories/BudgetCategories"));
+const Resources = lazy(() => import("./pages/profiles/Resources"));
+const IntakeUpload = lazy(() => import("./pages/upload-pages/IntakeUpload"));
+const ResourceUpload = lazy(() => import("./pages/upload-pages/ResourceUpload"));
+const ProjectProgressUpload = lazy(() => import("./pages/upload-pages/ProjectProgressUpload"));
+const ProjectPlanUpload = lazy(() => import("./pages/upload-pages/ProjectPlanUpload"));
+const EditFieldLabels = lazy(() => import("./pages/edit-field-labels/EditFieldLabels"));
+
 const queryClient = new QueryClient();
 const routesWithTitles = [
   // { path: "/ManageList", title: "Managge List", element: <ManageList /> },
@@ -83,6 +131,11 @@ const routesWithTitles = [
     element: <DesignationChart />,
   },
   {
+    path: "DepartmentList",
+    title: "Departments",
+    element: <DepartmentList />,
+  },
+   {
     path: "/Adminpanel/DepartmentList",
     title: "Departments",
     element: <DepartmentList />,
@@ -162,6 +215,7 @@ const routesWithTitles = [
   //   element: <MilestoneViewGantt />,
   // },
   { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
+    { path: "Resources", title: "Resources", element: <Resources /> },
   {
     path: "/IntakeList",
     title: "Intake/Backlog List",
@@ -206,6 +260,7 @@ const routesWithTitles = [
   //   element: <IntakeApproval />,
   // },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
+    { path: "RoleMaster", title: "Roles", element: <Roles /> },
   { path: "/Adminpanel/roles", title: "Roles", element: <Roles /> },
   {
     path: "/Adminpanel/impacted-applications",
@@ -213,9 +268,25 @@ const routesWithTitles = [
     element: <ImpactedApps />,
   },
   {
+    path: "ImpactedApps",
+    title: "Impacted Applications",
+    element: <ImpactedApps />,
+  },
+  {
     path: "/Adminpanel/Classifications",
     title: "Classifications",
     element: <Classifications />,
+  },
+   {
+    path: "/Classification",
+    title: "Classifications",
+    element: <Classifications />,
+  },
+
+  {
+    path: "Designation",
+    title: "Designations",
+    element: <Designations />,
   },
   {
     path: "/Adminpanel/designations",
@@ -332,11 +403,16 @@ const routesWithTitles = [
     title: "Edit Labels",
     element: <EditFieldLabels />,
   },
-  // {
-  //   path: "/ApproveChangeRequest",
-  //   title: "Approve Project Change",
-  //   element: <ChangeRequestUpdated />,
-  // },
+  {
+    path: "CustomLabels",
+    title: "Edit Labels",
+    element: <EditFieldLabels />,
+  },
+  {
+    path: "/ApprovedProjectList/ApproveChangeRequest",
+    title: "Approve Project Change",
+    element: <ChangeRequestWizard _isApproval={true}/>,
+  },
   // {
   //   path: "/MilestoneDateApproval",
   //   title: "Milestone Date Change",
@@ -410,6 +486,12 @@ const App = () => {
         <BrowserRouter>
           <TitleProvider>
             <ThemeProvider>
+              <Suspense fallback={
+                <div className="flex flex-col items-center justify-center h-screen space-y-4">
+      <div className="h-6 w-40 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
+      <div className="h-4 w-52 bg-gray-200 rounded animate-pulse"></div>
+    </div>}>
   <Routes>
               <Route
                 element={
@@ -450,6 +532,7 @@ const App = () => {
         
           <Route path="*" element={<NotFound />} /> */}
             </Routes>
+            </Suspense>
             </ThemeProvider>
           
           </TitleProvider>

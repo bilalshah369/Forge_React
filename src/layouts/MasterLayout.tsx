@@ -14,7 +14,7 @@ const {theme}=useTheme();
     setNavigator(navigate);
   }, [navigate]);
   return (
-    <div style={{padding:10,backgroundColor:theme.colors.drawerBackgroundColor}}>
+    <div style={{padding:5,backgroundColor:theme.colors.drawerBackgroundColor}}>
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
 

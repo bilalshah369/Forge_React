@@ -6,7 +6,7 @@
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>template react</title>
+  <title>PPM</title>
   <!-- <meta name="description" content="Lovable Generated Project" />
   <meta name="author" content="Lovable" />
 
@@ -22,9 +22,9 @@
     html,
     body {
       width: 100%;
-      overflow-x: hidden;
+      /* overflow-x: hidden; */
       /* ⛔ Prevent horizontal scroll on the body */
-      font-family: 'Roboto' !important; 
+      /* //font-family: 'Roboto' !important;  */
       /* //padding: 5px; */
       /* background-color: #044086 !important; */
 /* font-family: 'Roboto', sans-serif !important;; */
@@ -35,7 +35,16 @@
 
 
     }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
     .rs-picker-popup.rs-picker-popup-date {
       z-index: 1000000000 !important;
     }

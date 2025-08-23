@@ -10,9 +10,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ApproveSVG, RejectSVG, ReviewSVG } from "@/assets/Icons";
+import { ApproveSVG, Preview_svg, RejectSVG, ReviewSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { useTheme } from "@/themes/ThemeProvider";
+import { GetPlanChangeProjects } from "@/utils/PM";
  interface UserRole {
   role_id: number;
   role_name: string;
@@ -56,7 +57,7 @@ interface ResourceModalProps {
   onClose: () => void;
 }
 
-const IntakeApprovalModal: React.FC<ResourceModalProps> = ({
+const PlanApprovalModal: React.FC<ResourceModalProps> = ({
 isOpen,onClose
 }) => {
     const [alertVisible, setAlertVisible] = useState<boolean>(false);
@@ -68,111 +69,135 @@ isOpen,onClose
       visible: true,
       type: 'sno',
       column_width: '50',
-      url: '',
-      order_no: 0,
+      url: 'PlanApproval',
+      order_no: 1,
     },
-
     {
-      label: 'Project ID',
+      label: 'Proj. ID',
       key: 'customer_project_id',
       visible: true,
       type: 'project_id',
-      column_width: '150',
-      url: '',
-      order_no: 0,
+      column_width: '100',
+      url: 'PlanApproval',
+      order_no: 2,
     },
     {
       label: 'Project Name',
       key: 'project_name',
       visible: true,
       type: 'project_name',
-      column_width: '100',
-      url: '',
-      order_no: 0,
+      column_width: '200',
+      url: 'PlanApproval',
+      order_no: 3,
     },
-
     {
-      label: 'Status',
-      key: 'status_name',
+      label: 'Project Owner',
+      key: 'project_owner_user_name',
       visible: true,
       type: '',
       column_width: '200',
-      url: '',
-      order_no: 0,
+      url: 'PlanApproval',
+      order_no: 8,
     },
-
+    {
+      label: 'Decision',
+      key: 'status_name',
+      visible: false,
+      type: '',
+      column_width: '100',
+      url: 'PlanApproval',
+      order_no: 4,
+    },
     {
       label: 'Classification',
       key: 'classification_name',
       visible: true,
       type: '',
       column_width: '200',
-      url: '',
-      order_no: 0,
+      url: 'PlanApproval',
+      order_no: 5,
     },
-    // {
-    //   label: 'Business Owner',
-    //   key: 'business_stakeholder_user_name',
-    //   visible: false,
-    //   type: '',
-    //   column_width: '200',
-    //   url: '',
-    //   order_no: 0,
-    // },
+    {
+      label: 'Business Owner',
+      key: 'business_stakeholder_user_name',
+      visible: false,
+      type: '',
+      column_width: '200',
+      url: 'PlanApproval',
+      order_no: 6,
+    },
     // {
     //   label: 'Business Owner Department',
     //   key: 'business_stakeholder_dept_name',
     //   visible: false,
     //   type: '',
     //   column_width: '200',
-    //   url: '',
-    //   order_no: 0,
+    //   url: 'PlanApproval',
+    //   order_no: 7,
+    // },
+
+    // {
+    //   label: 'Project Manager',
+    //   key: 'project_manager_name',
+    //   visible: false,
+    //   type: '',
+    //   column_width: '200',
+    //   url: 'PlanApproval',
+    //   order_no: 9,
+    // },
+    // {
+    //   label: 'Start Date',
+    //   key: 'start_date',
+    //   visible: true,
+    //   type: 'date',
+    //   column_width: '200',
+    //   url: 'PlanApproval',
+    //   order_no: 10,
+    // },
+    // {
+    //   label: 'End Date',
+    //   key: 'end_date',
+    //   visible: false,
+    //   type: 'date',
+    //   column_width: '200',
+    //   url: 'PlanApproval',
+    //   order_no: 11,
     // },
     {
-      label: 'Start Date',
-      key: 'start_date',
-      visible: true,
-      type: 'date',
-      column_width: '200',
-      url: '',
-      order_no: 0,
-    },
-    /* {
-      label: 'Go-Live Date',
+      label: 'Go-live Date',
       key: 'golive_date',
       visible: true,
       type: 'date',
       column_width: '200',
-      url: '',
-      order_no: 0,
-    }, */
+      url: 'PlanApproval',
+      order_no: 12,
+    },
     // {
-    //   label: 'Requested By',
+    //   label: 'Created By',
     //   key: 'created_by_name',
     //   visible: false,
     //   type: '',
     //   column_width: '200',
-    //   url: '',
-    //   order_no: 0,
+    //   url: 'PlanApproval',
+    //   order_no: 13,
     // },
     // {
-    //   label: 'Requested On',
+    //   label: 'Created On',
     //   key: 'created_at',
     //   visible: false,
     //   type: 'date',
     //   column_width: '200',
-    //   url: '',
-    //   order_no: 0,
+    //   url: 'PlanApproval',
+    //   order_no: 14,
     // },
-
     {
       label: 'Action',
       key: 'action',
       visible: true,
       type: 'actions',
       column_width: '100',
-      url: '',
-      order_no: 0,
+      url: 'PlanApproval',
+      order_no: 15,
     },
   ]);
   const [approvalprojects, setapprovalProjects] = useState<any[]>([]);
@@ -199,15 +224,15 @@ isOpen,onClose
   const fetchProjects = async () => {
     try {
       
-      const response = await GetProjectApproval({
-        PageNo: 1,
-        PageSize: 10,
-      });
+      const response = await GetPlanChangeProjects({
+          PageNo: 1,
+          PageSize: 10, // Ensure the API is fetching only 10 items
+        });;
 
       const result = JSON.parse(response);
 
       if (result?.data && Array.isArray(result.data)) {
-        const latestProjects = result.data.slice(0, 5); // Ensure only latest 10 records
+        const latestProjects = result.data.slice(0, 10); // Ensure only latest 10 records
         setapprovalProjects(latestProjects);
 
         
@@ -312,30 +337,31 @@ isOpen,onClose
     <>
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
-        <h2 className="text-lg font-bold text-center">Intake Approval List</h2>
+        <h2 className="text-lg font-bold text-center">Pending Approval List</h2>
 <AdvancedDataTable
             actions={(item) => (
               <div className="flex space-x-2">
-                {item.status===3 && <Tooltip>
+                {true && <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => {
-                        handleApprovePress(
-                      item.proj_intk_aprvl_id,
-                      item.sequence_id,
-                      item.project_id,
-                      '2',
-                      '4',
-                      'review',
-                    );
+                        navigation(
+                            `/ApprovedProjectList/ApproveChangeRequest?projectId=${item.project_id}`
+                          );
+                      //   , {
+                      // projectId: worker,
+                      // _isEdit: false,
+                      // _isApproval: true,
+                      // redirect: 'PlanApproval',
+                   // });
                       }}
                     >
-                      <ReviewSVG height={22} width={22} className="[&_path]:fill-white"/>
+                      <Preview_svg height={22} width={22} className="[&_path]:fill-white"/>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent>{"Review"}</TooltipContent>
+                  <TooltipContent>{"View Change request"}</TooltipContent>
                 </Tooltip>}
-                {item.status===1 && <Tooltip>
+                {/* {item.status===1 && <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => {
@@ -376,7 +402,7 @@ isOpen,onClose
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Reject"}</TooltipContent>
-                </Tooltip>}
+                </Tooltip>} */}
                   
               </div>
             )}
@@ -459,4 +485,4 @@ isOpen,onClose
   );
 };
 
-export default IntakeApprovalModal;
+export default PlanApprovalModal;

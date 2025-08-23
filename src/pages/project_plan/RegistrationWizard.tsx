@@ -91,7 +91,7 @@ const tabs = [
   { id: "preview-submit", label: "Preview & Submit", icon: Eye },
 ];
 
-export function RegistrationWizard() {
+export default function RegistrationWizard() {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";

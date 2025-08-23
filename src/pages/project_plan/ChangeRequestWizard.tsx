@@ -91,7 +91,7 @@ const tabs = [
   { id: "preview-submit", label: "Preview & Submit", icon: Eye },
 ];
 
-export function ChangeRequestWizard() {
+export default function ChangeRequestWizard({_isApproval=false}) {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";
@@ -218,8 +218,8 @@ export function ChangeRequestWizard() {
                       Project Intake Change Summary
                     </h2>
                     <ProjectViewChangeRequest
-                      changeRequest={true}
-                      showApproval={false}
+                      changeRequest={_isApproval?false:true}
+                      showApproval={_isApproval?true:false}
                     />
                   </div>
                 </div>

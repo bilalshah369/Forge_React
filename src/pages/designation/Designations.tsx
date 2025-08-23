@@ -6,7 +6,7 @@ import { deleteDesignation, GetDesignationByPage } from "@/utils/Designation";
 import { DesignationModal } from "./DesignationModal";
 import AlertBox from "@/components/ui/AlertBox";
 
-export const Designations: React.FC = () => {
+ const Designations: React.FC = () => {
   const [designations, setDesignations] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editDesignation, setEditDesignation] = React.useState(null);
@@ -151,7 +151,7 @@ export const Designations: React.FC = () => {
                     setModalVisible(true);
                   }}
                 >
-                  <Edit className="w-4 h-4 text-black" />
+                  <Edit className="w-4 h-4 text-white" />
                 </button>
                 <button
                   onClick={() => {
@@ -163,7 +163,7 @@ export const Designations: React.FC = () => {
                       handleDelete(item.classification_id);
                   }}
                 >
-                  <Trash2 className="w-4 h-4 text-red-500" />
+                  <Trash2 className="w-4 h-4 text-white" />
                 </button>
               </div>
             )}
@@ -207,3 +207,4 @@ export const Designations: React.FC = () => {
     </>
   );
 };
+export default Designations;

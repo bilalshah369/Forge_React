@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLabels } from "./LabelContext";
 import { fetchLabelsByCategory } from "../../services/labelService";
 import AlertBox from "@/components/ui/AlertBox";
+import { useTheme } from "@/themes/ThemeProvider";
+import { Button } from "@/components/ui/button";
 
 interface ApiLabel {
   id: number;
@@ -62,7 +64,7 @@ const EditFieldLabels: React.FC = () => {
     };
     fetchAllLabels();
   }, []);
-
+const {theme} =useTheme();
   // Filter labels based on search query
   useEffect(() => {
     const filtered = allLabels.filter(
@@ -237,9 +239,9 @@ const EditFieldLabels: React.FC = () => {
         {isLoading ? (
           <p>Loading...</p>
         ) : (
-          <div className="w-4/5 mx-auto">
+          <div className="w-4/5 mx-auto" >
             {/* Table Header */}
-            <div className="flex bg-blue-900 border-b border-gray-300 py-2.5">
+            <div className="flex py-2.5" style={{ backgroundColor: theme.colors.drawerBackgroundColor }}>
               <div className="p-1.5 w-[30%] text-left font-bold text-base text-white">
                 Default Label
               </div>
@@ -288,8 +290,8 @@ const EditFieldLabels: React.FC = () => {
               ))
             )}
             {/* Update Button */}
-            <button
-              className="bg-blue-900 py-2.5 w-36 rounded mx-auto block my-2.5 text-white font-bold text-center cursor-pointer hover:bg-blue-800"
+            <button style={{ backgroundColor: theme.colors.drawerBackgroundColor }}
+              className="py-2.5 w-36 rounded mx-auto block my-2.5 text-white font-bold text-center cursor-pointer hover:bg-blue-800"
               onClick={handleBulkUpdate}
             >
               Update
@@ -311,16 +313,19 @@ const EditFieldLabels: React.FC = () => {
                     }
                     return (
                       <button
-                        key={page}
-                        onClick={() => onPageChange(page as number)}
-                        className={`p-2 mx-0.5 rounded text-sm ${
-                          currentPage === page
-                            ? "bg-blue-900 text-white font-bold"
-                            : "bg-gray-100 text-black"
-                        }`}
-                      >
-                        {page}
-                      </button>
+  onClick={() => onPageChange(parseInt(page))}
+  className={`w-8 h-8 p-0 text-sm rounded-md border 
+    ${page === currentPage 
+      ? "text-white" 
+      : "bg-white text-black hover:bg-gray-100"
+    }`}
+  style={page === currentPage 
+    ? { backgroundColor: theme.colors.drawerBackgroundColor } 
+    : {}
+  }
+>
+  {page}
+</button>
                     );
                   })}
                 </div>

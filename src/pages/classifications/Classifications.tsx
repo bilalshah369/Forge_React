@@ -6,7 +6,7 @@ import { ClassificationModal } from "./AddClassificationModal";
 import { Edit, Trash2 } from "lucide-react";
 import AlertBox from "@/components/ui/AlertBox";
 
-export const Classifications: React.FC = () => {
+ const Classifications: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
   const [classification, setClassification] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -157,7 +157,7 @@ export const Classifications: React.FC = () => {
                     setModalVisible(true);
                   }}
                 >
-                  <Edit className="w-4 h-4 text-black" />
+                  <Edit className="w-4 h-4 text-white" />
                 </button>
                 <button
                   onClick={() => {
@@ -169,7 +169,7 @@ export const Classifications: React.FC = () => {
                       handleDelete(item.classification_id);
                   }}
                 >
-                  <Trash2 className="w-4 h-4 text-red-500" />
+                  <Trash2 className="w-4 h-4 text-white" />
                 </button>
               </div>
             )}
@@ -212,3 +212,5 @@ export const Classifications: React.FC = () => {
     </>
   );
 };
+
+export default Classifications;
