@@ -50,6 +50,8 @@ import DoughuntPieChart from "../charts/DoughuntPieChart";
 import ResourceUtilizationChart from "../charts/ResourceUtilizationChart";
 import Grouped3DBarChartV4 from "../charts/Grouped3DBarChartV4";
 import ResourceRoadmapGantt from "../charts/ResourceRoadmapGantt";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { XCircle } from "lucide-react";
 // src/pages/HomePage.tsx
 const Dashboard3 = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -225,7 +227,7 @@ const Dashboard3 = () => {
       label: "#",
       key: "sno",
       visible: true,
-      type: "",
+      type: "sno",
       column_width: "40",
       url: "AdminDboard3",
       order_no: 1,
@@ -632,6 +634,79 @@ const Dashboard3 = () => {
 
       {/* Row 2 - Tabs aligned right */}
       <div className="flex justify-end mt-4 gap-2">
+        {selectedStatus?.length > 0 ||
+              searchQuery?.length > 0 ||
+              selectedDepartments?.length > 0 ||
+              availability_range?.length > 0  ? (<TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            onClick={async () => {
+                                    setSelectedStatus('');
+                      setselectedDepartments('');
+                      setAvailability_range('');
+                      // setStartDate('');
+                      // setEndDate('');
+                      // setRange(null);
+                      // setRange([startOfYearInput, endOfYearInput]);
+                      // setStartDate(
+                      //   startOfYearInput.toLocaleDateString('en-CA'),
+                      // ); // 'YYYY-MM-DD'
+                      // setEndDate(endOfYearInput.toLocaleDateString('en-CA')); // 'YYYY-MM-DD'
+                      setSearchQuery('');
+                      setCurrentPage(1);
+                      setSelectedProject_id('');
+                      await fetch_departments_projects(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                      );
+                      await fetchResurceAvailability(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                      );
+                      await fetchResourceAvailabilityMonthWise(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                      );
+                      await fetch_resource_utilized(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                      );
+                      await fetchProjectsWithFilters({
+                        project_id: '',
+                        availability_range: '',
+                        status: '',
+                        project_start_date: '',
+                        project_end_date: '',
+                        page: 1,
+                        pageSize: rowsPerPage,
+                        project_owner_dept: '',
+                      });
+                                  }}
+                            className="ml-2 text-gray-600 hover:text-red-600 transition-colors"
+                          >
+                            <XCircle className="w-7 h-7" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top">
+                          <p>Clear Filter</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>): (
+                              <div />
+                            )}
         <AutoComplete
           placeholder="&#x1F50D;Search Project..."
           data={searchList}

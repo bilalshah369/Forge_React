@@ -2,6 +2,7 @@ import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
 import { useTheme } from "@/themes/ThemeProvider";
 import { AddResource } from "@/utils/Resource";
 import { getDesignation, GetUserDept } from "@/utils/Users";
+import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
  interface UserRole {
   role_id: number;
@@ -205,8 +206,21 @@ const addUser = async (payload: any) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
         <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
-        <h2 className="text-lg font-bold text-center mb-4">Add New Resource</h2>
-
+      
+ <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             Add New Resource
+          </h2>
+          <button
+          type="button"
+            onClick={() => {
+               onClose("")
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
           {/* First Name */}
           <div>

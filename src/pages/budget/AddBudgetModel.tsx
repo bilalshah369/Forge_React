@@ -13,6 +13,7 @@ import {
 } from "@/utils/Intake";
 import { GetUserDept } from "@/utils/Users";
 import { formatAmountWithDollarSign } from "@/utils/util";
+import { X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 export class BudgetData {
@@ -603,21 +604,21 @@ const validateForm = () => {
   return (
     <>
       {visible ? (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div
-            className="bg-white p-6 rounded shadow-lg w-full max-w-[700px]"
-            onClick={(e) => e.stopPropagation()} // Prevent modal from closing on outside click
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             Budget Calculation
+          </h2>
+          <button
+            onClick={() => {
+                  handleReset();
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
           >
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">Budget Calculation</h2>
-              {/* <button
-                type="button"
-                onClick={onClose}
-                className="text-gray-600 hover:text-red-600 text-lg"
-              >
-                &times;
-              </button> */}
-            </div>
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
             <form
               //method="post"

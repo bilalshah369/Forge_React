@@ -14,6 +14,7 @@ import { ApproveSVG, Preview_svg, RejectSVG, ReviewSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { useTheme } from "@/themes/ThemeProvider";
 import { GetPlanChangeProjects } from "@/utils/PM";
+import { X } from "lucide-react";
  interface UserRole {
   role_id: number;
   role_name: string;
@@ -335,9 +336,19 @@ isOpen,onClose
 
   return (
     <>
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6">
-        <h2 className="text-lg font-bold text-center">Pending Approval List</h2>
+   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+            Pending Approval List
+          </h2>
+          <button
+            onClick={onClose}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 <AdvancedDataTable
             actions={(item) => (
               <div className="flex space-x-2">

@@ -52,6 +52,8 @@ import DoughuntPieChart from "../charts/DoughuntPieChart";
 import BurndownChart from "../charts/BurndownChart";
 import PieChartBudget from "../charts/PieChartBudget";
 import DoughPieChart from "../charts/DoughPieChart";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { XCircle } from "lucide-react";
 // src/pages/HomePage.tsx
 const Dashboard2 = () => {
   interface Header extends TableColumn {}
@@ -113,7 +115,7 @@ const Dashboard2 = () => {
       label: "#",
       key: "sno",
       visible: true,
-      type: "",
+      type: "sno",
       column_width: "40",
       url: "AdminDboard2",
       order_no: 1,
@@ -856,6 +858,76 @@ const Dashboard2 = () => {
 
       {/* Row 2 - Tabs aligned right */}
       <div className="flex justify-end mt-4 gap-2">
+        {selectedStatus?.length > 0 ||
+              selectedDepartments?.length > 0 ||
+              searchQuery?.length > 0 ||
+              selectedBudgetImpact?.length > 0  ? (<TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={async () => {
+                            setSelectedStatus('');
+                      setselectedDepartments('');
+                      setSearchQuery('');
+                      setSelectedBudgetImpact('');
+                      setSelectedProject_id('');
+                      // setStartDate('');
+                      // setEndDate('');
+                      // setRange([startOfYearInput, endOfYearInput]);
+                      // setStartDate(
+                      //   startOfYearInput.toLocaleDateString('en-CA'),
+                      // ); // 'YYYY-MM-DD'
+                      // setEndDate(endOfYearInput.toLocaleDateString('en-CA')); // 'YYYY-MM-DD'
+                      setCurrentPage(1);
+                      await fetch_departments_projects(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                        '',
+                      );
+                      await fetchBudgetDataCount(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                        '',
+                      );
+                      await fetchNumberGameStatus(
+                        '',
+                        '',
+                        '',
+                        startOfYearInput.toLocaleDateString('en-CA'),
+                        endOfYearInput.toLocaleDateString('en-CA'),
+                        '',
+                      );
+                      await fetchProjectsWithFilters({
+                        project_id: '',
+                        budget_impact: '',
+                        status: '',
+                        project_start_date:
+                          startOfYearInput.toLocaleDateString('en-CA'),
+                        project_end_date:
+                          endOfYearInput.toLocaleDateString('en-CA'),
+                        page: 1,
+                        pageSize: rowsPerPage,
+                        project_owner_dept: '',
+                      });
+                          }}
+                    className="ml-2 text-gray-600 hover:text-red-600 transition-colors"
+                  >
+                    <XCircle className="w-7 h-7" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="top">
+                  <p>Clear Filter</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>): (
+                      <div />
+                    )}
         <AutoComplete
           placeholder="&#x1F50D;Search Project..."
           data={searchList}
@@ -963,6 +1035,8 @@ const Dashboard2 = () => {
           }}
         />
         <MultiSelectDepartment
+        multi={true}
+        searchable={true}
           placeholder="Select Departments"
           departments={departments}
           selected={
@@ -1337,7 +1411,7 @@ const Dashboard2 = () => {
         data={projects}
         columns={headers}
         title="Project Dashboard"
-        pageSize={10}
+        rowsOnPage={10}
         exportFileName="projects"
       />
       {/* Content Below */}

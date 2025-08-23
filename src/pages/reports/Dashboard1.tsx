@@ -49,6 +49,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { XCircle } from "lucide-react";
 // src/pages/HomePage.tsx
 const Dashboard1 = () => {
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -993,6 +994,57 @@ const Dashboard1 = () => {
 
       {/* Row 2 - Tabs aligned right */}
       <div className="flex justify-end mt-4 gap-2">
+        {selectedStatus?.length > 0 ||
+            selectedDepartments?.length > 0 ||
+            searchQuery?.length > 0 ||
+            selectedPriority?.length > 0 ||
+            range?.length > 0 ? (<TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            onClick={async () => {
+                    //setChartLoading1(true);
+                   
+                    setSelectedStatus('');
+                    setselectedDepartments('');
+                    setSelectedPriority('');
+                    setSelectedProject_id('');
+                    setStartDate('');
+                    setEndDate('');
+                    setRange(null);
+                    setSearchQuery('');
+                    setCurrentPage(1);
+                    await fetch_departments_projects('', '', '', '', '');
+                    await fetch_resource_utilized('', '', '', '', '');
+                    await fetchNumberGame('', '', '', '', '');
+
+                    await fetchProjectsWithFilters({
+                      project_id: '',
+                      raid_priority: '',
+                      status: '',
+                      project_start_date: '',
+                      project_end_date: '',
+                      page: 1,
+                      pageSize: rowsPerPage,
+                      project_owner_dept: '',
+                    });
+                    await fetchRAIDBubble('', '', '', '', '');
+                    
+                    //setselectedDepartments('');
+                    //setChartLoading1(false);
+                  }}
+            className="ml-2 text-gray-600 hover:text-red-600 transition-colors"
+          >
+            <XCircle className="w-7 h-7" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          <p>Clear Filter</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>): (
+              <div />
+            )}
         <AutoComplete
           placeholder="&#x1F50D;Search Project..."
           data={searchList}

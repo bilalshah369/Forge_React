@@ -26,6 +26,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTheme } from "@/themes/ThemeProvider";
+import { X } from "lucide-react";
 
 interface AddMilestoneModalProps {
   visible: boolean;
@@ -728,9 +729,22 @@ export const AddMilestoneModal: React.FC<AddMilestoneModalProps> = ({
         <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
           {/* Title */}
           <h2 className="text-lg font-semibold text-center mb-6">
-            {isEditable ? "Edit Milestone" : "Add New Milestone"}
+            
           </h2>
-
+ <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             {isEditable ? "Edit Milestone" : "Add New Milestone"}
+          </h2>
+          <button
+          type="button"
+            onClick={() => {
+                 onClose();
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
           {/* Form */}
           <form
             className="grid grid-cols-2 gap-4"

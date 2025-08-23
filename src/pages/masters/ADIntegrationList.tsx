@@ -18,6 +18,7 @@ import AlertBox from "@/components/ui/AlertBox";
 import { StartProject } from "@/utils/ApprovedProjects";
 import { AddADForCustomer, DeleteAD, GetADIntegrationsForCustomer, GetADList } from "@/utils/Integration";
 import { useTheme } from "@/themes/ThemeProvider";
+import { X } from "lucide-react";
 export interface Header {
   label: string;
   key: string;
@@ -275,9 +276,22 @@ const ADIntegrationList = () => {
             data_type={"Active Directory (AD)"}
           />
         </div>
-        {isModalVisible && <><div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 className="text-xl font-semibold mb-4 text-center">Active Directory (AD) Integrations</h2>
+        {isModalVisible && <>  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             Active Directory (AD) Integrations
+          </h2>
+          <button
+          type="button"
+            onClick={() => {
+                 setIsModalVisible(false)
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
         {/* Form */}
         <form method="post" className="space-y-4"  

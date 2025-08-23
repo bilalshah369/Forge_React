@@ -6,6 +6,7 @@ import CustomTabs from "@/components/ui/custom-tabs";
 import ProjectAutocomplete from "@/components/ui/ProjectAutocomplete";
 import { RangeDatePicker } from "@/components/ui/RangeDatePicker";
 import { AutoComplete, DateRangePicker, Panel } from "rsuite";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useLocation } from "react-router-dom";
 import {
   startOfDay,
@@ -54,6 +55,7 @@ import ThreeDPieChart from "../charts/ThreeDPieChart";
 import RAID3DBarChartV4 from "../charts/RAID3DBarChartV4";
 import DoughuntPieChart from "../charts/DoughuntPieChart";
 import DoughPieChart from "../charts/DoughPieChart";
+import { XCircle } from "lucide-react";
 // src/pages/HomePage.tsx
 const Dashboard4 = () => {
   const [selectedBudgetImpact, setSelectedBudgetImpact] = useState<string>("");
@@ -281,7 +283,7 @@ const Dashboard4 = () => {
       label: "#",
       key: "sno",
       visible: true,
-      type: "",
+      type: "sno",
       column_width: "40",
       url: "AdminDboard4",
       order_no: 1,
@@ -989,6 +991,63 @@ const Dashboard4 = () => {
 
       {/* Row 2 - Tabs aligned right */}
       <div className="flex justify-end mt-4 gap-2">
+        {selectedStatus?.length > 0 ||
+            selectedDepartments?.length > 0 ||
+            searchQuery?.length > 0 ||
+            selectedPriority?.length > 0 ||
+            selectedBudgetImpact?.length > 0  ? (<TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <button
+                                    onClick={async () => {
+                                            setSelectedStatus('');
+                    setselectedDepartments('');
+                    setSelectedPriority('');
+                    setSelectedBudgetImpact('');
+                    setSelectedProject_id('');
+                    setStartDate('');
+                    setSearchQuery('');
+                    setEndDate('');
+                    setRange(null);
+                    setCurrentPage(1);
+                    await fetch_departments_projects('', '', '', '', '');
+                    await fetch_resource_utilized('', '', '', '', '');
+                    await fetchNumberGame('', '', '', '', '');
+                    await fetchBudgetImpact(
+                      '',
+                      '',
+                      '',
+                      '',
+                      '',
+                      '',
+                      //phase_status: selectedPhase,
+                      // page: 1,
+                      // pageSize: rowsPerPage,
+                    );
+                    await fetchProjectsWithFilters({
+                      project_id: '',
+                      raid_priority: '',
+                      status: '',
+                      project_start_date: '',
+                      project_end_date: '',
+                      page: 1,
+                      pageSize: rowsPerPage,
+                      business_owner_dept: '',
+                      budget_impact: '',
+                    });
+                                          }}
+                                    className="ml-2 text-gray-600 hover:text-red-600 transition-colors"
+                                  >
+                                    <XCircle className="w-7 h-7" />
+                                  </button>
+                                </TooltipTrigger>
+                                <TooltipContent side="top">
+                                  <p>Clear Filter</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>): (
+                                      <div />
+                                    )}
         <AutoComplete
           placeholder="&#x1F50D;Search Project..."
           data={searchList}

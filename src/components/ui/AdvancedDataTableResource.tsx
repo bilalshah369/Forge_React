@@ -32,6 +32,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
+  X,
 } from "lucide-react";
 import {
   Select,
@@ -1084,11 +1085,25 @@ const AdvancedDataTableResource: React.FC<AdvancedDataTableProps> = ({
       )}
 
       {isSentToModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Send for Approval
-            </h2>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             Send for Approval
+          </h2>
+          <button
+            onClick={() => {
+                  setMilestone_id("");
+                  setSentTo("");
+                  //setEstimatedDate("");
+                  setIsSentToModalVisible(false);
+                  setDateApprovalMode("2");
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
             {/* Radio Options */}
             <div className="flex gap-6 mb-4">

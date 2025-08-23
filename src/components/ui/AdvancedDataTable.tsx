@@ -32,6 +32,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
+  X,
 } from "lucide-react";
 import {
   Select,
@@ -64,6 +65,8 @@ import { useNavigate } from "react-router-dom";
 import { convertUTCtoLocalDateOnly } from "@/utils/util";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/themes/ThemeProvider";
+import "rsuite/dist/rsuite.min.css"; 
+import ColumnsDropdown from "./ColumnsDropdown";
 
 interface AdvancedDataTableProps {
   data: any[];
@@ -699,19 +702,9 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
   return (
     <div >
       {/* Header with Title and Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex gap-4">
-          {/* <StatusMultiSelect
-            statuses={statusOptions}
-            selected={selectedStatus || ""}
-            onChange={setSelectedStatus}
-          />
-          <StatusMultiSelect
-            statuses={statusOptions}
-            selected={selectedStatus || ""}
-            onChange={setSelectedStatus}
-          /> */}
-          {isCreate &&
+      <div className="flex justify-between items-center w-full p-2">
+  <div className="flex w-auto px-2 py-1 gap-2">
+    {isCreate &&
             (!assignedPermission ||
               (data_type === "Project" && assignedPermission.includes(22)) ||
               !["Project"].includes(data_type)) && (
@@ -760,11 +753,9 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               )}
             </>
           )}
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Search */}
-          {(selectedDepartments?.length > 0 ||
+  </div>
+  <div className="flex w-auto px-2 py-1 gap-2">
+    {(selectedDepartments?.length > 0 ||
             selectedStatus?.length > 0 ||
             searchQuery?.length > 0) && (
             <Tooltip>
@@ -832,7 +823,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
           )}
           {isShowPending && (
         
-          <div className="relative inline-block">
+          <div className="relative ">
           
            <Tooltip>
                   <TooltipTrigger asChild>
@@ -876,13 +867,6 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               <AutoComplete
                 placeholder="&#x1F50D; Search Project..."
                 data={searchList}
-                // style={{
-                //   border: "1px solid black",
-                //   borderRadius: 4,
-                //   padding: 2,
-                //   marginBottom: 10,
-                //   width: 224,
-                // }}
                 value={searchQuery}
                 onChange={(val) => {
                   if (justSelected.current) {
@@ -901,8 +885,15 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                   const selected = searchList.find((m) => m.value === worker);
                   onSearch(worker, selected?.label);
                 }}
-                className="custom-autocomplete"
+                 className="custom-autocomplete"
                 menuClassName="custom-autocomplete-menu"
+          //  style={{
+          //         border: '1px solid black',
+          //         borderRadius: 4,
+          //         padding: 2,
+          //         marginBottom: 10,
+          //         width: 224,
+          //       }}
               />
             )}
           </div>
@@ -915,56 +906,58 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
           )}
           {/* Column Visibility */}
           {isColumnVisibility && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Columns Visibility
-                </Button>
-              </DropdownMenuTrigger>
+            <ColumnsDropdown columns={columns} setColumns={setColumns} />
+            // <DropdownMenu>
+            //   <DropdownMenuTrigger asChild>
+            //     <Button variant="outline" size="sm">
+            //       <Settings className="w-4 h-4 mr-2" />
+            //       Columns Visibility
+            //     </Button>
+            //   </DropdownMenuTrigger>
 
-              <DropdownMenuContent align="end" className="w-56">
-                {/* Optional: Select All / Clear All */}
-                <DropdownMenuItem
-                  onSelect={() =>
-                    setColumns((prev) =>
-                      prev.map((col) => ({ ...col, visible: true }))
-                    )
-                  }
-                >
-                  Select All
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onSelect={() =>
-                    setColumns((prev) =>
-                      prev.map((col) => ({ ...col, visible: false }))
-                    )
-                  }
-                >
-                  Clear All
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
+            //   <DropdownMenuContent align="end" className="w-56">
+            //     {/* Optional: Select All / Clear All */}
+            //     <DropdownMenuItem
+            //       onSelect={() =>
+            //         setColumns((prev) =>
+            //           prev.map((col) => ({ ...col, visible: true }))
+            //         )
+            //       }
+            //     >
+            //       Select All
+            //     </DropdownMenuItem>
+            //     <DropdownMenuItem
+            //       onSelect={() =>
+            //         setColumns((prev) =>
+            //           prev.map((col) => ({ ...col, visible: false }))
+            //         )
+            //       }
+            //     >
+            //       Clear All
+            //     </DropdownMenuItem>
+            //     <DropdownMenuSeparator />
 
-                {/* Multi-selection toggles */}
-                {columns.map((column) => (
-                  <DropdownMenuCheckboxItem
-                    key={column.key}
-                    checked={column.visible}
-                    onCheckedChange={(checked) =>
-                      handleColumnVisibilityChange(column.key, !!checked)
-                    }
-                  >
-                    {column.label}
-                  </DropdownMenuCheckboxItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            //     {/* Multi-selection toggles */}
+            //     {columns.map((column) => (
+            //       <DropdownMenuCheckboxItem
+            //         key={column.key}
+            //         checked={column.visible}
+            //         onCheckedChange={(checked) =>
+            //           handleColumnVisibilityChange(column.key, !!checked)
+            //         }
+            //       >
+            //         {column.label}
+            //       </DropdownMenuCheckboxItem>
+            //     ))}
+            //   </DropdownMenuContent>
+            // </DropdownMenu>
           )}
-        </div>
-      </div>
+  </div>
+</div>
+      
 
       {/* Table */}
-      <div className="overflow-auto w-full mt-2">
+      <div className="overflow-auto w-full">
         {/* You can adjust width as needed */}
         <Table className="table-auto w-full">
           <TableHeader className="h-auto">
@@ -1094,11 +1087,26 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
       )}
 
       {isSentToModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Send for Approval
-            </h2>
+       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-center flex-1">
+             Send for Approval
+          </h2>
+          <button
+            onClick={() => {
+                  setMilestone_id("");
+                  setSentTo("");
+                  //setEstimatedDate("");
+                  setIsSentToModalVisible(false);
+                  setDateApprovalMode("2");
+                }}
+            className="top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+            
 
             {/* Radio Options */}
             <div className="flex gap-6 mb-4">
@@ -1166,6 +1174,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               <Button
                 className="px-4 py-2 rounded-lg text-white"
                 variant="default"
+                style={{backgroundColor:theme.colors.drawerBackgroundColor}}
                 onClick={HandleSentTo}
               >
                 {false

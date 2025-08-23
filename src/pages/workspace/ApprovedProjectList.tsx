@@ -576,6 +576,7 @@ const ApprovedProjectList = () => {
             onPageChange={function (worker: number): void {
               handlePageChange(worker);
             }}
+            isColumnVisibility={true}
             MasterDepartments={departments}
             MasterStatus={statuses}
             selectedDepartment={selectedDepartment}
