@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { DeleteSVG, EditSVG, ProjectPhaseSVG } from "@/assets/Icons";
+import { ApproveSVG, DeleteSVG, EditSVG, ProjectPhaseSVG, RejectSVG } from "@/assets/Icons";
 import { FetchPermission } from "@/utils/Permission";
 import { GetRoles } from "@/utils/RoleMaster";
 import { GetResources } from "@/utils/Resource";
@@ -20,6 +20,7 @@ import {
   GetChangeRequest,
   GetMilestoneNew,
   GetMilestones,
+  HandleChangeRequest,
   MilestoneChangeRequest,
 } from "@/utils/ApprovedProjects";
 import AddTeamMemberModal from "../Modals/AddTeamMemberModal";
@@ -56,7 +57,7 @@ type Milestone = {
   is_active: boolean;
   change_request: boolean;
 };
-const MilestoneNewChangeRequest = () => {
+const MilestoneNewChangeRequest = ({ changeRequest, showApproval }) => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";
@@ -90,7 +91,7 @@ const MilestoneNewChangeRequest = () => {
     },
     {
       label: "Priority",
-      key: "priority",
+      key: "priority_name",
       visible: true,
       type: "priority",
       column_width: "150",
@@ -332,6 +333,51 @@ const MilestoneNewChangeRequest = () => {
       //Alert.alert("Error", "Failed to delete milestone. Please try again.");
     }
   };
+  const approveChangeRequest = async (change: any) => {
+    try {
+      const payload = {
+        change_request_id: change.change_request_id,
+        status: 13,
+        comment: 'Approved',
+      };
+
+      const response = await HandleChangeRequest(payload);
+      const parsed = JSON.parse(response);
+
+      if (parsed.status === 'success') {
+        showAlert('Milestone Change Approved.');
+        FetchMilestones(parseInt(projectId));
+      } else {
+        throw new Error(parsed.message || 'Unknown error occurred');
+      }
+    } catch (error) {
+      console.error('Error in approve/reject:', error);
+      
+    }
+  };
+
+  const rejectChangeRequest = async (change: any) => {
+    try {
+      const payload = {
+        change_request_id: change.change_request_id,
+        status: 11,
+        comment: 'Rejected',
+      };
+
+      const response = await HandleChangeRequest(payload);
+      const parsed = JSON.parse(response);
+
+      if (parsed.status === 'success') {
+        showAlert('Milestone Change Rejected.');
+       FetchMilestones(parseInt(projectId));
+      } else {
+        throw new Error(parsed.message || 'Unknown error occurred');
+      }
+    } catch (error) {
+      console.error('Error in approve/reject:', error);
+      
+    }
+  };
   const location = useLocation();
   const navigation = useNavigate();
   useEffect(() => {
@@ -345,7 +391,46 @@ const MilestoneNewChangeRequest = () => {
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
           <AdvancedDataTable
-            actions={(item) => (
+            actions={showApproval ?(item) => (
+              <div className="flex space-x-2">
+                {(item['change_request'] ||
+                                  item['action'] ||
+                                  item['is_approved']) &&(
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log("View", item);
+                        approveChangeRequest(item);
+                      }}
+                    >
+                      <ApproveSVG height={22} width={22} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Approve"}</TooltipContent>
+                </Tooltip>)}
+{(item['change_request'] ||
+                                  item['action'] ||
+                                  item['is_approved'] )&&(
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log("View", item);
+                        // handleDelete(
+                        //   parseInt(item.project_resources_id ?? "", 10)
+                        // );
+
+                       rejectChangeRequest(item);
+                      }}
+                    >
+                      <RejectSVG height={22} width={22} className="[&_path]:fill-white"/>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Reject"}</TooltipContent>
+                </Tooltip>)}
+              </div>
+            ):(item) => (
               <div className="flex space-x-2">
                 <Tooltip>
                   <TooltipTrigger asChild>

@@ -562,7 +562,7 @@ const {theme} =useTheme();
                   placeholder="Enter Name"
                 />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col" id="timesheetModal">
                 <label className="text-sm font-medium mb-1">Role</label>
                 <input
                   readOnly

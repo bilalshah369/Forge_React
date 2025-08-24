@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { DeleteSVG, EditSVG, ProjectPhaseSVG } from "@/assets/Icons";
+import { ApproveSVG, DeleteSVG, EditSVG, ProjectPhaseSVG, RejectSVG } from "@/assets/Icons";
 import { FetchPermission } from "@/utils/Permission";
 import { GetRoles } from "@/utils/RoleMaster";
 import { GetResources } from "@/utils/Resource";
@@ -18,6 +18,7 @@ import {
   DeleteNewRequest,
   GetChangeRequest,
   GetTeamMembers,
+  HandleChangeRequest,
   MemberChangeRequest,
 } from "@/utils/ApprovedProjects";
 import AddTeamMemberModal from "../Modals/AddTeamMemberModal";
@@ -43,6 +44,8 @@ export class Team {
   public isActive?: boolean;
 }
 type TeamMember = {
+   resource_id?: number;
+    role_id?: number;
   project_resources_id?: number;
   change_request_id?: number;
   resource_name: string;
@@ -54,8 +57,9 @@ type TeamMember = {
   end_date: string;
   is_active: boolean;
   change_request: boolean;
+  availability_percentage?:number;
 };
-const TeamMembersChangeRequest = () => {
+const TeamMembersChangeRequest = ({ changeRequest, showApproval }) => {
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
 
@@ -241,13 +245,18 @@ const TeamMembersChangeRequest = () => {
             resource_name: change.resource_name,
             change_request_id: change.change_request_id,
             role_name: change.role_name,
-            average_cost: change.average_cost,
+            average_cost: change.request_data.average_cost,
             actual_cost: change.request_data.actual_cost,
             working_hours: change.request_data.working_hours,
             start_date: change.request_data.start_date,
             end_date: change.request_data.end_date,
             is_active: false,
             change_request: true,
+            resource_id:change.request_data.resource_id,
+            availability_percentage:change.request_data.availability_percentage,
+
+role_id:change.request_data.role_id,
+
           })
         );
 
@@ -273,6 +282,7 @@ const TeamMembersChangeRequest = () => {
               change_request_id: deleteActionMap[member?.project_resources_id],
             }),
           }));
+          debugger;
         const combinedMembers = [
           ...(filteredActiveMembers ?? []),
           ...newMembers,
@@ -286,6 +296,7 @@ const TeamMembersChangeRequest = () => {
             change_request: false,
           }));
       }
+      debugger;
       setTeamMembers(finalTeamMembers);
     } catch (error) {
       console.error("Error fetching team members:", error);
@@ -319,7 +330,7 @@ const TeamMembersChangeRequest = () => {
 
   const handleEdit = (member) => {
     //console.log('Edit member:', member);
-    ////////debugger;
+   debugger;
     setSelectedMember(member);
     setIsEditing(true);
     setIsTeamMemberModalVisible(true);
@@ -399,7 +410,51 @@ const TeamMembersChangeRequest = () => {
       // Alert.alert("Error", "Failed to submit request. Please try again.");
     }
   };
+ const approveChangeRequest = async (change: any) => {
+    try {
+      const payload = {
+        change_request_id: change.change_request_id,
+        status: 13,
+        comment: 'Approved',
+      };
 
+      const response = await HandleChangeRequest(payload);
+      const parsed = JSON.parse(response);
+
+      if (parsed.status === 'success') {
+        fetchTeam(parseInt(projectId));
+        showAlert('Team Member Change Approved.');
+      } else {
+        throw new Error(parsed.message || 'Unknown error occurred');
+      }
+    } catch (error) {
+      console.error('Error in approve/reject:', error);
+      
+    }
+  };
+
+  const rejectChangeRequest = async (change: any) => {
+    try {
+      const payload = {
+        change_request_id: change.change_request_id,
+        status: 11,
+        comment: 'Rejected',
+      };
+
+      const response = await HandleChangeRequest(payload);
+      const parsed = JSON.parse(response);
+
+      if (parsed.status === 'success') {
+        fetchTeam(parseInt(projectId));
+        showAlert('Team Member Change Rejected.');
+      } else {
+        throw new Error(parsed.message || 'Unknown error occurred');
+      }
+    } catch (error) {
+      console.error('Error in approve/reject:', error);
+      
+    }
+  };
   const location = useLocation();
   const navigation = useNavigate();
   useEffect(() => {
@@ -418,7 +473,46 @@ const TeamMembersChangeRequest = () => {
       <div className="w-full h-full overflow-auto">
         <div className="min-w-[1000px]">
           <AdvancedDataTable
-            actions={(item) => (
+          actions={showApproval ?(item) => (
+              <div className="flex space-x-2">
+                {(item['change_request'] ||
+                                  item['action'] ||
+                                  item['is_approved']) &&(
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log("View", item);
+                        approveChangeRequest(item);
+                      }}
+                    >
+                      <ApproveSVG height={22} width={22} />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Approve"}</TooltipContent>
+                </Tooltip>)}
+{(item['change_request'] ||
+                                  item['action'] ||
+                                  item['is_approved'] )&&(
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log("View", item);
+                        // handleDelete(
+                        //   parseInt(item.project_resources_id ?? "", 10)
+                        // );
+
+                       rejectChangeRequest(item);
+                      }}
+                    >
+                      <RejectSVG height={22} width={22} className="[&_path]:fill-white"/>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Reject"}</TooltipContent>
+                </Tooltip>)}
+              </div>
+            ):(item) => (
               <div className="flex space-x-2">
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -459,6 +553,7 @@ const TeamMembersChangeRequest = () => {
                 </Tooltip>
               </div>
             )}
+           
             data={teamMembers}
             columns={headers}
             PageNo={1}
@@ -473,13 +568,14 @@ const TeamMembersChangeRequest = () => {
           />
           <AddTeamMemberModal
             isOpen={isTeamMembersModalVisible}
-            onClose={() => setIsTeamMemberModalVisible(false)}
+            onClose={() => {setIsEditing(false);
+              setIsTeamMemberModalVisible(false)}}
             onSubmit={() => {
               fetchTeam(parseInt(projectId));
             }}
             member={selectedMember}
             changeRequest={true}
-            isEditing={true}
+            isEditing={isEditing}
           />
           <AlertBox
             visible={alertVisible}

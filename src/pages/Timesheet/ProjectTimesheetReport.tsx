@@ -255,10 +255,10 @@ const {theme} =useTheme();
                           <table className="w-full border mt-2 text-sm">
                             <thead className=" text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                               <tr>
-                                <th className="px-2 py-1">S.No.</th>
-                                <th className="px-2 py-1">Resource Name</th>
-                                <th className="px-2 py-1">Department</th>
-                                <th className="px-2 py-1">Manager</th>
+                                <th className="px-2 py-1 text-left">S.No.</th>
+                                <th className="px-2 py-1 text-left">Resource Name</th>
+                                <th className="px-2 py-1 text-left">Department</th>
+                                <th className="px-2 py-1 text-left">Manager</th>
                                 <th className="px-2 py-1 text-center"></th>
                               </tr>
                             </thead>
@@ -309,19 +309,19 @@ const {theme} =useTheme();
                                           <table className="w-full mt-2 border text-xs">
                                             <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                               <tr>
-                                                <th className="px-2 py-1">
+                                                <th className="px-2 py-1 text-left">
                                                   S.No.
                                                 </th>
-                                                <th className="px-2 py-1">
+                                                <th className="px-2 py-1 text-left">
                                                   Date
                                                 </th>
-                                                <th className="px-2 py-1">
+                                                <th className="px-2 py-1 text-left">
                                                   Start Time
                                                 </th>
-                                                <th className="px-2 py-1">
+                                                <th className="px-2 py-1 text-left">
                                                   End Time
                                                 </th>
-                                                <th className="px-2 py-1">
+                                                <th className="px-2 py-1 text-left">
                                                   Total Hours
                                                 </th>
                                               </tr>

@@ -703,7 +703,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
     <div >
       {/* Header with Title and Actions */}
       <div className="flex justify-between items-center w-full p-2">
-  <div className="flex w-auto px-2 py-1 gap-2">
+  <div className="flex w-auto px-2 py-1 gap-2 [&>*]:w-[208px]">
     {isCreate &&
             (!assignedPermission ||
               (data_type === "Project" && assignedPermission.includes(22)) ||
@@ -754,7 +754,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
             </>
           )}
   </div>
-  <div className="flex w-auto px-2 py-1 gap-2">
+  <div className="flex w-auto px-2 py-1 gap-2 ">
     {(selectedDepartments?.length > 0 ||
             selectedStatus?.length > 0 ||
             searchQuery?.length > 0) && (
@@ -829,6 +829,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                   <TooltipTrigger asChild>
                     
                     <button
+                    type="button"
                       onClick={() => {
                         console.log("View");
                         // openDecisionModal(item.project_id);
@@ -1032,6 +1033,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               </SelectContent>
             </Select>
             <Button
+            type="button"
               variant="outline"
               size="sm"
               onClick={() => onPageChange(PageNo - 1)}
@@ -1056,6 +1058,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
 
                 return (
                   <button
+                  type="button"
   onClick={() => onPageChange(pageNumber)}
   className={`w-8 h-8 p-0 text-sm rounded-md border 
     ${PageNo === pageNumber 
@@ -1074,6 +1077,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
             </div>
 
             <Button
+            type="button"
               variant="outline"
               size="sm"
               onClick={() => onPageChange(PageNo + 1)}

@@ -8,6 +8,7 @@ import { ApproveFieldEditRequest, get_field_change_requests } from "../../utils/
 
 
 import { useTheme } from "@/themes/ThemeProvider";
+import { format } from "date-fns";
 
 interface ApproveFieldEditProp {
   field_id: string;
@@ -17,6 +18,7 @@ interface ApproveFieldEditProp {
   text_style?: string;
   isRequired: boolean;
   MasterUsers: any;
+  onApprove: () => void;
 }
 
 export class Label {
@@ -41,7 +43,7 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
   text_style,
   is_edit,
   isRequired,
-  MasterUsers,
+  MasterUsers,onApprove
 }) => {
     const {theme} =useTheme();
   const [popupVisible, setPopupVisible] = useState(false);
@@ -114,6 +116,24 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
     const payload = { field_id, project_id, status: 13, comment };
 
     try {
+       if (
+             
+              field_id === "business_stakeholder_user"
+            ) {
+              
+      
+              const deptPayload = { field_id:"business_stakeholder_dept", project_id, status: 13, comment };
+              await ApproveFieldEditRequest(deptPayload);
+            }
+            if (
+              field_id === "project_owner_user" 
+              
+            ) {
+              
+      
+              const deptPayload = { field_id:"project_owner_dept", project_id, status: 13, comment };
+              await ApproveFieldEditRequest(deptPayload);
+            }
       const response = await ApproveFieldEditRequest(payload);
       const parsedRes = JSON.parse(response);
 
@@ -121,7 +141,9 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
         setAlertMessage("Field Value change request Approved");
         setAlertVisible(true);
         setPopupVisible(false);
+        
         setLabel((prev) => ({ ...prev, changeFound: false }));
+        onApprove();
       }
     } catch (err) {
       console.error("Error approving:", err);
@@ -169,7 +191,14 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
         )?.department_name;
       case "business_stakeholder_user":
       case "project_owner_user":
+       
+        const userw = MasterUsers?.find(
+          (item) => item.user_id?.toString() === label.new_field_value
+        );
+        return `${userw?.first_name ?? ""} ${userw?.last_name ?? ""}`;
+            
         case "priority":
+           case "budget_impact":
         return MasterUsers?.find(
           (item) => item.id?.toString() === label.new_field_value
         )?.value;
@@ -178,6 +207,48 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
           (item) => item.user_id?.toString() === label.new_field_value
         );
         return `${user?.first_name ?? ""} ${user?.last_name ?? ""}`;
+        case "project_size":
+       return MasterUsers?.find(
+          (item) => item.id?.toString() === label.new_field_value
+        )?.value;
+        case "impacted_applications":
+       return label.new_field_value
+    ?.split(",") // split comma separated ids
+    .map((id) =>
+      MasterUsers?.find(
+        (item) => item.application_id?.toString() === id.trim()
+      )?.application_name
+    )
+    .filter(Boolean) // remove undefined if any id not found
+    .join(", ");
+        case "impacted_function":
+      return label.new_field_value
+  ?.split(",")                                   // split into array of ids
+  .map(id =>
+    MasterUsers?.find(item => item.department_id?.toString() === id.trim())?.department_name
+  )
+  .filter(Boolean)                               // remove undefined/null
+  .join(", ");
+  case "dependent_projects":
+       return label.new_field_value
+    ?.split(",") // split comma separated ids
+    .map((id) =>
+      MasterUsers?.find(
+        (item) => item.project_id?.toString() === id.trim()
+      )?.project_name
+    )
+    .filter(Boolean) // remove undefined if any id not found
+    .join(", ");
+     case "budget_size":
+       return MasterUsers?.find(
+          (item) => item.id?.toString() === label.new_field_value
+        )?.value;
+        case "start_date":
+          case "end_date":
+            case "golive_date":
+       return  format(new Date(label.new_field_value), "MM/dd/yyyy")
+        
+       
       default:
         return label.new_field_value;
     }

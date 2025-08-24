@@ -399,7 +399,7 @@ const Timesheet = () => {
             data_type={"Project"}
           />
         </div>
-        <div id="timesheetModal">
+        <div >
           <TimesheetModal
             visible={isTimesheetModalVisible}
             onClose={() => setIsTimesheetModalVisible(false)}

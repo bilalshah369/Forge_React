@@ -5,6 +5,7 @@ import {
   ChangeRequestSVG,
   Details_line_svg,
   DollarSign,
+  Preview_svg,
   ProjectPlanSVG,
   Update_project_statusSVG,
 } from "@/assets/Icons";
@@ -653,7 +654,7 @@ const PMView = () => {
                         );
                       }}
                     >
-                      <Details_line_svg fill="white" height={20} width={20}/>
+                      <Preview_svg className="[&_path]:fill-white"  height={20} width={20}/>
                     </button>
                   </TooltipTrigger>
                   <TooltipContent>{"Audit Log"}</TooltipContent>

@@ -894,7 +894,7 @@ const ProjectDashboard = () => {
                   size="sm"
                   //className="gap-2"
                   onClick={() => {
-                    navigation("/PMView/BudgetForecast");
+                    navigation(`/PMView/BudgetPlanner?projectId=${projectId}`);
                   }}
                   className="flex items-center text-black gap-1 w-full"
                 >

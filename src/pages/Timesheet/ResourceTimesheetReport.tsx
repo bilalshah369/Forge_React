@@ -218,12 +218,12 @@ const {theme} =useTheme();
                                 <table className="w-full table-auto mt-2">
                                   <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                     <tr>
-                                      <th className="p-2">S.No.</th>
-                                      <th className="p-2">Project Name</th>
-                                      <th className="p-2">Status</th>
-                                      <th className="p-2">Department</th>
-                                      <th className="p-2">Start Date</th>
-                                      <th className="p-2">End Date</th>
+                                      <th className="p-2 text-left">S.No.</th>
+                                      <th className="p-2 text-left">Project Name</th>
+                                      <th className="p-2 text-left">Status</th>
+                                      <th className="p-2 text-left">Department</th>
+                                      <th className="p-2 text-left">Start Date</th>
+                                      <th className="p-2 text-left">End Date</th>
                                       <th className="p-2 text-right"></th>
                                     </tr>
                                   </thead>
@@ -300,19 +300,19 @@ const {theme} =useTheme();
                                                   <table className="w-full table-auto">
                                                     <thead className="text-white" style={{backgroundColor:theme.colors.drawerBackgroundColor}}>
                                                       <tr>
-                                                        <th className="p-2">
+                                                        <th className="p-2 text-left">
                                                           S.No.
                                                         </th>
-                                                        <th className="p-2">
+                                                        <th className="p-2 text-left">
                                                           Date
                                                         </th>
-                                                        <th className="p-2">
+                                                        <th className="p-2 text-left">
                                                           Start Time
                                                         </th>
-                                                        <th className="p-2">
+                                                        <th className="p-2 text-left">
                                                           End Time
                                                         </th>
-                                                        <th className="p-2">
+                                                        <th className="p-2 text-left">
                                                           Total Hours
                                                         </th>
                                                       </tr>

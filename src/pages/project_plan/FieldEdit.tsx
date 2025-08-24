@@ -7,6 +7,9 @@ import AlertBox from "@/components/ui/AlertBox";
 import { GetChangeRequestPreview } from "../../utils/ApprovedProjects";
 import MultiSelectDropdown from "@/components/ui/MultiSelectDropdown";
 import { useTheme } from "@/themes/ThemeProvider";
+import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
+import { DatePicker } from "rsuite";
+import { convertUTCtoLocalDateOnly } from "@/utils/util";
 interface FieldEditProp {
   label_id: string;
   project_id: number;
@@ -17,6 +20,7 @@ interface FieldEditProp {
   //Master Data
   MasterData: any;
   isPicker?: boolean;
+  isDate?: boolean;
   idKey?: string;
   labelKey?: string;
 }
@@ -30,7 +34,7 @@ export default function FieldEdit({
   MasterData,
   isPicker,
   idKey,
-  labelKey,
+  labelKey,isDate
 }: FieldEditProp) {
   const [popupVisible, setPopupVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -201,6 +205,22 @@ const {theme} =useTheme();
             //   }))}
             // />
             isMultiSelect ? (
+
+              label_id==="impacted_function" ? <MultiSelectDepartment
+                      multi={true}
+                      searchable={true}
+                        placeholder="Select Departments"
+                        departments={MasterData}
+                        selected={
+                          label.label_name?.length > 0
+                    ? label.label_name.split(",")
+                    : []
+                        }
+                        onChange={async function (selected: string[]): Promise<void> {
+                          const worker = selected?.join(",");
+                          handleFieldChange(worker);
+                        }}
+                      />:
               <MultiSelectDropdown
                 items={(MasterData ?? []).map((item) => ({
                   value: idKey ? item[idKey] : undefined,
@@ -235,6 +255,30 @@ const {theme} =useTheme();
               </select>
             )
           ) : (
+            isDate ?<DatePicker
+                 
+                  oneTap
+                  value={
+                    label.label_name ? convertUTCtoLocalDateOnly(label.label_name) : null
+                  }
+                  onChange={(date) => {
+                    if (date) {
+                      const safeDate = new Date(date);
+                      safeDate.setHours(12, 0, 0, 0);
+                      const iso = safeDate.toISOString();
+                      
+                      handleFieldChange(iso);
+                    } else {
+                      handleFieldChange("");
+                    }
+                  }}
+                  format="MM/dd/yyyy"
+                  placement="bottomEnd"
+                  placeholder="mm/dd/yyyy"
+                  editable={false}
+                  className="w-full"
+                 
+                />:
             <input
               type="text"
               className="w-full p-2 border rounded mb-2"
@@ -246,7 +290,7 @@ const {theme} =useTheme();
 
           <input
             type="text"
-            className="w-full p-2 border rounded mb-2"
+            className="w-full p-2 border rounded mb-2 mt-2"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Enter comment if any"

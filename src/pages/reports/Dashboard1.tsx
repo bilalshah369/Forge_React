@@ -993,7 +993,7 @@ const Dashboard1 = () => {
       </div>
 
       {/* Row 2 - Tabs aligned right */}
-      <div className="flex justify-end mt-4 gap-2">
+      <div className="flex justify-end mt-4 gap-2 [&>*:not(:first-child)]:w-[208px]">
         {selectedStatus?.length > 0 ||
             selectedDepartments?.length > 0 ||
             searchQuery?.length > 0 ||

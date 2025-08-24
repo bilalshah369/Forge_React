@@ -39,6 +39,7 @@ import { MultiSelectDepartment } from "@/components/ui/MultiSelectDepartment";
 import MultifeatureGanttMilestone from "./MultifeatureGanttMilestone";
 import MultifeatureGanttProjectDependencies from "./MultifeatureGanttProjectDependencies";
 import { useTheme } from "@/themes/ThemeProvider";
+import "rsuite/dist/rsuite.min.css"; 
 const now = new Date();
 
 const customRanges = [
@@ -326,9 +327,9 @@ const RoadmapOverview = () => {
   return (
     <div className="w-full h-full">
       <div className="w-full h-full overflow-auto">
-        <div className="flex items-center justify-between w-full px-4 py-3 bg-white rounded-md shadow-sm">
-          <div className="p-2 min-w-[320px] max-w-[400px] bg-white rounded-md justify-center">
-            <div className="inline-flex border border-gray-300 rounded-full overflow-hidden text-sm font-medium shadow-sm">
+        <div className="flex justify-between items-center w-full">
+  <div className="w-auto  px-2 py-1">
+    <div className="inline-flex border border-gray-300 rounded-full overflow-hidden text-sm font-medium shadow-sm [&>*]:w-[180px]">
               <button
                 onClick={() => {
                   setSelectedRoadmapView("Milestone");
@@ -365,9 +366,10 @@ const RoadmapOverview = () => {
                 Dependency View
               </button>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {(selectedStatus ||
+  </div>
+  <div className="w-auto  px-2 py-1">
+    <div className="flex flex-wrap gap-2 justify-end [&>*]:w-[208px]">
+    {(selectedStatus ||
               selectedDepartments ||
               searchQuery ||
               range) && (
@@ -560,10 +562,12 @@ const RoadmapOverview = () => {
               placement="bottomEnd"
               placeholder="mm/dd/yyyy - mm/dd/yyyy"
               editable={false}
+              style={{width:250}}
               // shouldDisableDate={combine(allowedMaxDays(7), beforeToday())}
-            />
-          </div>
-        </div>
+            /></div>
+  </div>
+</div>
+      
         {selectedRoadmapView === "Milestone" && !loading && (
           <MultifeatureGanttMilestone
             data={projects}

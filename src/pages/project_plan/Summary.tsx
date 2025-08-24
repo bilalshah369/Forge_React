@@ -49,8 +49,9 @@ interface FieldValues {
 interface SubmissionProps {
   changeRequest?: boolean;
   isApproval?: boolean;
+  showApproval?:boolean
 }
-const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
+const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval,showApproval }) => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
   const isEditable = searchParams.get("isEditable") === "true";
@@ -267,6 +268,7 @@ const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
         ) : isApproval ? (
           <></>
         ) : (
+          !showApproval?(
           <div className="p-6 bg-gray-50 rounded-md shadow-lg mt-5">
             <h2 className="text-lg font-semibold text-blue-600 mb-4">
               You are now at the final step of the Project Plan Update. Please
@@ -288,7 +290,7 @@ const Summary: React.FC<SubmissionProps> = ({ changeRequest, isApproval }) => {
                 </button>
               </div>
             </div>
-          </div>
+          </div>):<></>
         )}
         <AlertBox
           visible={alertVisible}

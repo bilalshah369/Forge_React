@@ -617,7 +617,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
   const [formIsEditable, setFormIsEditable] = useState<boolean>(isEditable);
   const [actualBudget, setActualBudget] = useState("");
   const [budgetImpact, setBudgetImpact] = useState("");
-
+const [reload, setReload] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const [budgetData, setBudgetData] = useState<BudgetRow[]>([]);
@@ -1266,7 +1266,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
   //const status = location.params?.status ?? null;
 
   const navigation = useNavigate();
-
+const rerunEffect = () => setReload(prev => prev + 1);
   useEffect(() => {
     (async function () {
       if (projectId) {
@@ -1368,7 +1368,7 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
       fetchDependentProjects();
       setLoading(false);
     })();
-  }, [location]); // Runs again on location change
+  }, [location,reload]); // Runs again on location change
   return (
     <div className="w-full h-full">
       <div className="w-full h-full overflow-auto">
@@ -1395,14 +1395,15 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                   )}
                     {showApproval && (
                 <ApproveFieldEdit
-                  field_id="project_name"
-                  isRequired={false}
-                  default_text={nameTitle ?? ''}
-                  is_edit={true}
-                  text_style={undefined}
-                   project_id={parseInt(projectId) ?? 0}
-                  MasterUsers={users}
-                />
+                      field_id="project_name"
+                      isRequired={false}
+                      default_text={nameTitle ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={users} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
               )}
                 </div>
               </div>
@@ -1429,16 +1430,15 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                   )}
                     {showApproval && (
                 <ApproveFieldEdit
-                  field_id="classification"
-                  isRequired={false}
-                   default_text={
-                        classification ?? "No Classification Selected"
-                      }
-                  is_edit={true}
-                  text_style={undefined}
-                  project_id={parseInt(projectId) ?? 0}
-                  MasterUsers={classifications}
-                />
+                      field_id="classification"
+                      isRequired={false}
+                      default_text={classification ?? "No Classification Selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={classifications} onApprove={function (): void {
+                         rerunEffect();
+                      } }                />
               )}
                 </div>
               </div>
@@ -1463,16 +1463,15 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                   )}
                        {showApproval && (
                 <ApproveFieldEdit
-                  field_id="priority"
-                  isRequired={false}
-                  default_text={
-                    priority  || 'No Priority Selected'
-                  }
-                  is_edit={true}
-                  text_style={undefined}
-                  project_id={parseInt(projectId) ?? 0}
-                  MasterUsers={priorityData}
-                />
+                      field_id="priority"
+                      isRequired={false}
+                      default_text={priority || 'No Priority Selected'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={priorityData} onApprove={function (): void {
+                         rerunEffect();
+                      } }                />
               )}
                 </div>
               </div>
@@ -1504,20 +1503,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
 
                    {showApproval && (
                 <ApproveFieldEdit
-                  field_id="goal_id"
-                  isRequired={false}
-                   default_text={
-                        goals.find(
-                          (goal) =>
-                            goal.goal_id?.toString() ===
-                            goalSelected?.toString()
-                        )?.goal_name || "No goal selected"
-                      }
-                  is_edit={true}
-                  text_style={undefined}
-                  project_id={parseInt(projectId) ?? 0}
-                  MasterUsers={goals}
-                />
+                      field_id="goal_id"
+                      isRequired={false}
+                      default_text={goals.find(
+                        (goal) => goal.goal_id?.toString() ===
+                          goalSelected?.toString()
+                      )?.goal_name || "No goal selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={goals} onApprove={function (): void {
+                         rerunEffect();
+                      } }                />
               )}
                 </div>
               </div>
@@ -1544,17 +1541,16 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
 
                   {showApproval && (
                 <ApproveFieldEdit
-                  field_id="program_id"
-                  isRequired={false}
-                  default_text={
-                        programData.find((obj) => obj.program_id === program)
-                          ?.program_name || "No program selected"
-                      }
-                  is_edit={true}
-                  text_style={undefined}
-                  project_id={parseInt(projectId) ?? 0}
-                  MasterUsers={programData}
-                />
+                      field_id="program_id"
+                      isRequired={false}
+                      default_text={programData.find((obj) => obj.program_id === program)
+                        ?.program_name || "No program selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={programData} onApprove={function (): void {
+                         rerunEffect();
+                      } }                />
               )}
                 </div>
               </div>
@@ -1592,6 +1588,9 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                   text_style={undefined}
                   project_id={parseInt(projectId) ?? 0}
                   MasterUsers={projectSizeData}
+                  onApprove={()=>{
+                     rerunEffect();
+                  }}
                 />
               )}
                 </div>
@@ -1617,6 +1616,19 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="department_name"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="impacted_function"
+                      isRequired={false}
+                      default_text={
+                        impactedFunction || 'No Application Found'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={departments} onApprove={()=>{
+                     rerunEffect();
+                  }}               />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1638,6 +1650,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="application_name"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="impacted_applications"
+                      isRequired={false}
+                      default_text={impactedApp || 'No Application Found'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={applications} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1664,6 +1688,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="project_name"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="dependent_projects"
+                      isRequired={false}
+                      default_text={selectedDependentProjects || 'No Application Found'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={dependentProjects} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
 
@@ -1685,6 +1721,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="value"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="budget_size"
+                      isRequired={false}
+                      default_text={budget || 'No Budget Selected'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={budgetSizeData} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1707,6 +1755,20 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                   {showApproval && (
+                <ApproveFieldEdit
+                      field_id="actual_budget"
+                      isRequired={false}
+                      default_text={budgetPermission
+                        ? actualBudget
+                        : 'No permission to view'}
+                      is_edit={true}
+                      text_style={undefined}
+                     project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
             </div>
@@ -1762,8 +1824,23 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       text_style={undefined}
                       project_id={parseInt(projectId) ?? 0}
                       MasterData={undefined}
+                      isDate={true}
                     />
                   )}
+                    {showApproval && (
+                <ApproveFieldEdit
+                      field_id="start_date"
+                      isRequired={false}
+                      default_text={startDate
+                          ? format(new Date(startDate), "MM/dd/yyyy")
+                          : "No Start Date Selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                       project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1786,9 +1863,23 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       is_edit={true}
                       text_style={undefined}
                       project_id={parseInt(projectId) ?? 0}
-                      MasterData={undefined}
+                      MasterData={undefined}  isDate={true}
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="end_date"
+                      isRequired={false}
+                      default_text={endDate
+                          ? format(new Date(endDate), "MM/dd/yyyy")
+                          : "No End Date Selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                       project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1809,9 +1900,23 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       is_edit={true}
                       text_style={undefined}
                       project_id={parseInt(projectId) ?? 0}
-                      MasterData={undefined}
+                      MasterData={undefined}  isDate={true}
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="golive_date"
+                      isRequired={false}
+                      default_text={goLiveDate
+                          ? format(new Date(goLiveDate), "MM/dd/yyyy")
+                          : "No golive_date Selected"}
+                      is_edit={true}
+                      text_style={undefined}
+                       project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
             </div>
@@ -1841,6 +1946,20 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="full_name"
                     />
                   )}
+                    {showApproval && (
+                <ApproveFieldEdit
+                  field_id="business_stakeholder_user"
+                  isRequired={false}
+                  default_text={businessOwner ?? ''}
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={users}
+                  onApprove={function (): void {
+                        rerunEffect();
+                      } }          
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1869,6 +1988,20 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="full_name"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                  field_id="project_manager_id"
+                  isRequired={false}
+                  default_text={projectManager ?? ''}
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={users}
+                  onApprove={function (): void {
+                        rerunEffect();
+                      } }          
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1891,6 +2024,20 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       labelKey="full_name"
                     />
                   )}
+                   {showApproval && (
+                <ApproveFieldEdit
+                  field_id="project_owner_user"
+                  isRequired={false}
+                  default_text={projectOwner ?? ''}
+                  is_edit={true}
+                  text_style={undefined}
+                  project_id={parseInt(projectId) ?? 0}
+                  MasterUsers={users}
+                  onApprove={function (): void {
+                        rerunEffect();
+                      } }          
+                />
+              )}
                 </div>
               </div>
               <div className="col-span-1">
@@ -1907,9 +2054,13 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
             </h2>
             {permissions.includes(40) ? (
               <div>
-                {projectROIData.roi_percent &&
+
+{/* {projectROIData.roi_percent &&
                 projectROIData.roi_percent !== "0" &&
-                projectROIData.roi_percent !== "" ? (
+                projectROIData.roi_percent !== "" ? ( */}
+
+
+                {false? (
                   <>
                     {/* First row */}
                     <div className="flex gap-4 mb-4">
@@ -2021,11 +2172,40 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       <label className="text-sm font-medium">
                         Approx ROI (%)
                       </label>
-                      <span className="mt-1 p-2 border rounded bg-gray-100">
+                      {/* <span className="mt-1 p-2 border rounded bg-gray-100">
                         {rOIPermission
                           ? roi?.toString() ?? ""
                           : "No permission to view"}
-                      </span>
+                      </span> */}
+                      {changeRequest && (
+                    <FieldEdit
+                      label_id="roi"
+                      isMultiSelect={false}
+                      default_text={
+                        rOIPermission
+                          ? roi
+                          : "No permission to view"
+                      }
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterData={undefined}
+                    />
+                  )}
+                   {showApproval && (
+                <ApproveFieldEdit
+                      field_id="roi"
+                      isRequired={false}
+                      default_text={rOIPermission
+                        ? roi
+                        : 'No permission to view'}
+                      is_edit={true}
+                      text_style={undefined}
+                     project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                     </div>
                     <div className="flex flex-col flex-1" />
                     <div className="flex flex-col flex-1" />
@@ -2063,6 +2243,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                   {showApproval && (
+                <ApproveFieldEdit
+                      field_id="business_desc"
+                      isRequired={false}
+                      default_text={businessProblem ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div>
@@ -2082,6 +2274,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="scope_definition"
+                      isRequired={false}
+                      default_text={scopeDefinition ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
 
@@ -2103,6 +2307,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="key_assumption"
+                      isRequired={false}
+                      default_text={keyAssumption ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div>
@@ -2120,6 +2336,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                   {showApproval && (
+                <ApproveFieldEdit
+                      field_id="benefit_roi"
+                      isRequired={false}
+                      default_text={benefitsROI ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
 
@@ -2139,6 +2367,18 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       MasterData={undefined}
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="risk"
+                      isRequired={false}
+                      default_text={risk ?? ''}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={undefined} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
               <div>
@@ -2155,25 +2395,24 @@ const ProjectViewChangeRequest = ({ changeRequest, showApproval }) => {
                       is_edit={true}
                       text_style={undefined}
                       project_id={parseInt(projectId) ?? 0}
-                      MasterData={[
-                        {
-                          label: "Increase in top-line",
-                          value: "Increase in top-line",
-                        },
-                        {
-                          label: "Decrease in bottom-line",
-                          value: "Decrease in bottom-line",
-                        },
-                        {
-                          label: "Mandatory/Compliance/Operational",
-                          value: "Mandatory/Compliance/Operational",
-                        },
-                      ]}
+                      MasterData={BudgetImpactedList}
                       isPicker
-                      idKey="value"
-                      labelKey="label"
+                      idKey="id"
+                      labelKey="value"
                     />
                   )}
+                  {showApproval && (
+                <ApproveFieldEdit
+                      field_id="budget_impact"
+                      isRequired={false}
+                      default_text={budgetImpact?.toString() ?? 'No budget Impact Selected'}
+                      is_edit={true}
+                      text_style={undefined}
+                      project_id={parseInt(projectId) ?? 0}
+                      MasterUsers={BudgetImpactedList} onApprove={function (): void {
+                        rerunEffect();
+                      } }                />
+              )}
                 </div>
               </div>
             </div>

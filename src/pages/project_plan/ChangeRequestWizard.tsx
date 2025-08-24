@@ -232,7 +232,8 @@ export default function ChangeRequestWizard({_isApproval=false}) {
                     {/* <h2 className="text-xl font-semibold">Team Members</h2> */}
                     {/* <Button>Add Team Member</Button> */}
                   </div>
-                  <TeamMembersChangeRequest />
+                  <TeamMembersChangeRequest changeRequest={_isApproval?false:true}
+                      showApproval={_isApproval?true:false}/>
                 </div>
               </TabsContent>
 
@@ -291,7 +292,8 @@ export default function ChangeRequestWizard({_isApproval=false}) {
               <TabsContent value="milestones" className="mt-0">
                 <div className="space-y-6">
                   <div className="flex justify-between items-center">
-                    <MilestoneNewChangeRequest />
+                    <MilestoneNewChangeRequest changeRequest={_isApproval?false:true}
+                      showApproval={_isApproval?true:false}/>
                   </div>
                 </div>
               </TabsContent>
@@ -306,7 +308,8 @@ export default function ChangeRequestWizard({_isApproval=false}) {
               {/* Preview & Submit Tab */}
               <TabsContent value="preview-submit" className="mt-0">
                 <div className="space-y-6">
-                  <Summary changeRequest={true} />
+                  <Summary changeRequest={_isApproval?false:true}
+                      showApproval={_isApproval?true:false} />
                 </div>
               </TabsContent>
             </div>

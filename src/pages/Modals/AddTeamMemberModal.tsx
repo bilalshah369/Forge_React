@@ -282,6 +282,7 @@ export default function AddTeamMemberModal({
     //if (!validateForm()) return;
     if (!form.startDate) return;
     if (!form.endDate) return;
+    debugger;
     const isUpdating = member?.project_resources_id ? true : false;
     const payload = {
       project_resources_id: changeRequest
@@ -292,7 +293,7 @@ export default function AddTeamMemberModal({
       project_id: projectId,
       resource_id: Number(form.member),
       role_id: Number(form.role),
-      actual_cost: Number(form.actual_cost),
+      actual_cost: Number(form.costPerHour),
       working_hours: Number(form.working_hours),
       start_date: form.startDate?.toLocaleDateString("en-CA"),
       end_date: form.endDate?.toLocaleDateString("en-CA"),
@@ -335,6 +336,7 @@ export default function AddTeamMemberModal({
       fetchMembers();
       GetRole();
       FetchProjectDetails(parseInt(projectId));
+      debugger;
       if (member) {
         // setMemberName(member.resource_name);
         // setMemberId(member.resource_id);
