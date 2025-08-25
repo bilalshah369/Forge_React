@@ -1,9 +1,10 @@
+import { AddNotification } from "@/utils/Notification";
 import { X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 
 interface AddNotificationModalProps {
   visible: boolean;
-  onClose: () => void;
+  onClose: (str:string) => void;
   onSave: (notification: NotificationData, mode: "add" | "edit") => void;
   mode?: "add" | "edit";
   notificationToEdit?: NotificationData;
@@ -47,9 +48,30 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
 
   useEffect(() => {
     if (notificationToEdit) {
+      debugger;
       setFormData(notificationToEdit);
     }
-  }, [notificationToEdit]);
+    else
+    {
+      setFormData({
+    notification_id: "",
+    notification_type: "",
+    notification_title: "",
+    notification_desc: "",
+    recipients: "",
+    module: "",
+    notification_action: "",
+    start_date: "",
+    end_date: "",
+    url: "",
+  });
+    }
+    // else
+    // {
+    //   debugger;
+    //   setFormData(formData);
+    // }
+  }, [visible,notificationToEdit]);
 
   const isBroadcast = ["subscription", "offers", "general"].includes(
     formData.notification_type
@@ -88,20 +110,47 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  const handleSubmit = async () => {
-    if (!validate()) return;
-
+const handleSave = async (
+    values: NotificationData,
+    
+  ) => {
+    debugger;
     setSubmitting(true);
     try {
-      onSave(formData, mode);
-      onClose();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to save notification");
+      //   await new Promise(resolve => setTimeout(resolve, 1000)); // Mock API
+      //   onSave(values, mode); // Pass mode to differentiate add vs edit
+      //   onClose();
+      const response = await AddNotification(values);
+      const parsedRes = JSON.parse(response);
+      if (parsedRes.status === 'success') {
+        //console.log('AD Added succesfully');
+        //setResultDialog(true);
+        //showAlert('Details updated successfully');
+        onClose(parsedRes.message);
+      }
+    } catch (error) {
+      console.error(
+        `Failed to ${mode === 'add' ? 'save' : 'update'} notification:`,
+        error,
+      );
+      alert(`Error ${mode === 'add' ? 'saving' : 'updating'} notification`);
     } finally {
       setSubmitting(false);
     }
+  };
+  const handleSubmit = async () => {
+    if (!validate()) return;
+  handleSave(formData);
+    //setSubmitting(true);
+    // try {
+    //   onSave(formData, mode);
+    //   onClose("");
+    // } catch (err) {
+    //   console.error(err);
+    //   alert("Failed to save notification");
+    // } finally {
+    //   setSubmitting(false);
+    // }
   };
 
   if (!visible) return null;
@@ -114,7 +163,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
             {mode === "add" ? "Add Notification" : "Edit Notification"}
           </h2>
           <button
-            onClick={onClose}
+            onClick={()=>{onClose("")}}
             className="top-4 right-4 text-gray-500 hover:text-gray-700"
           >
             <X className="w-5 h-5" />
@@ -137,7 +186,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
             <option value="subscription">Subscription Related</option>
             <option value="offers">Offers</option>
             <option value="project">Project Workflow</option>
-            <option value="general">General</option>
+            {/* <option value="general">General</option> */}
           </select>
           {errors.notification_type && (
             <p className="text-red-500 text-sm">{errors.notification_type}</p>
@@ -261,7 +310,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
         <div className="flex justify-end gap-3 mt-6">
           <button
             className="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100"
-            onClick={onClose}
+             onClick={()=>{onClose("")}}
             disabled={submitting}
           >
             Cancel

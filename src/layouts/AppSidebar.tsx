@@ -153,7 +153,7 @@ export function AppSidebar() {
     ////debugger;
     //setSelectedScreen(localStorage.getItem("UserState"));
     fetchRoleModules();
-  }, []);
+  }, [localStorage.getItem("ID")]);
   return (
     <Sidebar
       className={`${

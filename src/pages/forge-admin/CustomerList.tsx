@@ -274,7 +274,7 @@ const CustomerList = () => {
           company_name,
           firstName,
           lastName,
-          source,
+          source,landing_url
         } = user;
 
         //setIsLoggedIn(true);
@@ -317,7 +317,7 @@ const CustomerList = () => {
           //localStorage.setItem('UserState', 'CustomerList');
           localStorage.setItem('isAdmin', 'yes');
           localStorage.setItem('UserState', 'AdminDboard');
-          navigation('AdminDboard');
+          navigation("/"+landing_url);
           //navigate('Main', {screen: 'AdminDboard'});
         } else if (UserType === '1' || userrole === 1) {
           //console.log('Decoded UserType:', UserType);
@@ -326,11 +326,11 @@ const CustomerList = () => {
         } else if (UserType === '103' || userrole === 103) {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
-          navigation('IntakeList');
+          navigation("/"+landing_url);
         } else {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
-          navigation('AdminDboard');
+          navigation("/"+landing_url);
         }
       } else {
        
@@ -435,6 +435,7 @@ const CustomerList = () => {
           onClose={(result:string) => {
             setIsAddModelVisible(false);
             setSelectedCustomer(0);
+            if(result)
             showAlert(result);
             fetchCustomers();
           }}

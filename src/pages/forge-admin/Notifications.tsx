@@ -182,8 +182,9 @@ const Notifications = () => {
                     <button
                       onClick={() => {
                         console.log("View", item);
+                        setEditNotification(item);
                         setAddNotificationModalVisible(true);
-              setEditNotification(item);
+              
                       }}
                     >
                       <EditSVG height={22} width={22} className="[&_path]:fill-white"/>
@@ -217,6 +218,8 @@ const Notifications = () => {
             isDownloadExcel={true}
             isColumnVisibility={true}
             onCreate={() => {
+              debugger;
+              setEditNotification(undefined);
             setAddNotificationModalVisible(true);
             
         }}
@@ -231,7 +234,14 @@ const Notifications = () => {
         </div>
          <AddNotificationModal
         visible={isAddNotificationModalVisible}
-        onClose={() => setAddNotificationModalVisible(false)}
+        //onClose={() => setAddNotificationModalVisible(false)}
+         onClose={(result:string) => {
+            setAddNotificationModalVisible(false);
+            setEditNotification(undefined);
+            if(result)
+            showAlert(result);
+            fetchNotifications();
+          }}
         onSave={() => {}}
         mode={editNotification ? 'edit' : 'add'}
         notificationToEdit={editNotification}

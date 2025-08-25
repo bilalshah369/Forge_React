@@ -92,7 +92,8 @@ export default function Header() {
           //console.log('Navigating to Main screen');
           //localStorage.setItem("UserState", "CustomerList");
           localStorage.setItem("isAdmin", "yes");
-          navigationRef("AdminDboard");
+          debugger;
+          navigationRef('/'+jsonResult.data.user.landing_url);
         } else if (UserType === "103" || userrole === 103) {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
@@ -118,7 +119,8 @@ export default function Header() {
       const last = localStorage.getItem("lastName");
       const storedCompany = localStorage.getItem("company_name");
       setCompany_name_user(storedCompany ?? "");
-      setIsAdmin(decodeBase64(localStorage.getItem("UserType")));
+      //setIsAdmin(decodeBase64(localStorage.getItem("UserType")));
+      setIsAdmin(localStorage.getItem("isAdmin"));
       if (storedImage) {
         setUserImage(storedImage); // Ensure image is only updated when needed
       }
@@ -127,7 +129,7 @@ export default function Header() {
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
-  }, []);
+  }, [localStorage.getItem("ID")]);
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
        {/* <button
@@ -147,10 +149,20 @@ export default function Header() {
         <Menu className="h-5 w-5 text-gray-700" />
       </button>
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">{company_name_user?.substring(0,1)}</span>
+          {
+            company_name_user?<><div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">{
+            
+            company_name_user?.substring(0,1)?? 'A'}</span>
           </div>
-          <span className="text-primary font-bold text-xl">{company_name_user}</span>
+          <span className="text-primary font-bold text-xl">{company_name_user}</span></>:<><div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">{
+            
+            'A'}</span>
+          </div>
+          <span className="text-primary font-bold text-xl">{'Forge Admin'}</span></>
+          }
+          
         </div>
       </div>
 
@@ -163,7 +175,7 @@ export default function Header() {
         </h1>
       </div>
       <div className="flex items-center gap-4">
-        {isAdmin==="1" && (
+        {isAdmin==='yes' && (
           <div
             onClick={() => {
               //setTheme("blue");
