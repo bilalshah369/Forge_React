@@ -6,12 +6,16 @@ import { toast } from "@/hooks/use-toast";
 import { DeleteRole, GetRolesByPage } from "@/utils/RoleMaster";
 import { RoleModal } from "./RolesModal";
 import AlertBox from "@/components/ui/AlertBox";
+import { useLabels } from "../edit-field-labels/LabelContext";
 
- const Roles: React.FC = () => {
+const Roles: React.FC = () => {
   const [roles, setRoles] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editRole, setEditRole] = React.useState(null);
-
+  const { labels } = useLabels();
+  const labelRoles = labels["role"] || {
+    display: "Role",
+  };
   /* Alert states */
   const [alertVisible, setAlertVisible] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
@@ -35,7 +39,7 @@ import AlertBox from "@/components/ui/AlertBox";
       order_no: 1,
     },
     {
-      label: "Role",
+      label: labelRoles.display,
       key: "role_name",
       visible: true,
       type: "string",

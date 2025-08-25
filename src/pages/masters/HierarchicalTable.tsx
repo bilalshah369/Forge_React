@@ -4,10 +4,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DeleteDept, GetDept, InsertDept } from "@/utils/Departments";
 import { Delete_svg, EditSVG, Plus_svg } from "@/assets/Icons";
 import { FetchPermission } from "@/utils/Permission";
-import {ChromePicker} from 'react-color'; // Web Color Picker
+import { ChromePicker } from "react-color"; // Web Color Picker
 import AlertBox from "@/components/ui/AlertBox";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useTheme } from "@/themes/ThemeProvider";
+import { useLabels } from "../edit-field-labels/LabelContext";
 interface Department {
   department_id?: number;
   customer_id: number;
@@ -26,24 +31,23 @@ interface Department {
   children?: Department[];
 }
 const initialNewDepartmentState = {
-    department_id: null,
-    customer_id: 1,
-    parent_department_id: null,
-    department_name: '',
-    description: '',
-    department_head: null,
-    department_level: 1,
-    is_active: true,
-    department_color: '',
-    department_second_color: '',
-     created_at: "",
+  department_id: null,
+  customer_id: 1,
+  parent_department_id: null,
+  department_name: "",
+  description: "",
+  department_head: null,
+  department_level: 1,
+  is_active: true,
+  department_color: "",
+  department_second_color: "",
+  created_at: "",
   updated_at: "",
   created_by: "",
   updated_by: "",
-  };
+};
 
 interface HierarchicalTableProps {
-  
   onAdd?: (parentId: number | null, department: Department) => void;
   onEdit?: (department: Department) => void;
   onDelete?: (departmentId: number) => void;
@@ -65,8 +69,11 @@ interface DataItem {
   department_second_color: string;
   children?: DataItem[];
 }
-const HierarchicalTable: React.FC<HierarchicalTableProps> = ({
-}) => {
+const HierarchicalTable: React.FC<HierarchicalTableProps> = ({}) => {
+  const { labels } = useLabels();
+  const labelDept = labels["department"] || {
+    display: "Department",
+  };
   const [expanded, setExpanded] = useState<number[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -74,10 +81,10 @@ const HierarchicalTable: React.FC<HierarchicalTableProps> = ({
   const [currentDepartment, setCurrentDepartment] = useState<Department | null>(
     null
   );
-    const [parentDepartmentName, setParentDepartmentName] = useState('');
-    const [alertVisible, setAlertVisible] = useState(false);
+  const [parentDepartmentName, setParentDepartmentName] = useState("");
+  const [alertVisible, setAlertVisible] = useState(false);
   const [message, setMessage] = useState("");
-  
+
   const showAlert = (message: string) => {
     setMessage(message);
     setAlertVisible(true);
@@ -89,8 +96,12 @@ const HierarchicalTable: React.FC<HierarchicalTableProps> = ({
     //navigation("/PMView");
   };
   const [permissions, setPermissions] = useState<number[]>([]);
-  const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
-const [data, setData] = useState<DataItem[]>([]);
+  const [tooltip, setTooltip] = useState<{
+    text: string;
+    x: number;
+    y: number;
+  } | null>(null);
+  const [data, setData] = useState<DataItem[]>([]);
   const toggleExpand = (id: number) => {
     setExpanded((prev) =>
       prev.includes(id) ? prev.filter((d) => d !== id) : [...prev, id]
@@ -124,7 +135,7 @@ const [data, setData] = useState<DataItem[]>([]);
   };
 
   const lightenColor = (color: string, percent: number) => {
-    let num = parseInt(color.replace('#', ''), 16);
+    let num = parseInt(color.replace("#", ""), 16);
     let r = (num >> 16) & 255,
       g = (num >> 8) & 255,
       b = num & 255;
@@ -139,23 +150,22 @@ const [data, setData] = useState<DataItem[]>([]);
       .slice(1)
       .toUpperCase()}`;
   };
-const handleAddDepartment = async () => {
+  const handleAddDepartment = async () => {
     //console.log('Selected Department Head:', selectedUser);
-//debugger;
+    //debugger;
     // Check for empty department name
     if (!currentDepartment.department_name.trim()) {
-      
       return;
     }
 
     // Prepare the department payload
     const departmentToSend = {
       ...currentDepartment,
-      department_head:  null, // Allow null if no user is selected
+      department_head: null, // Allow null if no user is selected
     };
 
     try {
-      const token = localStorage.getItem('Token');
+      const token = localStorage.getItem("Token");
       //console.log('Department to be sent: ', departmentToSend);
 
       // Make the API request to insert the department
@@ -170,12 +180,12 @@ const handleAddDepartment = async () => {
       const response = await InsertDept(departmentToSend);
       const parsedRes = JSON.parse(response);
 
-      if (parsedRes.status === 'success') {
+      if (parsedRes.status === "success") {
         //  if (response.status ==="success") {
         //Alert.alert('Success', 'New department added successfully');
         setModalOpen(false);
 
-    showAlert(parsedRes.message);
+        showAlert(parsedRes.message);
         const randomPrimaryColor = getRandomDarkColor();
         const randomSecondaryColor = lightenColor(randomPrimaryColor, 50);
         // Reset the new department details
@@ -189,17 +199,14 @@ const handleAddDepartment = async () => {
         // Refresh departments and sub-departments
         //fetchSubDepartments(null);
         fetchDepartments();
-       
       } else {
-       
       }
     } catch (error) {
-      console.error('Error adding department:', error);
-   
+      console.error("Error adding department:", error);
     }
   };
 
- const handleDelete = async departmentId => {
+  const handleDelete = async (departmentId) => {
     try {
       // const token = await AsyncStorage.getItem('Token');
       // const response = await fetch(`${BASE_URL}/master/delete_department`, {
@@ -212,22 +219,18 @@ const handleAddDepartment = async () => {
       // });
 
       // if (response.ok) {
-      const response = await DeleteDept({department_id: departmentId});
+      const response = await DeleteDept({ department_id: departmentId });
       const parsedRes = JSON.parse(response);
 
-      if (parsedRes.status === 'success') {
-         showAlert(parsedRes.message);
+      if (parsedRes.status === "success") {
+        showAlert(parsedRes.message);
 
         fetchDepartments();
-       
       } else {
-       
       }
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   };
-    const handleAddSubDepartment = (parentId, departmentName) => {
+  const handleAddSubDepartment = (parentId, departmentName) => {
     const randomPrimaryColor = getRandomDarkColor();
     const randomSecondaryColor = lightenColor(randomPrimaryColor, 50);
     setCurrentDepartment({
@@ -262,7 +265,7 @@ const handleAddDepartment = async () => {
             <td className="px-4 py-2 text-white flex">
               {item.children?.length ? (
                 <button
-                type="button"
+                  type="button"
                   onClick={() => toggleExpand(item.department_id)}
                   className="mr-2"
                 >
@@ -290,34 +293,59 @@ const handleAddDepartment = async () => {
             <td className="px-4 py-2">{item.description}</td>
             <td className="px-4 py-2">
               <div className="flex gap-2 ">
-                  <Tooltip>
-                      <TooltipTrigger asChild>
- <button onClick={() => {setParentDepartmentName("");openEditModal(item)}} >
-                  <EditSVG width={20} height={20}  className="text-white [&_path]:fill-white" />
-                </button>
-                      </TooltipTrigger>
-                      <TooltipContent>{"Edit"}</TooltipContent>
-                    </Tooltip>
                 <Tooltip>
-                      <TooltipTrigger asChild>
-                <button onClick={() => {if (confirm("Are you sure you want to delete?"))handleDelete(item.department_id)}} >
-                  <Delete_svg width={20} height={20} className="text-white [&_path]:fill-white" />
-                </button>
-                </TooltipTrigger>
-                      <TooltipContent>{"Delete"}</TooltipContent>
-                    </Tooltip>
-                     <Tooltip>
-                      <TooltipTrigger asChild>
- <button onClick={() => {
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        setParentDepartmentName("");
+                        openEditModal(item);
+                      }}
+                    >
+                      <EditSVG
+                        width={20}
+                        height={20}
+                        className="text-white [&_path]:fill-white"
+                      />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Edit"}</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        if (confirm("Are you sure you want to delete?"))
+                          handleDelete(item.department_id);
+                      }}
+                    >
+                      <Delete_svg
+                        width={20}
+                        height={20}
+                        className="text-white [&_path]:fill-white"
+                      />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Delete"}</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
                         handleAddSubDepartment(
                           item.department_id,
-                          item.department_name,
-                        );}} >
-                  <Plus_svg width={20} height={20} className="text-white [&_path]:fill-white" />
-                </button>
-                      </TooltipTrigger><TooltipContent>{"Add new sub department"}</TooltipContent>
-                    </Tooltip>
-               
+                          item.department_name
+                        );
+                      }}
+                    >
+                      <Plus_svg
+                        width={20}
+                        height={20}
+                        className="text-white [&_path]:fill-white"
+                      />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Add new sub department"}</TooltipContent>
+                </Tooltip>
               </div>
             </td>
           </tr>
@@ -325,10 +353,10 @@ const handleAddDepartment = async () => {
         </React.Fragment>
       );
     });
-    const fetchDepartments = async () => {
+  const fetchDepartments = async () => {
     try {
       //console.log('API Calling');
-      const response = await GetDept('');
+      const response = await GetDept("");
       const result = await JSON.parse(response);
 
       if (!result?.data?.departments) {
@@ -342,22 +370,22 @@ const handleAddDepartment = async () => {
       console.log(JSON.stringify(result));
       const activeDepartments = result.data.departments;
       if (activeDepartments.length === 0) {
-        console.warn('No active departments available.');
+        console.warn("No active departments available.");
         return;
       }
 
       const departmentMap = new Map(
-        activeDepartments.map(dept => [
+        activeDepartments.map((dept) => [
           dept.department_id,
           {
             ...dept,
             children: [],
-            department_color: dept.department_color || 'lightgray', // Default color
+            department_color: dept.department_color || "lightgray", // Default color
           },
-        ]),
+        ])
       );
 
-      activeDepartments.forEach(dept => {
+      activeDepartments.forEach((dept) => {
         if (dept.parent_department_id) {
           const parent = departmentMap.get(dept.parent_department_id);
           if (parent) {
@@ -367,83 +395,90 @@ const handleAddDepartment = async () => {
       });
 
       const rootDepartments = activeDepartments
-        .filter(dept => dept.parent_department_id === null)
-        .map(dept => departmentMap.get(dept.department_id));
-//bilal
-    //   const forgeTree = {
-    //     department_name: companyName || 'Company',
-    //     department_color: 'black', // Default root color
-    //     children: rootDepartments.length ? rootDepartments : [],
-    //   };
+        .filter((dept) => dept.parent_department_id === null)
+        .map((dept) => departmentMap.get(dept.department_id));
+      //bilal
+      //   const forgeTree = {
+      //     department_name: companyName || 'Company',
+      //     department_color: 'black', // Default root color
+      //     children: rootDepartments.length ? rootDepartments : [],
+      //   };
 
-     // console.log('tree structure->:', JSON.stringify(forgeTree, null, 2));
+      // console.log('tree structure->:', JSON.stringify(forgeTree, null, 2));
 
       //setTreeData(forgeTree);
       setData(rootDepartments);
       //setLoading(false);
     } catch (error) {
-      console.error('Error fetching departments:', error);
+      console.error("Error fetching departments:", error);
       //setLoading(false);
     }
   };
   const checkPermission = async () => {
-      try {
-        const permissionResponse = await FetchPermission(''); // Fetching permission data
-        const parsedResponse =
-          typeof permissionResponse === 'string'
-            ? JSON.parse(permissionResponse)
-            : permissionResponse;
+    try {
+      const permissionResponse = await FetchPermission(""); // Fetching permission data
+      const parsedResponse =
+        typeof permissionResponse === "string"
+          ? JSON.parse(permissionResponse)
+          : permissionResponse;
 
-        if (
-          !parsedResponse ||
-          !parsedResponse.data ||
-          !parsedResponse.data.user_permissions
-        ) {
-          throw new Error('Invalid response format');
-        }
-
-        const permissionData = parsedResponse.data.user_permissions || [];
-
-        const permissionIds = permissionData.map(
-          (perm: {permission_id: number}) => perm.permission_id,
-        );
-
-        setPermissions(permissionIds);
-        console.log('Permission for user is', permissionIds);
-      } catch (error) {
-        console.error('Error retrieving permissions:', error);
+      if (
+        !parsedResponse ||
+        !parsedResponse.data ||
+        !parsedResponse.data.user_permissions
+      ) {
+        throw new Error("Invalid response format");
       }
-    };
-const location = useLocation();
+
+      const permissionData = parsedResponse.data.user_permissions || [];
+
+      const permissionIds = permissionData.map(
+        (perm: { permission_id: number }) => perm.permission_id
+      );
+
+      setPermissions(permissionIds);
+      console.log("Permission for user is", permissionIds);
+    } catch (error) {
+      console.error("Error retrieving permissions:", error);
+    }
+  };
+  const location = useLocation();
   const navigation = useNavigate();
-  const {theme} =useTheme();
+  const { theme } = useTheme();
   useEffect(() => {
     (async function () {
-        checkPermission();
-     fetchDepartments();
+      checkPermission();
+      fetchDepartments();
     })();
   }, [location]); // Runs again on location change
   return (
     <div className="p-4">
-{!permissions ||
+      {!permissions ||
         (permissions.includes(46) && (
           <div className="flex justify-between items-center mb-4">
-  <h2 className="text-xl font-semibold"></h2>
-  <button
-  type="button"
-    onClick={() =>{setParentDepartmentName(""); openAddModal(null)}} // pass null since it's a new one
-    className="flex items-center gap-2 px-4 py-2  text-white rounded-lg shadow transition"
-    style={{backgroundColor:theme.colors.drawerBackgroundColor}}
-  >
-    <Plus_svg width={20} height={20} className="text-white [&_path]:fill-white"  />
-    Add New Department
-  </button>
-</div>
+            <h2 className="text-xl font-semibold"></h2>
+            <button
+              type="button"
+              onClick={() => {
+                setParentDepartmentName("");
+                openAddModal(null);
+              }} // pass null since it's a new one
+              className="flex items-center gap-2 px-4 py-2  text-white rounded-lg shadow transition"
+              style={{ backgroundColor: theme.colors.drawerBackgroundColor }}
+            >
+              <Plus_svg
+                width={20}
+                height={20}
+                className="text-white [&_path]:fill-white"
+              />
+              Add New Department
+            </button>
+          </div>
         ))}
       <table className="w-full border border-gray-200 rounded-lg border-separate border-spacing-y-2">
         <thead className="bg-gray-100">
           <tr>
-            <th className="px-4 py-2 text-left">Department</th>
+            <th className="px-4 py-2 text-left">{labelDept.display}</th>
             <th className="px-4 py-2 text-left">Description</th>
             <th className="px-4 py-2 text-left">Actions</th>
           </tr>
@@ -460,19 +495,27 @@ const location = useLocation();
           {tooltip.text}
         </div>
       )}
-<AlertBox
-          visible={alertVisible}
-          onCloseAlert={closeAlert}
-          message={message}
-        />
+      <AlertBox
+        visible={alertVisible}
+        onCloseAlert={closeAlert}
+        message={message}
+      />
       {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-semibold mb-4">
-              {isEditing ? "Edit Department" :  parentDepartmentName===""? "Add Department":"Add Sub-Department"}
+              {isEditing
+                ? "Edit Department"
+                : parentDepartmentName === ""
+                ? "Add Department"
+                : "Add Sub-Department"}
             </h2>
-          { parentDepartmentName!==""? <h3>Parent Department: {parentDepartmentName}</h3>  :<></>}
+            {parentDepartmentName !== "" ? (
+              <h3>Parent Department: {parentDepartmentName}</h3>
+            ) : (
+              <></>
+            )}
             <input
               type="text"
               placeholder="Name"
@@ -507,41 +550,45 @@ const location = useLocation();
                 className="w-16 h-10 p-0 border rounded"
               />
             </div> */}
-             <div className="flex gap-6">
-      {/* Primary Color Picker */}
-      <div className="flex flex-col items-center p-4 border rounded-lg shadow bg-white w-1/2">
-        <p className="mb-2 font-medium">
-          Primary Color:{" "}
-          <span className="font-mono">{currentDepartment.department_color}</span>
-        </p>
-        <ChromePicker
-          color={currentDepartment.department_color || "#ffffff"}
-          onChangeComplete={(color) =>
-            setCurrentDepartment((prev) => ({
-              ...prev,
-              department_color: color.hex,
-            }))
-          }
-        />
-      </div>
+            <div className="flex gap-6">
+              {/* Primary Color Picker */}
+              <div className="flex flex-col items-center p-4 border rounded-lg shadow bg-white w-1/2">
+                <p className="mb-2 font-medium">
+                  Primary Color:{" "}
+                  <span className="font-mono">
+                    {currentDepartment.department_color}
+                  </span>
+                </p>
+                <ChromePicker
+                  color={currentDepartment.department_color || "#ffffff"}
+                  onChangeComplete={(color) =>
+                    setCurrentDepartment((prev) => ({
+                      ...prev,
+                      department_color: color.hex,
+                    }))
+                  }
+                />
+              </div>
 
-      {/* Secondary Color Picker */}
-      <div className="flex flex-col items-center p-4 border rounded-lg shadow bg-white w-1/2">
-        <p className="mb-2 font-medium">
-          Secondary Color:{" "}
-          <span className="font-mono">{currentDepartment.department_second_color}</span>
-        </p>
-        <ChromePicker
-          color={currentDepartment.department_second_color || "#ffffff"}
-          onChangeComplete={(color) =>
-            setCurrentDepartment((prev) => ({
-              ...prev,
-              department_second_color: color.hex,
-            }))
-          }
-        />
-      </div>
-    </div>
+              {/* Secondary Color Picker */}
+              <div className="flex flex-col items-center p-4 border rounded-lg shadow bg-white w-1/2">
+                <p className="mb-2 font-medium">
+                  Secondary Color:{" "}
+                  <span className="font-mono">
+                    {currentDepartment.department_second_color}
+                  </span>
+                </p>
+                <ChromePicker
+                  color={currentDepartment.department_second_color || "#ffffff"}
+                  onChangeComplete={(color) =>
+                    setCurrentDepartment((prev) => ({
+                      ...prev,
+                      department_second_color: color.hex,
+                    }))
+                  }
+                />
+              </div>
+            </div>
             <div className="flex justify-end gap-2 mt-5">
               <button
                 onClick={() => setModalOpen(false)}
@@ -550,7 +597,8 @@ const location = useLocation();
                 Cancel
               </button>
               <button
-                onClick={handleAddDepartment} style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                onClick={handleAddDepartment}
+                style={{ backgroundColor: theme.colors.drawerBackgroundColor }}
                 className="px-4 py-2 text-white rounded"
               >
                 {isEditing ? "Save" : "Add"}

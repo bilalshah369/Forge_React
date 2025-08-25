@@ -5,12 +5,16 @@ import { Edit, Trash2 } from "lucide-react";
 import { deleteDesignation, GetDesignationByPage } from "@/utils/Designation";
 import { DesignationModal } from "./DesignationModal";
 import AlertBox from "@/components/ui/AlertBox";
+import { useLabels } from "../edit-field-labels/LabelContext";
 
- const Designations: React.FC = () => {
+const Designations: React.FC = () => {
   const [designations, setDesignations] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editDesignation, setEditDesignation] = React.useState(null);
-
+  const { labels } = useLabels();
+  const labelDesignation = labels["designation"] || {
+    display: "Designation",
+  };
   /* Alert states */
   const [alertVisible, setAlertVisible] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState("");
@@ -34,7 +38,7 @@ import AlertBox from "@/components/ui/AlertBox";
       order_no: 1,
     },
     {
-      label: "Designation",
+      label: labelDesignation.display,
       key: "designation_name",
       visible: true,
       type: "string",

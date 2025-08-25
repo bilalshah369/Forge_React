@@ -5,12 +5,17 @@ import { Header } from "../workspace/PMView";
 import { ClassificationModal } from "./AddClassificationModal";
 import { Edit, Trash2 } from "lucide-react";
 import AlertBox from "@/components/ui/AlertBox";
+import { useLabels } from "../edit-field-labels/LabelContext";
 
- const Classifications: React.FC = () => {
+const Classifications: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
   const [classification, setClassification] = React.useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [editClassification, setEditClassification] = React.useState(null);
+  const { labels } = useLabels();
+  const labelClassification = labels["classification_name"] || {
+    display: "Classification",
+  };
 
   /* Alert states */
   const [alertVisible, setAlertVisible] = React.useState(false);
@@ -35,7 +40,7 @@ import AlertBox from "@/components/ui/AlertBox";
       order_no: 1,
     },
     {
-      label: "Classification",
+      label: labelClassification.display,
       key: "classification_name",
       visible: true,
       type: "string",
