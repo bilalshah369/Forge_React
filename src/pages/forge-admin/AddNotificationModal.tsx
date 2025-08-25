@@ -1,6 +1,8 @@
 import { AddNotification } from "@/utils/Notification";
+import { convertUTCtoLocalDateOnly } from "@/utils/util";
 import { X } from "lucide-react";
 import React, { useState, useEffect } from "react";
+import { DatePicker } from "rsuite";
 
 interface AddNotificationModalProps {
   visible: boolean;
@@ -15,7 +17,7 @@ interface NotificationData {
   notification_type: string;
   notification_title: string;
   notification_desc: string;
-  recipients: string;
+  recipient_type: string;
   module?: string;
   notification_action?: string;
   start_date?: string;
@@ -35,7 +37,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
     notification_type: "",
     notification_title: "",
     notification_desc: "",
-    recipients: "",
+    recipient_type: "",
     module: "",
     notification_action: "",
     start_date: "",
@@ -50,6 +52,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
     if (notificationToEdit) {
       debugger;
       setFormData(notificationToEdit);
+      
     }
     else
     {
@@ -58,7 +61,7 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
     notification_type: "",
     notification_title: "",
     notification_desc: "",
-    recipients: "",
+    recipient_type: "",
     module: "",
     notification_action: "",
     start_date: "",
@@ -96,8 +99,8 @@ const AddNotificationModal: React.FC<AddNotificationModalProps> = ({
     if (!formData.notification_desc)
       newErrors.notification_desc = "Description is required";
 
-    if (isBroadcast && !formData.recipients)
-      newErrors.recipients = "Recipients are required";
+    if (isBroadcast && !formData.recipient_type)
+      newErrors.recipient_type = "recipient_type are required";
 
     if (isBroadcast && !formData.start_date)
       newErrors.start_date = "Start date is required";
@@ -120,6 +123,7 @@ const handleSave = async (
       //   await new Promise(resolve => setTimeout(resolve, 1000)); // Mock API
       //   onSave(values, mode); // Pass mode to differentiate add vs edit
       //   onClose();
+      values.module="1";
       const response = await AddNotification(values);
       const parsedRes = JSON.parse(response);
       if (parsedRes.status === 'success') {
@@ -157,18 +161,19 @@ const handleSave = async (
 
   return (
      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-        <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-center flex-1">
-            {mode === "add" ? "Add Notification" : "Edit Notification"}
-          </h2>
-          <button
-            onClick={()=>{onClose("")}}
-            className="top-4 right-4 text-gray-500 hover:text-gray-700"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+             <div className="bg-white rounded-md shadow-lg max-h-[90vh] w-full max-w-2xl overflow-y-auto p-6">
+             <div className="flex items-center justify-between mb-4">
+               <h2 className="text-lg font-bold text-center flex-1">
+                 {mode === "add" ? "Add Notification" : "Edit Notification"}
+               </h2>
+               <button
+                onClick={()=>{onClose("")}}
+                 className="top-4 right-4 text-gray-500 hover:text-gray-700"
+               >
+                 <X className="w-5 h-5" />
+               </button>
+             </div>
+       
         
 
         {/* Notification Type */}
@@ -228,15 +233,15 @@ const handleSave = async (
           )}
         </div>
 
-        {/* Recipients */}
+        {/* recipient_type */}
         {isBroadcast && (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
-              <span className="text-red-500">*</span> Recipients
+              <span className="text-red-500">*</span> Recipient Type
             </label>
             <select
-              name="recipients"
-              value={formData.recipients}
+              name="recipient_type"
+              value={formData.recipient_type}
               onChange={handleChange}
               className="w-full border rounded-lg p-2"
             >
@@ -244,25 +249,40 @@ const handleSave = async (
               <option value="admin">Only Admins</option>
               <option value="all">All Users</option>
             </select>
-            {errors.recipients && (
-              <p className="text-red-500 text-sm">{errors.recipients}</p>
+            {errors.recipient_type && (
+              <p className="text-red-500 text-sm">{errors.recipient_type}</p>
             )}
           </div>
         )}
 
-        {/* Start Date */}
-        {isBroadcast && (
+        {/* Start Date isBroadcast */}
+        {true && (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
               <span className="text-red-500">*</span> Start Date
             </label>
-            <input
+            {/* <input
               type="date"
               name="start_date"
               value={formData.start_date || ""}
               onChange={handleChange}
               className="w-full border rounded-lg p-2"
-            />
+            /> */}
+         
+
+              <DatePicker
+                              oneTap
+                              appearance="default"
+                              value={convertUTCtoLocalDateOnly(formData.start_date)}
+                              onChange={(date) => {
+                                setFormData((prev) => ({ ...prev, ["start_date"]: date?.toDateString() }));
+                              }}
+                              format="MM/dd/yyyy"
+                              className="w-full"
+                              placement="bottomEnd"
+                              placeholder="mm/dd/yyyy"
+                              editable={false}
+                            />
             {errors.start_date && (
               <p className="text-red-500 text-sm">{errors.start_date}</p>
             )}
@@ -270,18 +290,31 @@ const handleSave = async (
         )}
 
         {/* End Date */}
-        {isBroadcast && (
+        {true && (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
               <span className="text-red-500">*</span> End Date
             </label>
-            <input
+            {/* <input
               type="date"
               name="end_date"
               value={formData.end_date || ""}
               onChange={handleChange}
               className="w-full border rounded-lg p-2"
-            />
+            /> */}
+            <DatePicker
+                              oneTap
+                              appearance="default"
+                              value={convertUTCtoLocalDateOnly(formData.end_date)}
+                              onChange={(date) => {
+                                setFormData((prev) => ({ ...prev, ["end_date"]: date?.toDateString() }));
+                              }}
+                              format="MM/dd/yyyy"
+                              className="w-full"
+                              placement="bottomEnd"
+                              placeholder="mm/dd/yyyy"
+                              editable={false}
+                            />
             {errors.end_date && (
               <p className="text-red-500 text-sm">{errors.end_date}</p>
             )}

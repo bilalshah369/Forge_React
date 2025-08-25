@@ -28,7 +28,7 @@ export default function NotificationBar() {
 
   useEffect(() => {
     fetchUserNotifications(1);
-  }, []);
+  }, [localStorage.getItem("ID")]);
 
   const fetchUserNotifications = async (newPage = 1) => {
     if (isLoading || (newPage !== 1 && !hasMore)) return;
@@ -48,7 +48,7 @@ export default function NotificationBar() {
           newPage === 1 ? newNotifications : [...prev, ...newNotifications]
         );
         setUnreadCount(parsedRes.unread || 0);
-
+debugger;
         if (newNotifications.length < pageSize) {
           setHasMore(false);
         } else {
@@ -68,7 +68,7 @@ export default function NotificationBar() {
     projectId: string
   ) => {
     MarkNotificationAsRead({ notification_recipient_id: nrid });
-    window.location.href = `${url}/${projectId}`;
+    window.location.href = `/${url}?projectId=${projectId}`;
     setIsModalVisible(false);
   };
 

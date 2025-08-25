@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../workspace/PMView";
 import { GetProjectApproval, UpdateProjectApproval } from "@/utils/Intake";
 import AdvancedDataTable from "@/components/ui/AdvancedDataTable";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -15,6 +15,9 @@ import AlertBox from "@/components/ui/AlertBox";
 import { useTheme } from "@/themes/ThemeProvider";
 
 const IntakeApprovalPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+     const projectIdr = searchParams.get("projectId");
+     const [projectId, setProjectId] = useState<number | null>(null);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [headers, setHeaders] = useState<Header[]>([
@@ -29,7 +32,7 @@ const IntakeApprovalPage: React.FC = () => {
   const [approvalProjects, setApprovalProjects] = useState<any[]>([]);
   const [isCommentBoxOpen, setIsCommentBoxOpen] = useState(false);
 
-  const [projectId, setProjectId] = useState<number | null>(null);
+  
   const [statusId, setStatusId] = useState<number | null>(null);
   const [approvalType, setApprovalType] = useState<string>("");
   const [sequenceId, setSequenceId] = useState<number | null>(null);
@@ -54,7 +57,18 @@ const IntakeApprovalPage: React.FC = () => {
       const response = await GetProjectApproval({ PageNo: 1, PageSize: 10 });
       const result = JSON.parse(response);
       if (result?.data && Array.isArray(result.data)) {
-        setApprovalProjects(result.data.slice(0, 5));
+if(projectIdr)
+{
+const filtered = result.data.filter(item => item.project_id ===projectIdr);
+
+        // Assign only filtered results
+          setApprovalProjects(filtered);
+}
+else
+{
+  setApprovalProjects(result.data);
+}
+        
       } else {
         setApprovalProjects([]);
       }

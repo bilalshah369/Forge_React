@@ -16,7 +16,7 @@ import {
 } from "@/utils/ApprovedProjects";
 import { GetMasterDataPM, GetPlanChangeProjects } from "@/utils/PM";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import PlanApprovalModal from "../Modals/PlanApprovalModal";
 export interface Header {
   label: string;
@@ -35,6 +35,9 @@ const options = {
   movetoapprove: false,
 };
 const ApprovedProjectList = () => {
+ 
+    const [searchParams] = useSearchParams();
+    const projectId = searchParams.get("projectId");
   const [headers, setHeaders] = useState<Header[]>([
     {
       label: "#",
@@ -515,23 +518,35 @@ const ApprovedProjectList = () => {
     (async function () {
       FetchMasterDataPM("ApprovedProjectList");
       //setLoading(false);
-      const filters = location?.state?.filters || {};
-      if (filters) {
-        setSelectedDepartment(filters.departments || "");
-        setSelectedStatus(filters.status || "");
-        setSearchQuery(filters.keyword || "");
-        setProject_id(filters.project_id || "");
+      if(projectId=="")
+      {
+fetchProjects();
+      }
+      else{
         fetchProjectsWithFilters({
-          project_owner_dept: filters.departments || "",
-          status: filters.status || "",
-          keyword: filters.keyword || "",
-          project_id: filters.project_id || "",
+        
+          project_id: projectId || "",
           PageNo: 1,
           PageSize: rowsPerPage,
         });
-      } else {
-        fetchProjects();
       }
+      // const filters = location?.state?.filters || {};
+      // if (filters) {
+      //   setSelectedDepartment(filters.departments || "");
+      //   setSelectedStatus(filters.status || "");
+      //   setSearchQuery(filters.keyword || "");
+      //   setProject_id(filters.project_id || "");
+      //   fetchProjectsWithFilters({
+      //     project_owner_dept: filters.departments || "",
+      //     status: filters.status || "",
+      //     keyword: filters.keyword || "",
+      //     project_id: filters.project_id || "",
+      //     PageNo: 1,
+      //     PageSize: rowsPerPage,
+      //   });
+      // } else {
+      //   fetchProjects();
+      // }
       fetchPendingProjects();
     })();
   }, [location]); // Runs again on location change
