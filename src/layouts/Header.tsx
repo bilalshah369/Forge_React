@@ -132,22 +132,22 @@ export default function Header() {
   }, [localStorage.getItem("ID")]);
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
-       {/* <button
+      {/* <button
         className="lg:hidden flex items-center justify-center  rounded hover:bg-gray-100"
         onClick={toggleSidebar}
       >
         <Menu className="h-5 w-5 text-gray-700" />
       </button>  */}
       <div className="flex items-center gap-4">
-           {/* <SidebarTrigger className="p-2">
+        {/* <SidebarTrigger className="p-2">
             <Menu className="h-4 w-4" />
           </SidebarTrigger>  */}
-          <button
-        className="flex items-center justify-center  rounded hover:bg-gray-100"
-        onClick={toggleSidebar}
-      >
-        <Menu className="h-5 w-5 text-gray-700" />
-      </button>
+        <button
+          className="flex items-center justify-center  rounded hover:bg-gray-100"
+          onClick={toggleSidebar}
+        >
+          <Menu className="h-5 w-5 text-gray-700" />
+        </button>
         <div className="flex items-center gap-2">
           {
             company_name_user?<><div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
@@ -231,20 +231,16 @@ export default function Header() {
                 <div className="w-3 h-3 rounded-full bg-blue-500"></div>
               </div> */}
               <div className="flex items-center gap-2">
-      {themes.map((t) => (
-        <button
-          key={t.key}
-          onClick={() => setTheme(t.key as any)}
-          className="p-2 rounded-full hover:scale-110 transition-transform"
-        >
-          <Circle_svg
-            height={20}
-            width={20}
-            fill={t.color}
-          />
-        </button>
-      ))}
-    </div>
+                {themes.map((t) => (
+                  <button
+                    key={t.key}
+                    onClick={() => setTheme(t.key as any)}
+                    className="p-2 rounded-full hover:scale-110 transition-transform"
+                  >
+                    <Circle_svg height={20} width={20} fill={t.color} />
+                  </button>
+                ))}
+              </div>
 
               {/* Progress Bar */}
               <div className="w-full bg-muted rounded-full h-2">
@@ -264,7 +260,10 @@ export default function Header() {
                 <span className="text-sm">View/Edit Profile</span>
               </DropdownMenuItem>
 
-              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2 cursor-pointer">
+              <DropdownMenuItem
+                className="flex items-center gap-3 px-3 py-2 cursor-pointer"
+                onClick={() => navigate("/ResetPassword")}
+              >
                 <Key className="h-4 w-4" />
                 <span className="text-sm">Reset Password</span>
               </DropdownMenuItem>
