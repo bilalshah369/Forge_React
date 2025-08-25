@@ -25,38 +25,42 @@ export default function AdminPanel() {
     display: "Designation",
     placeholder: "Enter Designation",
     dropdown: "Select Designation",
+    plural: "Designations",
   };
   const labelDepartment = labels["department"] || {
     display: "Department",
     placeholder: "Enter Department",
     dropdown: "Select Department",
+    plural: "Departments",
   };
   const labelRoles = labels["role_name"] || {
     display: "Role",
     placeholder: "Enter Role",
     dropdown: "Select Role",
+    plural: "Roles",
   };
   const labelClassification = labels["classification_name"] || {
     display: "Classification",
     placeholder: "Enter Classification",
     dropdown: "Select Classification",
+    plural: "Classifications",
   };
   const labelApplication = labels["application_name"] || {
     display: "Impacted Application",
     placeholder: "Enter Application",
     dropdown: "Select Application",
+    plural: "Impacted Applications",
   };
 
   const items = [
     {
       icon: <Building2 size={36} />,
       label: "Company Details",
-
       url: "/Adminpanel/CompanyDetailPage",
     },
     {
       icon: <Network size={36} />,
-      label: "Departments",
+      label: labelDepartment.plural,
       url: "/Adminpanel/DepartmentList",
     },
     {
@@ -76,7 +80,7 @@ export default function AdminPanel() {
     },
     {
       icon: <Dot size={36} />,
-      label: labelApplication.display,
+      label: labelApplication.plural,
       url: "/Adminpanel/impacted-applications",
     },
     {

@@ -53,6 +53,7 @@ import { ClassificationModal } from "../classifications/AddClassificationModal";
 import { ApplicationModal } from "../impacted-apps/ImpactedAppsModal";
 import { ProgramsModal } from "../goals/ProgramsModal";
 import { useTheme } from "@/themes/ThemeProvider";
+import { useLabels } from "../edit-field-labels/LabelContext";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export interface Header {
@@ -288,16 +289,81 @@ const NewIntake = () => {
   //const route = useRoutes();
   //const status = route.params?.status ?? null; Bilal
 
-  const { labels } = { labels: {} }; //useLabels();
+  const { labels } = useLabels();
   const labelClassification = labels["classification_name"] || {
     display: "Classification",
     placeholder: "Enter Classification",
     dropdown: "Select Classification",
   };
-  const labelApplication = labels["application_name"] || {
-    display: "Application",
-    placeholder: "Enter Application",
-    dropdown: "Select Application",
+  const labelImpFunc = labels["impacted_function"] || {
+    display: "Impacted Function",
+    placeholder: "Enter Impacted Function",
+    dropdown: "Select Impacted Function",
+  };
+  const labelBusOwner = labels["business_stakeholder_user_name"] || {
+    display: "Business Owner",
+    placeholder: "Enter Business Owner",
+    dropdown: "Select Business Owner",
+  };
+  const labelBusOwnerDept = labels["business_stakeholder_dept_name"] || {
+    display: "Business Owner Department",
+    placeholder: "Enter Business Owner Department",
+    dropdown: "Select Business Owner Department",
+  };
+  const labelProjOwner = labels["project_owner"] || {
+    display: "Project Owner",
+    placeholder: "Enter Project Owner",
+    dropdown: "Select Project Owner",
+  };
+  const labelProjOwnerDept = labels["project_owner_dept"] || {
+    display: "Project Owner Department",
+    placeholder: "Enter Project Owner Department",
+    dropdown: "Select Project Owner Department",
+  };
+  const labelPropStart = labels["proposed_start_date"] || {
+    display: "Proposed Start Date",
+    placeholder: "Enter Proposed Start Date",
+    dropdown: "Select Proposed Start Date",
+  };
+  const labelPropEnd = labels["proposed_end_date"] || {
+    display: "Proposed End Date",
+    placeholder: "Enter Proposed End Date",
+    dropdown: "Select Proposed End Date",
+  };
+  const labelGoLiveDate = labels["golive_date"] || {
+    display: "Go-Live Date",
+    placeholder: "Enter Go-Live Date",
+    dropdown: "Select Go-Live Date",
+  };
+  const labelBusinessProb = labels["business_problem"] || {
+    display: "Business Description",
+    placeholder: "Enter Business Description",
+    dropdown: "Select Business Description",
+  };
+  const labelScopeDef = labels["scope_definition"] || {
+    display: "Scope Definition",
+    placeholder: "Enter Scope Definition",
+    dropdown: "Select Scope Definition",
+  };
+  const labelKeyAssumption = labels["key_assumption"] || {
+    display: "Key Assumptions",
+    placeholder: "Enter Key Assumptions",
+    dropdown: "Select Key Assumptions",
+  };
+  const labelBenefits = labels["benefits_roi"] || {
+    display: "Benefits/ROI",
+    placeholder: "Enter Benefits/ROI",
+    dropdown: "Select Benefits/ROI",
+  };
+  const labelRisk = labels["risk"] || {
+    display: "Risk",
+    placeholder: "Enter Risk",
+    dropdown: "Select Risk",
+  };
+  const labelBudgetImpact = labels["budget_impact"] || {
+    display: "Budget Impact",
+    placeholder: "Enter Budget Impact",
+    dropdown: "Select Budget Impact",
   };
 
   // #region Load Master
@@ -1018,7 +1084,7 @@ const NewIntake = () => {
   const datePickerRefGoLiveDate = useRef(null);
   const impactedFunctionRef = useRef(null);
   const impactedAppRef = useRef(null);
-  const {theme} =useTheme();
+  const { theme } = useTheme();
   useEffect(() => {
     (async function () {
       if (typeof isEditable === "boolean") {
@@ -1311,7 +1377,8 @@ const NewIntake = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Classification <span className="text-red-500">*</span>{" "}
+                  {labelClassification.display}{" "}
+                  <span className="text-red-500">*</span>{" "}
                   <span
                     onClick={() => setClassificationVisible(true)}
                     className="text-blue-600 cursor-pointer ml-1"
@@ -1325,7 +1392,7 @@ const NewIntake = () => {
                   onChange={(e) => setClassification(e.target.value)}
                   value={classification}
                 >
-                  <option value="">Select Classification</option>
+                  <option value="">{labelClassification.dropdown}</option>
                   {(classifications ?? []).map((item) => (
                     <option
                       key={item.classification_id}
@@ -1337,7 +1404,7 @@ const NewIntake = () => {
                 </select>
                 {submitted && !classification && (
                   <p className="text-red-500 text-sm mt-1">
-                    Classification is required
+                    {labelClassification.display} is required
                   </p>
                 )}
                 <ClassificationModal
@@ -1469,14 +1536,14 @@ const NewIntake = () => {
               {/* Row 3 */}
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Impacted Function <span className="text-red-500">*</span>
+                  {labelImpFunc.display} <span className="text-red-500">*</span>
                 </label>
                 {/* <select className="w-full mt-1 p-2 border rounded">
                   <option>Select Departments</option>
                 </select> */}
 
                 <MultiSelectDepartment
-                  placeholder="Select Departments"
+                  placeholder={labelImpFunc.placeholder}
                   departments={departments}
                   selected={
                     impactedFunction?.length > 0
@@ -1494,13 +1561,14 @@ const NewIntake = () => {
                     className="text-red-500 text-sm mt-1"
                     ref={impactedFunctionRef}
                   >
-                    Impacted Function is required
+                    {labelImpFunc.display} is required
                   </p>
                 )}
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Impacted Application <span className="text-red-500">*</span>{" "}
+                  Impacted Application
+                  <span className="text-red-500">*</span>{" "}
                   <span
                     onClick={() => setAppsVisible(true)}
                     className="text-blue-600 cursor-pointer ml-1"
@@ -1511,7 +1579,7 @@ const NewIntake = () => {
                 {applications && (
                   <MultiSelectDropdown
                     items={applications}
-                    placeholder="Select Impacted Application"
+                    placeholder="Select Applications"
                     selected={
                       impactedApp?.length > 0 ? impactedApp?.split(",") : []
                     }
@@ -1644,7 +1712,8 @@ const NewIntake = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Proposed Start Date <span className="text-red-500">*</span>
+                  {labelPropStart.display}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 {/* <input
                   value={startDate}
@@ -1708,7 +1777,7 @@ const NewIntake = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Proposed End Date <span className="text-red-500">*</span>
+                  {labelPropEnd.display} <span className="text-red-500">*</span>
                 </label>
                 {/* <input
                   value={endDate}
@@ -1769,7 +1838,8 @@ const NewIntake = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Go-live Date <span className="text-red-500">*</span>
+                  {labelGoLiveDate.display}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 {/* <input
                   value={goLiveDate}
@@ -1820,7 +1890,7 @@ const NewIntake = () => {
                     className="text-red-500 text-sm mt-1"
                     ref={datePickerRefGoLiveDate}
                   >
-                    Go-live date is required
+                    {labelGoLiveDate.display} is required
                   </p>
                 )}
                 {submitted && new Date(goLiveDate) > new Date(endDate) && (
@@ -1828,7 +1898,7 @@ const NewIntake = () => {
                     className="text-red-500 text-sm mt-1"
                     ref={datePickerRefGoLiveDate}
                   >
-                    Go live date must be before end date
+                    {labelGoLiveDate.display} must be before end date
                   </p>
                 )}
               </div>
@@ -1841,7 +1911,8 @@ const NewIntake = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Business Owner <span className="text-red-500">*</span>
+                  {labelBusOwner.display}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <select
                   className="w-full mt-1 p-2 border rounded"
@@ -1854,8 +1925,9 @@ const NewIntake = () => {
                     );
                     //fetchPrograms(e.target.value);
                   }}
+                  a
                 >
-                  <option value="">Select Business Owner</option>
+                  <option value="">{labelBusOwner.dropdown}</option>
                   {(users ?? []).map((item) => (
                     <option key={item.user_id} value={item.user_id?.toString()}>
                       {item.first_name + " " + item.last_name}
@@ -1864,20 +1936,20 @@ const NewIntake = () => {
                 </select>
                 {submitted && !businessOwner && (
                   <p className="text-red-500 text-sm mt-1">
-                    Business Owner is required
+                    {labelBusOwner.display} is required
                   </p>
                 )}
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Bussiness Owner Department{" "}
+                  {labelBusOwnerDept.display}{" "}
                   <span className="text-red-500">*</span>
                 </label>
                 <input
                   value={mapUserIdToDeptName(parseInt(businessOwner)) ?? ""}
                   type="text"
                   readOnly
-                  placeholder="Please Select Business Owner"
+                  placeholder={`Please select ${labelBusOwner.display}`}
                   className="w-full mt-1 p-2 border rounded"
                 />
               </div>
@@ -1913,7 +1985,8 @@ const NewIntake = () => {
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Project Owner <span className="text-red-500">*</span>
+                  {labelProjOwner.display}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <select
                   className="w-full mt-1 p-2 border rounded"
@@ -1927,7 +2000,7 @@ const NewIntake = () => {
                     //fetchPrograms(e.target.value);
                   }}
                 >
-                  <option value="">Select Project Owner</option>
+                  <option value="">{labelProjOwner.dropdown}</option>
                   {(users ?? []).map((item) => (
                     <option key={item.user_id} value={item.user_id?.toString()}>
                       {item.first_name + " " + item.last_name}
@@ -1936,13 +2009,13 @@ const NewIntake = () => {
                 </select>
                 {submitted && !projectOwner && (
                   <p className="text-red-500 text-sm mt-1">
-                    Project Owner is required
+                    {labelProjOwner.display} is required
                   </p>
                 )}
               </div>
               <div className="col-span-1">
                 <label className="block text-sm font-medium">
-                  Project Owner Department{" "}
+                  {labelProjOwnerDept.display}
                   <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -2056,14 +2129,14 @@ const NewIntake = () => {
               {/* Row 1 */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Business Problem/Description{" "}
+                  {labelBusinessProb.display}
                   <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   required
                   value={businessProblem}
                   rows={3}
-                  placeholder="Enter Business Problem/Description"
+                  placeholder={"Enter " + labelBusinessProb.display}
                   className="w-full p-2 border rounded"
                   onChange={(e) => {
                     // const newTotal = e.target.value;
@@ -2073,18 +2146,18 @@ const NewIntake = () => {
                 />
                 {submitted && !businessProblem && (
                   <p className="text-red-500 text-sm mt-1">
-                    Business Problem/Description is required
+                    {labelBusinessProb.display} is required
                   </p>
                 )}
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Scope Definition
+                  {labelScopeDef.display}
                 </label>
                 <textarea
                   value={scopeDefinition}
                   rows={3}
-                  placeholder="Enter Scope Definition"
+                  placeholder={"Enter " + labelScopeDef.display}
                   className="w-full p-2 border rounded"
                   onChange={(e) => {
                     // const newTotal = e.target.value;
@@ -2097,12 +2170,12 @@ const NewIntake = () => {
               {/* Row 2 */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Key Assumption
+                  {labelKeyAssumption.display}
                 </label>
                 <textarea
                   value={keyAssumption}
                   rows={3}
-                  placeholder="Enter Key Assumption"
+                  placeholder={"Enter " + labelKeyAssumption.display}
                   className="w-full p-2 border rounded"
                   onChange={(e) => {
                     // const newTotal = e.target.value;
@@ -2113,12 +2186,12 @@ const NewIntake = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Benefits/ROI
+                  {labelBenefits.display}
                 </label>
                 <textarea
                   value={benefitsROI}
                   rows={3}
-                  placeholder="Enter Benefits/ROI"
+                  placeholder={"Enter " + labelBenefits.display}
                   className="w-full p-2 border rounded"
                   onChange={(e) => {
                     // const newTotal = e.target.value;
@@ -2130,11 +2203,13 @@ const NewIntake = () => {
 
               {/* Row 3 */}
               <div>
-                <label className="block text-sm font-medium mb-1">Risk</label>
+                <label className="block text-sm font-medium mb-1">
+                  {labelRisk.display}
+                </label>
                 <textarea
                   value={risk}
                   rows={3}
-                  placeholder="Enter Risk"
+                  placeholder={"Enter " + labelRisk.display}
                   className="w-full p-2 border rounded"
                   onChange={(e) => {
                     // const newTotal = e.target.value;
@@ -2145,7 +2220,8 @@ const NewIntake = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Budget Impact <span className="text-red-500">*</span>
+                  {labelBudgetImpact.display}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
 
                 <select
@@ -2156,7 +2232,7 @@ const NewIntake = () => {
                     setBudgetImpact(e.target.value);
                   }}
                 >
-                  <option value="">Select Budget Impact</option>
+                  <option value="">{labelBudgetImpact.dropdown}</option>
                   {(BudgetImpactedList ?? []).map((item) => (
                     <option key={item.id} value={item.id?.toString()}>
                       {item.value}
@@ -2165,7 +2241,7 @@ const NewIntake = () => {
                 </select>
                 {submitted && !budgetImpact && (
                   <p className="text-red-500 text-sm mt-1">
-                    Budget Impact is required
+                    {`${labelBudgetImpact.display}`} is required
                   </p>
                 )}
               </div>
@@ -2196,13 +2272,19 @@ const NewIntake = () => {
                 <button
                   type="submit"
                   form="intake-main-form"
-                  className="flex items-center gap-2  text-white px-4 py-2 rounded transition" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                  className="flex items-center gap-2  text-white px-4 py-2 rounded transition"
+                  style={{
+                    backgroundColor: theme.colors.drawerBackgroundColor,
+                  }}
                   onClick={() => {
                     setMode("review");
                     //setIsReviewPopupVisible(true);
                   }}
                 >
-                  <ReviewSVG fill="white" className="h-5 w-5 [&_path]:fill-white" />
+                  <ReviewSVG
+                    fill="white"
+                    className="h-5 w-5 [&_path]:fill-white"
+                  />
                   Send for Review
                 </button>
               )}
@@ -2213,13 +2295,16 @@ const NewIntake = () => {
                 <button
                   type="submit"
                   form="intake-main-form"
-                  className="flex items-center gap-2 border text-white px-4 py-2 rounded  transition" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                  className="flex items-center gap-2 border text-white px-4 py-2 rounded  transition"
+                  style={{
+                    backgroundColor: theme.colors.drawerBackgroundColor,
+                  }}
                   onClick={() => {
                     setMode("approve");
                     //setIsApprovalPopupVisible(true);
                   }}
                 >
-                  <Send_approve_svg  className="h-5 w-5 [&_path]:fill-white"/>
+                  <Send_approve_svg className="h-5 w-5 [&_path]:fill-white" />
                   Send for Approval
                 </button>
               )}
