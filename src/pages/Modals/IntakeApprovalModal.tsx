@@ -413,7 +413,15 @@ isOpen,onClose
             >
               Close
             </button>
-            
+            <button
+                type="button"
+                className="px-6 py-2 text-white rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                onClick={() => {
+                  navigation("/IntakeList/IntakeApproval");
+                }}
+              >
+                View All
+              </button>
           </div>
       </div>
     </div>

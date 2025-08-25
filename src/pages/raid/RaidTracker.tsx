@@ -248,7 +248,7 @@ const RaidTracker = () => {
         dept
       );
       const result = JSON.parse(response);
-      //////debugger;
+      ////////debugger;
       if (result.status === "success") {
         if (result?.data?.length > 0) {
           setBubbleChartData(result);
@@ -346,7 +346,7 @@ const RaidTracker = () => {
         typeof response === "string" ? JSON.parse(response) : response;
       ////console.log(parsedRes.data.resource_types);
       if (parsedRes.status === "success") {
-        ////////debugger;
+        //////////debugger;
         statuses.splice(0, statuses.length);
         const std = parsedRes.data.statuses;
         std.forEach((element: any) => {
@@ -424,7 +424,7 @@ const RaidTracker = () => {
             selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
           }
           onChange={async function (selected: string[]): Promise<void> {
-            ////debugger;
+            //////debugger;
             const worker: any = selected?.join(",");
 
             setSelectedStatus(worker);

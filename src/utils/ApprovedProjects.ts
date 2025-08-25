@@ -18,7 +18,7 @@ export const GetApprovedProjects = async (params: {
     // Set default values for PageNo and PageSize if not provided
     const PageNo = params?.PageNo ?? 1; // Default to page 1
     const PageSize = params?.PageSize ?? 10; // Default to 10 records per page
-    ////debugger;
+    //////debugger;
     const projectIdT = params?.projectId; // Optional project ID
 
     // Construct the URL with pagination and optional projectId
@@ -27,7 +27,7 @@ export const GetApprovedProjects = async (params: {
     }PageNo=${PageNo}&PageSize=${PageSize}`;
 
     const token = localStorage.getItem('Token'); // Retrieve token from storage
-    ////////debugger
+    //////////debugger
     //console.log('Request URL:', uri);
 
     const jsonResult = await GetAsync_with_token(uri, token); // Fetch data with token
@@ -190,7 +190,7 @@ export const InsertMember = async (values: object): Promise<string> => {
 
 export const GetTeamMembers = async (projectId: any): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/approvedProjects/get_project_team?project_id=${projectId}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -199,9 +199,9 @@ export const GetTeamMembers = async (projectId: any): Promise<string> => {
   
     var jsonResult = await GetAsync_with_token(uri, token);
 
-    //////debugger;
+    ////////debugger;
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     //  //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -233,7 +233,7 @@ export const InsertMilestone = async (values: object): Promise<string> => {
 
 export const GetMilestones = async (projectId: any): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/approvedProjects/get_milestones?project_id=${projectId}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -242,7 +242,7 @@ export const GetMilestones = async (projectId: any): Promise<string> => {
  
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     //  //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -323,7 +323,7 @@ export const GetMilestonesResource = async (
 ): Promise<string> => {
   try {
     /* const { milestone_id, project_id } = payload; */
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/approvedProjects/get_milestone_resources?milestone_id=${milestone_id}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -332,7 +332,7 @@ export const GetMilestonesResource = async (
    
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     //  //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -385,7 +385,7 @@ export const InsertCustomField = async (values: object): Promise<string> => {
 
 export const GetCustomFields = async (projectId: any): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/approvedProjects/get_project_custom_fields?project_id=${projectId}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -394,7 +394,7 @@ export const GetCustomFields = async (projectId: any): Promise<string> => {
    
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     //  //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -475,7 +475,7 @@ export const MilestoneChangeRequest = async (
 
 export const GetChangeRequest = async (project_id: number) => {
   try {
-    //////////debugger;
+    ////////////debugger;
     var uri = `${BASE_URL}/projectChanges/get_filled_data_for_change_requests?project_id=${project_id}`;
     const token = localStorage.getItem('Token');
     var jsonRes = await GetAsync_with_token(uri, token);

@@ -98,7 +98,7 @@ const [data, setData] = useState<DataItem[]>([]);
   };
 
   const openAddModal = (parentId: number | null) => {
-    debugger;
+    //debugger;
     setIsEditing(false);
     setCurrentParentId(parentId);
     setCurrentDepartment(initialNewDepartmentState);
@@ -106,7 +106,7 @@ const [data, setData] = useState<DataItem[]>([]);
   };
 
   const openEditModal = (dept: Department) => {
-    debugger;
+    //debugger;
     setIsEditing(true);
     setCurrentDepartment({ ...dept });
     setModalOpen(true);
@@ -141,7 +141,7 @@ const [data, setData] = useState<DataItem[]>([]);
   };
 const handleAddDepartment = async () => {
     //console.log('Selected Department Head:', selectedUser);
-debugger;
+//debugger;
     // Check for empty department name
     if (!currentDepartment.department_name.trim()) {
       

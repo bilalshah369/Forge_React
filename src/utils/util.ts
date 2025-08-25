@@ -1,7 +1,7 @@
 // Utility function to format amounts
 export const formatAmountWithoutDollarSign = (amount) => {
   // Ensure the amount is a valid number
-  debugger;
+  //debugger;
   if (amount === null || amount === undefined || isNaN(amount)) {
     return "$"; // Default value for invalid amounts, no decimals
   }
@@ -27,7 +27,7 @@ export const formatAmountWithoutDollarSign = (amount) => {
 };
 
 export const formatAmountWithDollarSign = (amount) => {
-  debugger;
+  //debugger;
   // Ensure the amount is a valid number
   amount=amount?.toString()
   amount=amount.replace(',');

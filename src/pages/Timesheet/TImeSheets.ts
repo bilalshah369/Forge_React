@@ -16,7 +16,7 @@ export const GetTimesheet = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);

@@ -52,7 +52,7 @@ const ResourceRoadmapGantt: React.FC<ChartProps> = ({
 
       const response = await GetUserPermission(decodeBase64(userID || ""));
       const parsedRes = JSON.parse(response);
-      //////debugger;
+      ////////debugger;
       if (parsedRes.status === "success") {
         //console.log(`Permissions of ${userID} fetched successfully`, parsedRes);
         if (parsedRes.data.user_permissions.length > 0) {

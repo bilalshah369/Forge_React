@@ -420,7 +420,7 @@ const fetchAllRole = async () => {
         allSelectedUsersID.filter((id) => id !== mile_id)
       );
     } else {
-      ////debugger
+      //////debugger
       setAllSelectedUsersID([...allSelectedUsersID, mile_id]);
     }
     //console.log('Selected User IDs:', allSelectedUsersID);
@@ -471,7 +471,7 @@ const fetchAllRole = async () => {
       department_id: selectedDeptID,
       user_ids: allSelectedUsersID,
     };
-    debugger;
+    //debugger;
     //console.log('Multiple User Department Payload', payload);
     try {
       const response = await updateMultipleUsersDepartment(payload);

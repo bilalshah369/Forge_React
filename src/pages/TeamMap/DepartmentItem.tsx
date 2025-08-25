@@ -25,7 +25,7 @@ export const DepartmentItem = ({
   setDraggedOverId
 }) => {
   // const [draggedOverId, setDraggedOverId] = useState(null)
-  //debugger;
+  ////debugger;
   const { length } = items;
   const isRoot = level === 0;
 
@@ -65,7 +65,7 @@ export const DepartmentItem = ({
   };
 
   return items.map((item, index) => {
-    //debugger;
+    ////debugger;
     const { department_id,department_color } = item;
     const hasItemBelow = index < length - 1;
     const childrenCount = item.children && item.children.length;

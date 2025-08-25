@@ -103,7 +103,7 @@ export default function AddTeamMemberModal({
     try {
       const response = await GetResources({});
       //console.log(response);
-      ////////debugger;
+      //////////debugger;
       const parsedRes = JSON.parse(response);
       if (parsedRes.status === "success") {
         setMembers(parsedRes.data.resources); // Set the fetched members
@@ -120,7 +120,7 @@ export default function AddTeamMemberModal({
   const FetchProjectDetails = async (projectId: number) => {
     try {
       const response = await GetApprovedProjects({ projectId: projectId }); // Pass projectId here
-      //debugger;
+      ////debugger;
       const parsedRes = JSON.parse(response);
       //console.log('Get Projects Response:', response);
 
@@ -217,9 +217,9 @@ export default function AddTeamMemberModal({
   };
 
   const handleDateChange = (date: Date) => {
-    //debugger;
+    ////debugger;
     const project = approvedProjects[0]; // Assuming a single project
-    //debugger;
+    ////debugger;
     if (project && date) {
       // Parse and normalize dates to midnight
       const projectStartDate = new Date(project.start_date);
@@ -249,7 +249,7 @@ export default function AddTeamMemberModal({
     // Update the state
   };
   const handleEndDateChange = (date: Date) => {
-    //debugger;
+    ////debugger;
     const project = approvedProjects[0]; // Assuming a single project
     if (project && date) {
       // Parse and normalize dates to midnight
@@ -270,7 +270,7 @@ export default function AddTeamMemberModal({
         setEndDate("");
         return;
       } else {
-        ////debugger;
+        //////debugger;
         setEndDate(date); // Format for storage
         setForm({ ...form, endDate: date });
       }
@@ -282,7 +282,7 @@ export default function AddTeamMemberModal({
     //if (!validateForm()) return;
     if (!form.startDate) return;
     if (!form.endDate) return;
-    debugger;
+    //debugger;
     const isUpdating = member?.project_resources_id ? true : false;
     const payload = {
       project_resources_id: changeRequest
@@ -331,12 +331,12 @@ export default function AddTeamMemberModal({
   const {theme} =useTheme();
   useEffect(() => {
     if (isOpen) {
-      debugger;
+      //debugger;
       setSubmitted(false);
       fetchMembers();
       GetRole();
       FetchProjectDetails(parseInt(projectId));
-      debugger;
+      //debugger;
       if (member) {
         // setMemberName(member.resource_name);
         // setMemberId(member.resource_id);

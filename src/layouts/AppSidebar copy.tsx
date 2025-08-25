@@ -185,7 +185,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1">
               {dynamicModules.map((item) => {
-                ////debugger;
+                //////debugger;
                 console.log(dynamicModules);
                 const active = isActive(item.url);
 

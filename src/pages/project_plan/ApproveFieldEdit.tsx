@@ -89,9 +89,9 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
   const getLabelInfo = async (id: string) => {
     try {
       const res = await get_field_change_requests(id, project_id);
-      //debugger;
+      ////debugger;
       const parsedRes = JSON.parse(res);
-//debugger;
+////debugger;
       if (parsedRes.status === "success" && parsedRes.data.length > 0) {
         setLabel({
           ...parsedRes.data[0],
@@ -170,7 +170,7 @@ const ApproveFieldEdit: React.FC<ApproveFieldEditProp> = ({
 
   // ---- Resolve new value names ----
   const getNewNames = (field_id?: string) => {
-    debugger;
+    //debugger;
     switch (field_id) {
       case "classification":
         return MasterUsers?.find(

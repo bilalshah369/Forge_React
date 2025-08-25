@@ -32,7 +32,7 @@ export const InsertDraft = async (values: object): Promise<string> => {
 
 export const GetSequence = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/utils/get_sequence`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -41,7 +41,7 @@ export const GetSequence = async (query: string): Promise<string> => {
    
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     //console.log('jsonResult from API:', jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -225,7 +225,7 @@ export const GetProjectApproval = async (params: {
   PageSize?: number;
 }): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     const PageNo = params?.PageNo ?? 1; // Default to page 1
     const PageSize = params?.PageSize ?? 10; // Default to 10 records per page
@@ -237,7 +237,7 @@ export const GetProjectApproval = async (params: {
     //console.log(uri) ;
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     ////console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -293,7 +293,7 @@ export const UpdateProjectApproval = async (
 };
 export const GetBudgetCategories = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/utils/get_budget_categories`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -301,7 +301,7 @@ export const GetBudgetCategories = async (query: string): Promise<string> => {
     // //console.log(uri);``
     var jsonResult = await GetAsync_with_token(uri, token);
     // //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     ////console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -314,7 +314,7 @@ export const GetBudgetSubCategories = async (
   query: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/utils/get_budget_subcategories?category_id=${query}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -322,7 +322,7 @@ export const GetBudgetSubCategories = async (
     ////console.log(uri);``
     var jsonResult = await GetAsync_with_token(uri, token);
     ////console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     // //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -332,7 +332,7 @@ export const GetBudgetSubCategories = async (
 };
 export const GetBudgetDetails = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/utils/get_budget_details?project_id=${query}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -340,7 +340,7 @@ export const GetBudgetDetails = async (query: string): Promise<string> => {
     ////console.log(uri);``
     var jsonResult = await GetAsync_with_token(uri, token);
     ////console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     // //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -355,7 +355,7 @@ export const InsertBudgetDetails = async (
   try {
     //
     //const UserID = localStorage.getItem('UserID');
-    ////debugger;
+    //////debugger;
     var uri = `${BASE_URL}/utils/insert_budget_details`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
     const token = localStorage.getItem('Token');
@@ -374,7 +374,7 @@ export const InsertBudgetDetailsSingle = async (
   try {
     //  
     //const UserID = localStorage.getItem('UserID');
-    ////debugger;
+    //////debugger;
     var uri = `${BASE_URL}/utils/insert_budget_details_project_plan`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
     const token = localStorage.getItem('Token');
@@ -522,7 +522,7 @@ export const GetImpactedApplication = async (
 
     var jsonResult = await GetAsync_with_token(uri, token);
 
-    ////////debugger
+    //////////debugger
     // //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -565,7 +565,7 @@ export const InsertROIDetails = async (values: object): Promise<string> => {
 };
 export const GetROIDetails = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/get_project_roi?project_id=${query}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -573,7 +573,7 @@ export const GetROIDetails = async (query: string): Promise<string> => {
     ////console.log(uri);``
     var jsonResult = await GetAsync_with_token(uri, token);
     ////console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     // //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
@@ -617,7 +617,7 @@ export const InsertBulkResources = async (
 };
 export const GetDependentProjects = async (): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/projectDetails/get_project_names_for_dependency`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -625,7 +625,7 @@ export const GetDependentProjects = async (): Promise<string> => {
     ////console.log(uri);``
     var jsonResult = await GetAsync_with_token(uri, token);
     ////console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     // //console.log("jsonResult from API:", jsonResult);
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {

@@ -181,9 +181,9 @@ export default function RegistrationWizard() {
       //console.log('Get Projects Response:', parsedRes);
   
       const project = parsedRes.data.projects[0]; // Assuming the first project in the list
-      //debugger;
-      setprojectObj(project);
       ////debugger;
+      setprojectObj(project);
+      //////debugger;
     };
     useEffect(() => {
     if (projectId) {

@@ -88,7 +88,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
     gantt.detachEvent(gantt._myClickHandler);
   }
   gantt._myClickHandler = gantt.attachEvent("onTaskClick", function (id, e) {
-    debugger;
+    //debugger;
     const scrollState = gantt.getScrollState();
     let task1 = gantt.getTask(id);
     console.log("Task Clicked:", task1);
@@ -97,7 +97,7 @@ const MultifeatureGanttMilestone: React.FC<ChartProps> = ({
       var task: any[] = [];
       var links: any[] = [];
       data.forEach((element: any, index: any) => {
-        ////////////debugger;
+        //////////////debugger;
         task.push({
           s_no: element.customer_project_id,
           id: element.project_id,
@@ -643,7 +643,7 @@ const navigation = useNavigate();
     };
 
     window.handleProjectClick = (projectId: string, type: string) => {
-      debugger;
+      //debugger;
       if (type !== "milestone") {
         // navigate("ProjectPreview", {
         //   projectId,
@@ -659,7 +659,7 @@ const navigation = useNavigate();
     };
 
     return () => {
-      debugger;
+      //debugger;
       console.log("Cleaning up MultifeatureGanttMilestone");
       try {
         gantt.clearAll();

@@ -265,7 +265,7 @@ const ApprovedProjectList = () => {
 
       const result = JSON.parse(response);
       //console.log('Get Projects Response:', result);
-      ////debugger;
+      //////debugger;
       if (result?.data?.projects && Array.isArray(result.data.projects)) {
         setProjects(result.data.projects);
         const totalRecords = result.pagination.totalRecords;
@@ -297,7 +297,7 @@ const ApprovedProjectList = () => {
   };
 
   const handleRowsPerPageChange = (newRowsPerPage: number) => {
-    ////////////debugger;
+    //////////////debugger;
     setRowsPerPage(newRowsPerPage);
     setCurrentPage(1);
     fetchProjectsWithFilters({
@@ -310,7 +310,7 @@ const ApprovedProjectList = () => {
   const fetchProjectsWithFilters = async (
     filters: Record<string, any> = {}
   ) => {
-    //////////////debugger;
+    ////////////////debugger;
     // Extract pagination info from filters or set defaults
     const page1 = filters.PageNo || currentPage;
     const pageSize = filters.PageSize || rowsPerPage;
@@ -324,7 +324,7 @@ const ApprovedProjectList = () => {
 
       const response = await GetApprovedProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -388,7 +388,7 @@ const ApprovedProjectList = () => {
       //console.log('Get Projects Response:', result);
 
       if (result?.data && Array.isArray(result.data)) {
-        ////////////////debugger;
+        //////////////////debugger;
         var dk = result.data.filter(
           (m) => m.status === 1 || m.status === 3
         ).length;
@@ -482,7 +482,7 @@ const ApprovedProjectList = () => {
       project_id: selectedProjectId,
       status: Number(selectedDecision) === 0 ? 14 : Number(selectedDecision),
     };
-    //debugger;
+    ////debugger;
     //console.log('Payload:', payload);
 
     try {

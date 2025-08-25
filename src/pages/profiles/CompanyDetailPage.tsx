@@ -88,7 +88,7 @@ const CompanyDetailPage: React.FC<CompanyProfileProps> = ({
 //     const file = e.target.files?.[0];
 //     if (file) {
 //       const fileUrl = URL.createObjectURL(file);
-//       debugger;
+//       //debugger;
 //       setImageUri(fileUrl);
 //       const imageDataPayload = {
 //         fileuri: fileUrl,
@@ -106,7 +106,7 @@ const CompanyDetailPage: React.FC<CompanyProfileProps> = ({
 //   };
 //   const uploadImage = async (imageData: any): Promise<string> => {
 //     try {
-//       //////debugger
+//       ////////debugger
 //       // Step 1: Get the Bearer token
 //       setLoading(true);
 //       const bearerToken =  localStorage.getItem('Token');
@@ -331,7 +331,7 @@ const payload = {
           terms_conditions: customer.terms_conditions || '',
           privacy_policy: customer.privacy_policy || '',
         });
-        // //////debugger
+        // ////////debugger
         // const fetchedUri = await GetCustomersImage(
         //   'e0ea7266-8a9c-41ca-8340-bd9752b05cbf.jpeg',
         // );

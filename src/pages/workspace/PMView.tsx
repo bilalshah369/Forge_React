@@ -432,7 +432,7 @@ const PMView = () => {
   };
   const fetchProjects = async (page = currentPage, pageSize = rowsPerPage) => {
     try {
-      ////////////debugger;
+      //////////////debugger;
       const response = await GetPMProjects({
         PageNo: page,
         PageSize: parseInt(pageSize.toString(), 10),
@@ -470,7 +470,7 @@ const PMView = () => {
     // Extract pagination info from filters or set defaults
     const page = filters.page || currentPage;
     const pageSize = filters.pageSize || rowsPerPage;
-    ////////////////debugger;
+    //////////////////debugger;
     try {
       //setdataLoading(true);
 
@@ -480,7 +480,7 @@ const PMView = () => {
 
       const response = await GetDashProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -515,7 +515,7 @@ const PMView = () => {
   };
 
   const handleRowsPerPageChange = (newRowsPerPage: number) => {
-    ////////////debugger;
+    //////////////debugger;
     setRowsPerPage(newRowsPerPage);
     setCurrentPage(1);
     fetchProjectsWithFilters({

@@ -274,7 +274,7 @@ const IntakeList = () => {
       //console.log('Get Projects Response:', result);
 
       if (result?.data && Array.isArray(result.data)) {
-        ////////////////debugger;
+        //////////////////debugger;
         var dk = result.data.filter(
           (m) => m.status === 1 || m.status === 3
         ).length;
@@ -300,7 +300,7 @@ const IntakeList = () => {
   const fetchProjectsWithFilters = async (
     filters: Record<string, any> = {}
   ) => {
-    //////////////debugger;
+    ////////////////debugger;
     // Extract pagination info from filters or set defaults
     const page = filters.PageNo || currentPage;
     const pageSize = filters.PageSize || rowsPerPage;
@@ -314,7 +314,7 @@ const IntakeList = () => {
 
       const response = await GetProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 

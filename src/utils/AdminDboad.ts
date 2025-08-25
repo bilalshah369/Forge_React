@@ -7,7 +7,7 @@ import {GetAsync_with_token,PostAsync,
    PostAsync_with_token} from '../services/rest_api_service'
    export const MainDrawerNav = async (query:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = await AsyncStorage.getItem('UserID');
       const uri = `${BASE_URL}/master/role_modules?role_id=${query}`;
       //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -15,7 +15,7 @@ import {GetAsync_with_token,PostAsync,
       //console.log(uri);``
       const jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       //console.log("jsonResult from API:", jsonResult);
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
@@ -31,7 +31,7 @@ export const GetutilizedResource = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     let uri = `${BASE_URL}/chartsApis/resource_utilization`;
     const queryParams = new URLSearchParams();
@@ -58,7 +58,7 @@ if (project_id) {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -67,7 +67,7 @@ if (project_id) {
 };
 export const getChartsData = async (): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/chartsApis/initial_data_load`;
     //let uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -75,7 +75,7 @@ export const getChartsData = async (): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -220,7 +220,7 @@ export const GetBOProjectsWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/chartsApis/get_dashboard_project_business_owner`;
-    ////////////debugger;
+    //////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -238,7 +238,7 @@ export const GetBOProjectsWithFilters = async (filters: {
     if (filters.status) {
       queryParams.append('status', filters.status);
     }
-    ////////debugger;
+    //////////debugger;
     if (filters.PageNo) {
       queryParams.append('PageNo', filters.PageNo.toString());
     }
@@ -303,7 +303,7 @@ export const GetBOProjectsWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    //////////debugger;
+    ////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 

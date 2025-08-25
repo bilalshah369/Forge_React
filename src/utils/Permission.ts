@@ -17,7 +17,7 @@ export const FetchPermission = async (projectId: any): Promise<string> => {
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       //  //console.log("jsonResult from API:", jsonResult);
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {

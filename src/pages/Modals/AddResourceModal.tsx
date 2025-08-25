@@ -75,7 +75,7 @@ const [designationList, setDesignationList] = useState<any[]>();
   // Load initialData when modal opens
   useEffect(() => {
     if (initialData) {
-      debugger;
+      //debugger;
       setFormData({
         resource_id:initialData.resource_id || '',
         first_name: initialData.first_name || '',
@@ -126,7 +126,7 @@ const addUser = async (payload: any) => {
       payload.resource_type_id = payload.role_id;
       //console.log(payload);
       const response = await AddResource(payload);
-      ////////////debugger;
+      //////////////debugger;
       const parsedResponse = JSON.parse(response);
       if (parsedResponse.status === 'success') {
         /*  setApiMessage(parsedResponse.message); */
@@ -152,7 +152,7 @@ const addUser = async (payload: any) => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    debugger;
+    //debugger;
      
                 if (initialData && initialData.resource_id) {
                   formData.resource_id = initialData.resource_id;

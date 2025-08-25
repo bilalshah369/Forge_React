@@ -282,7 +282,7 @@ role_id:change.request_data.role_id,
               change_request_id: deleteActionMap[member?.project_resources_id],
             }),
           }));
-          debugger;
+          //debugger;
         const combinedMembers = [
           ...(filteredActiveMembers ?? []),
           ...newMembers,
@@ -296,7 +296,7 @@ role_id:change.request_data.role_id,
             change_request: false,
           }));
       }
-      debugger;
+      //debugger;
       setTeamMembers(finalTeamMembers);
     } catch (error) {
       console.error("Error fetching team members:", error);
@@ -330,7 +330,7 @@ role_id:change.request_data.role_id,
 
   const handleEdit = (member) => {
     //console.log('Edit member:', member);
-   debugger;
+   //debugger;
     setSelectedMember(member);
     setIsEditing(true);
     setIsTeamMemberModalVisible(true);
@@ -387,7 +387,7 @@ role_id:change.request_data.role_id,
     }
   };
   const handleDeleteRequest = async (member: any) => {
-    ////////debugger;
+    //////////debugger;
     try {
       const payload = {
         project_id: projectId,

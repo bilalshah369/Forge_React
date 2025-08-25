@@ -153,7 +153,7 @@ const ADIntegrationList = () => {
       }
     };
     const handleSave = async () => {
-        debugger;
+        //debugger;
     let tempErrors: {[key: string]: string} = {};
     console.log('selectedAD ' + selectedAD);
 

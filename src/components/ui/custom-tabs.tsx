@@ -26,7 +26,7 @@ export default function CustomTabs({ tabs, onClick }: TabsProps) {
             key={tab.to}
             //to={undefined}
             onClick={() => {
-              ////debugger;
+              //////debugger;
               localStorage.setItem("UserState",'AdminDboard');
               if (onClick) {
                 onClick(tab.to);

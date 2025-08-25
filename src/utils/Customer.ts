@@ -26,7 +26,7 @@ export const GetCustomers = async (params?: {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -139,7 +139,7 @@ export const UpdateMailer  = async (values: Object): Promise<string> => {
 
   export const GetMailer = async (query:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = await AsyncStorage.getItem('UserID');
       let customerId = await getCustomerId();
       var uri = `${BASE_URL}/customeradmin/get_customer_mailer`;
@@ -148,7 +148,7 @@ export const UpdateMailer  = async (values: Object): Promise<string> => {
       console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);

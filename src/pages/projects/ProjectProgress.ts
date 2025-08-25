@@ -101,7 +101,7 @@ const getCustomerId = async () => {
 };
 export const GetInprogressProject = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectInProgress/get_inProgress_project?project_id=${query}`;
@@ -110,7 +110,7 @@ export const GetInprogressProject = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -124,7 +124,7 @@ export const GetInprogressProjectWithPagination = async (
   searchQuery?: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     let customerId = await getCustomerId();
     let uri = `${BASE_URL}/projectInProgress/get_inProgress_project?PageNo=${PageNo}&PageSize=${PageSize}`;
 
@@ -136,7 +136,7 @@ export const GetInprogressProjectWithPagination = async (
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -167,7 +167,7 @@ export const GetRecentHistoryProject = async (
   query: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectFlow/get_project_history?project_id=${query}`;
@@ -176,7 +176,7 @@ export const GetRecentHistoryProject = async (
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -185,14 +185,14 @@ export const GetRecentHistoryProject = async (
 };
 export const GetResourceType = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/get_resource_types`;
     const token = localStorage.getItem('Token');
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -244,7 +244,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 
 // export const GetUsers = async (query:string): Promise<string> => {
 //   try {
-//     ////////debugger
+//     //////////debugger
 //     //const UserID = localStorage.getItem('UserID');
 //     var uri = 'https://underbuiltapi.aadhidigital.com/master/get_users';
 //     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -252,7 +252,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 //     //console.log(uri);
 //     var jsonResult = await GetAsync_with_token(uri, token);
 //     //console.log(jsonResult);
-//     ////////debugger
+//     //////////debugger
 //     return JSON.stringify(jsonResult ?? '');
 //   } catch (error) {
 //     console.error(error);
@@ -262,7 +262,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 
 export const GetAdIntegration = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/integration/get_users`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -270,7 +270,7 @@ export const GetAdIntegration = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -279,7 +279,7 @@ export const GetAdIntegration = async (query: string): Promise<string> => {
 };
 export const GetUserDept = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_department`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -287,7 +287,7 @@ export const GetUserDept = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -361,7 +361,7 @@ export const DeleteMultipleUsers = async (values: object): Promise<string> => {
 };
 export const ConfirmMultipleUsers = async (values: object): Promise<string> => {
   try {
-    //////debugger
+    ////////debugger
     //
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/insert_resource_to_user`;

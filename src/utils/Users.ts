@@ -126,7 +126,7 @@ export const GetUsersByID = async (
 };
 export const GetUserRole = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_user_role`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -134,7 +134,7 @@ export const GetUserRole = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -143,7 +143,7 @@ export const GetUserRole = async (query: string): Promise<string> => {
 };
 export const GetAllRoles = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_roles`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -151,7 +151,7 @@ export const GetAllRoles = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -160,7 +160,7 @@ export const GetAllRoles = async (query: string): Promise<string> => {
 };
 export const GetAllStatus = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri =
       `${BASE_URL}/customeradmin/get_statuses?is_active=true&status_type=` +
@@ -170,7 +170,7 @@ export const GetAllStatus = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -219,7 +219,7 @@ export const DeleteUser = async (values: object): Promise<string> => {
 };
 export const GetUserPermission = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_user_permissions?user_id=${query}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -227,7 +227,7 @@ export const GetUserPermission = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -236,7 +236,7 @@ export const GetUserPermission = async (query: string): Promise<string> => {
 };
 export const GetAdIntegration = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/integration/get_users`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -244,7 +244,7 @@ export const GetAdIntegration = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -253,7 +253,7 @@ export const GetAdIntegration = async (query: string): Promise<string> => {
 };
 export const GetUserDept = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_department?is_active=true`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -261,7 +261,7 @@ export const GetUserDept = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -356,7 +356,7 @@ export const updateUserPermissions = async (
 };
 export const GetModules = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_modules${query}`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -364,7 +364,7 @@ export const GetModules = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -373,7 +373,7 @@ export const GetModules = async (query: string): Promise<string> => {
 };
 export const getDesignation = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/get_designations${query}`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -381,7 +381,7 @@ export const getDesignation = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -410,7 +410,7 @@ export const addmodule = async (values: object): Promise<string> => {
 };
 export const GetRolePermission = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_role_permissions?role_id=${query}`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -418,7 +418,7 @@ export const GetRolePermission = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -427,7 +427,7 @@ export const GetRolePermission = async (query: string): Promise<string> => {
 };
 export const GetAllPermission = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_role_permissions`;
     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -435,7 +435,7 @@ export const GetAllPermission = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);

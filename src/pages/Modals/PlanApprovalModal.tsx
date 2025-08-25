@@ -10,11 +10,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ApproveSVG, Preview_svg, RejectSVG, ReviewSVG } from "@/assets/Icons";
+import { ApproveSVG, Clock_outline, Preview_svg, RejectSVG, ReviewSVG } from "@/assets/Icons";
 import AlertBox from "@/components/ui/AlertBox";
 import { useTheme } from "@/themes/ThemeProvider";
 import { GetPlanChangeProjects } from "@/utils/PM";
-import { X } from "lucide-react";
+import { Clock, Clock1, ClockAlertIcon, X } from "lucide-react";
  interface UserRole {
   role_id: number;
   role_name: string;
@@ -227,7 +227,7 @@ isOpen,onClose
       
       const response = await GetPlanChangeProjects({
           PageNo: 1,
-          PageSize: 10, // Ensure the API is fetching only 10 items
+          PageSize: 5, // Ensure the API is fetching only 10 items
         });;
 
       const result = JSON.parse(response);
@@ -235,7 +235,6 @@ isOpen,onClose
       if (result?.data && Array.isArray(result.data)) {
         const latestProjects = result.data.slice(0, 10); // Ensure only latest 10 records
         setapprovalProjects(latestProjects);
-
         
       } else {
         console.error('Invalid Projects data');
@@ -372,6 +371,31 @@ isOpen,onClose
                   </TooltipTrigger>
                   <TooltipContent>{"View Change request"}</TooltipContent>
                 </Tooltip>}
+                {item?.change_requests?.some(
+  (cr) => cr.change_type === "MILESTONE_END_DATE"
+) && <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      onClick={() => {
+                        console.log(item);
+                        navigation(
+                            `/ApprovedProjectList/MilestoneDateApproval?projectId=${item.project_id}`
+                          );
+                      //   , {
+                      // projectId: worker,
+                      // _isEdit: false,
+                      // _isApproval: true,
+                      // redirect: 'PlanApproval',
+                   // });
+                      }}
+                    >
+                      <Clock height={22} width={22} strokeWidth={2} 
+                      className="text-white"
+                       />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>{"Date Change Approval"}</TooltipContent>
+                </Tooltip>}
                 {/* {item.status===1 && <Tooltip>
                   <TooltipTrigger asChild>
                     <button
@@ -439,7 +463,15 @@ isOpen,onClose
             >
               Close
             </button>
-            
+             <button
+                type="button"
+                className="px-6 py-2 text-white rounded " style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+                onClick={() => {
+                  navigation("/ApprovedProjectList/PlanApproval");
+                }}
+              >
+                View All
+              </button>
           </div>
       </div>
     </div>

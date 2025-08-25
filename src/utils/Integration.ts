@@ -31,7 +31,7 @@ export const AddADForCustomer  = async (values: object): Promise<string> => {
 
   export const GetADIntegrationsForCustomer = async (customer_id:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = localStorage.getItem('UserID');
       var uri = `${BASE_URL}/integration/get_activedirectory_customer_integration?customer_id=${customer_id}`;
       //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -39,7 +39,7 @@ export const AddADForCustomer  = async (values: object): Promise<string> => {
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);
@@ -49,7 +49,7 @@ export const AddADForCustomer  = async (values: object): Promise<string> => {
 
   export const GetADList = async (): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = localStorage.getItem('UserID');
       var uri = `${BASE_URL}/integration/get_activedirectory_integration`;
       //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -57,7 +57,7 @@ export const AddADForCustomer  = async (values: object): Promise<string> => {
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);

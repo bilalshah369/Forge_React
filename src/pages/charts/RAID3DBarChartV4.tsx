@@ -15,7 +15,7 @@ const RAID3DBarChartV4: React.FC<ChartProps> = ({ onClcked, data }) => {
 
   useEffect(() => {
     const chart = am4core.create(chartRef.current!, am4charts.XYChart3D);
-    ////debugger;
+    //////debugger;
     chart.logo.disabled = true;
     const priorityCounts: any[] = data.map((item) => ({
       priority: item.priority,
@@ -50,7 +50,7 @@ const RAID3DBarChartV4: React.FC<ChartProps> = ({ onClcked, data }) => {
     series.columns.template.fillOpacity = 0.8;
 
     series.columns.template.events.on("hit", function (ev) {
-      ////debugger;
+      //////debugger;
       const data: any = ev.target.dataItem.dataContext;
       console.log("Column clicked:", data);
       onClcked(data.priority, "");
@@ -85,7 +85,7 @@ const RAID3DBarChartV4: React.FC<ChartProps> = ({ onClcked, data }) => {
   // >([]);
   useEffect(() => {
     const handleResize = () => {
-      //////debugger;
+      ////////debugger;
       if (chartRef.current) {
         setChartWidth(chartRef.current.offsetWidth || 400);
         setChartHeight(chartRef.current.offsetHeight || 300);

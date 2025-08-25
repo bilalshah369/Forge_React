@@ -27,7 +27,7 @@ export const GetAsync_with_token = async (uri, Token) => {
     });
     // Check if response is not OK (e.g., 403, 401)
     // if (!response.ok) {
-    //debugger;
+    ////debugger;
     if (response.status === 403) {
       // Handle expired token
       const refreshToken = await localStorage.getItem("refreshToken");
@@ -95,7 +95,7 @@ export const GetAsync_with_token_X_UserID = async (uri, Token) => {
 };
 export const PostAsync = async (uri, payload) => {
   try {
-    ////////debugger
+    //////////debugger
     const response = await fetch(uri, {
       method: "POST",
       headers: {
@@ -104,13 +104,13 @@ export const PostAsync = async (uri, payload) => {
       },
       body: payload,
     });
-    ////////debugger
+    //////////debugger
     //console.log('Login respo' + response);
     const json = await response.json();
     ////console.log(json);
     return json;
   } catch (error) {
-    ////////debugger
+    //////////debugger
     console.error(error);
   }
 };
@@ -254,7 +254,7 @@ export const PutAsync_with_token = async (uri, payload, Token) => {
 
 export const SubmitDetails1 = async (uri, payload) => {
   try {
-    //////debugger
+    ////////debugger
     const response = await fetch(uri, {
       method: "POST",
       headers: {
@@ -263,7 +263,7 @@ export const SubmitDetails1 = async (uri, payload) => {
       },
       body: payload,
     }).then((response) => {
-      //////debugger
+      ////////debugger
       //console.log(response);
       //console.log(response.message);
       if (response.status >= 200 && response.status <= 299) {
@@ -289,7 +289,7 @@ export const SubmitDetails = async (uri, payload) => {
     body: payload,
   })
     .then(async function (response) {
-      //////debugger
+      ////////debugger
       //console.log(response);
       //get new token if token is expired
       if (response.status === 403) {
@@ -393,7 +393,7 @@ export const fetchFileWithAuth = async (url) => {
 
 // const uploadImage = async (imageData: any): Promise<string> => {
 //   try {
-//     //////debugger
+//     ////////debugger
 //     // Step 1: Get the Bearer token
 //     //setLoading(true);
 //     const bearerToken = await localStorage.getItem("Token");

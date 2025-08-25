@@ -55,7 +55,7 @@ export const DeleteRole = async (roleId: number): Promise<string> => {
 
 export const GetRoles = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     //let customerId = await getCustomerId();
     var uri = `${BASE_URL}/master/get_roles`;
@@ -64,7 +64,7 @@ export const GetRoles = async (query: string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);

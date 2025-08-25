@@ -8,7 +8,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GetApplications = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     var uri = `${BASE_URL}/utils/get_impacted_applications`;
     const token = await localStorage.getItem("Token");
     //console.log(uri);

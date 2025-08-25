@@ -154,7 +154,7 @@ const Dashboard4 = () => {
   const justSelected = useRef(false);
   const [selectedProject_id, setSelectedProject_id] = useState<string>("");
   const handleSearch = async (value: any) => {
-    ////debugger;
+    //////debugger;
     setSearchQuery(value);
     if (!value.trim()) {
       setSearchList([]);
@@ -178,7 +178,7 @@ const Dashboard4 = () => {
     setSearchList(formatted);
   };
   const handleChange = async (value: any) => {
-    //////////////debugger;
+    ////////////////debugger;
     setRange(value);
     let std = selectedStatus.replace("55", "1,2,3,4,10");
     if (value) {
@@ -242,7 +242,7 @@ const Dashboard4 = () => {
         page: 1,
         pageSize: rowsPerPage,
       });
-      // //////////////debugger;
+      // ////////////////debugger;
       await fetch_departments_projects(
         selectedProject_id,
         selectedStatus,
@@ -577,7 +577,7 @@ const Dashboard4 = () => {
 
       if (result.status === "success") {
         //permissions
-        ////////////debugger;
+        //////////////debugger;
         setDepartments(result.data.departments);
         //Column Visibility
         if (result.data.column_visibility.length > 0) {
@@ -619,7 +619,7 @@ const Dashboard4 = () => {
       const response = await GetBOChartData();
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       setStatusDataCount(result.data.project_counts_by_status);
 
       const isAllZero = result.data.department_projects.every(
@@ -664,7 +664,7 @@ const Dashboard4 = () => {
     // Extract pagination info from filters or set defaults
     const page = filters.page || currentPage;
     const pageSize = filters.pageSize || rowsPerPage;
-    ////////////////debugger;
+    //////////////////debugger;
     try {
       //setdataLoading(true);
       //filter.business;
@@ -675,7 +675,7 @@ const Dashboard4 = () => {
 
       const response = await GetBOProjectsWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -753,7 +753,7 @@ const Dashboard4 = () => {
       );
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       //setpieDataChart(result);
       if (result?.message === "No projects found for the specified statuses.") {
         setStatusDataCount([]);
@@ -784,7 +784,7 @@ const Dashboard4 = () => {
 
       const result = JSON.parse(response);
       //var dk = transformToChartData(result);
-      ////////////debugger;
+      //////////////debugger;
       //console.log(dk);
       //setDepartmentChartData(transformToChartData(result));
       const isAllZero = result.data.every(
@@ -816,7 +816,7 @@ const Dashboard4 = () => {
         project_end_date
       );
       const result = JSON.parse(response);
-      ////////////debugger;
+      //////////////debugger;
       //setResourceUtilized(result.data);
       setEChart3dData(result);
       // const parsedRes =
@@ -852,7 +852,7 @@ const Dashboard4 = () => {
         budget_impact ?? ""
       );
       const result = JSON.parse(response);
-      ////debugger;
+      //////debugger;
       if (result.status === "success") {
         if (result?.data?.length > 0) {
           setBubbleChartData(result?.data);
@@ -884,7 +884,7 @@ const Dashboard4 = () => {
         dept
       );
       const result = JSON.parse(response);
-      ////debugger;
+      //////debugger;
       if (result.status === "success") {
         if (result?.data?.length > 0) {
           setBubbleChartData(result?.data);
@@ -1154,7 +1154,7 @@ const Dashboard4 = () => {
             selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
           }
           onChange={async function (selected: string[]): Promise<void> {
-            ////debugger;
+            //////debugger;
             const worker: any = selected?.join(",");
 
             setSelectedStatus(worker ?? "");
@@ -1222,7 +1222,7 @@ const Dashboard4 = () => {
               pageSize: rowsPerPage,
               budget_impact: selectedBudgetImpact,
             });
-            // //////////////debugger;
+            // ////////////////debugger;
             await fetch_departments_projects(
               selectedProject_id,
               selectedStatus,
@@ -1367,7 +1367,7 @@ const Dashboard4 = () => {
                     budget_impact: selectedBudgetImpact,
                   });
 
-                  //////debugger;
+                  ////////debugger;
                   console.log(selectedStatus);
                 }}
                 // height={200}
@@ -1377,9 +1377,9 @@ const Dashboard4 = () => {
             ) : (
               <>
                 {(() => {
-                  //////////////debugger;
+                  ////////////////debugger;
                   if (chartData3D?.length === 0) {
-                    //////////////debugger; // Breakpoint hits here
+                    ////////////////debugger; // Breakpoint hits here
                     return (
                       <div style={styles.card}>
                         <label style={styles.message}>No records</label>
@@ -1427,7 +1427,7 @@ const Dashboard4 = () => {
                   ): Promise<void> {
                     //setChartLoading1(true);
                     //setdataLoading(true);
-                    // //////////debugger;
+                    // ////////////debugger;
                     console.log(statuses);
 
                     setSelectedBudgetImpact(worker1 ?? "");
@@ -1467,9 +1467,9 @@ const Dashboard4 = () => {
               ) : (
                 <>
                   {(() => {
-                    //////debugger;
+                    ////////debugger;
                     if (bubbleChartData?.length === 0) {
-                      ////////////debugger; // Breakpoint hits here
+                      //////////////debugger; // Breakpoint hits here
                       return (
                         <div style={styles.card}>
                           <label style={styles.message}>No records</label>
@@ -1543,7 +1543,7 @@ const Dashboard4 = () => {
                 ): Promise<void> {
                   //setChartLoading1(true);
                   //setdataLoading(true);
-                  // //////////debugger;
+                  // ////////////debugger;
                   console.log(statuses);
 
                   setSelectedStatus(
@@ -1591,9 +1591,9 @@ const Dashboard4 = () => {
             ) : (
               <>
                 {(() => {
-                  //////////////debugger;
+                  ////////////////debugger;
                   if (StatusDataCount?.length === 0) {
-                    ////////////debugger; // Breakpoint hits here
+                    //////////////debugger; // Breakpoint hits here
                     return (
                       <div style={styles.card}>
                         <label style={styles.message}>No records</label>

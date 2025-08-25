@@ -32,7 +32,7 @@ export default function Header() {
     { key: "blue", color: "blue" },
   ];
   const [isAdmin, setIsAdmin] = useState("");
-  ////debugger;
+  //////debugger;
   const navigate = useNavigate();
   const { toggleSidebar } = useSidebar();
   const [user_name_user, setUser_name_user] = useState<string>("");
@@ -79,7 +79,7 @@ export default function Header() {
         const UserType = decodeBase64(localStorage.getItem("UserType") ?? "");
 
         //console.log('Decoded UserType:', UserType);
-        //////////////debugger;
+        ////////////////debugger;
         if (UserType === "3" || userrole === 3) {
           //console.log('Decoded UserType:', UserType);
           //console.log('Navigating to Main screen');
@@ -130,16 +130,22 @@ export default function Header() {
   }, []);
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
-      <button
+       {/* <button
         className="lg:hidden flex items-center justify-center  rounded hover:bg-gray-100"
         onClick={toggleSidebar}
       >
         <Menu className="h-5 w-5 text-gray-700" />
-      </button>
+      </button>  */}
       <div className="flex items-center gap-4">
-        <SidebarTrigger className="p-2">
-          <Menu className="h-4 w-4" />
-        </SidebarTrigger>
+           {/* <SidebarTrigger className="p-2">
+            <Menu className="h-4 w-4" />
+          </SidebarTrigger>  */}
+          <button
+        className="flex items-center justify-center  rounded hover:bg-gray-100"
+        onClick={toggleSidebar}
+      >
+        <Menu className="h-5 w-5 text-gray-700" />
+      </button>
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
             <span className="text-primary-foreground font-bold text-sm">{company_name_user?.substring(0,1)}</span>

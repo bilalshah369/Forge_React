@@ -20,7 +20,7 @@ import {
 // console.log(data);
 
 const Parent = ({ item, onDragStart, onDragEnd, draggable }) => {
-  debugger;
+  //debugger;
   
  return (
   // <div style={{backgroundColor:item.department_color,color:'white',}}
@@ -76,7 +76,7 @@ export default function TreeMapView({selectedView}) {
   
     const getCustName = async () => {
       try {
-        //debugger;
+        ////debugger;
         const res = localStorage.getItem("company_name");
         setCompanyName(res?.toString());
       } catch (err) {

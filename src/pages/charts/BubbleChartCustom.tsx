@@ -128,12 +128,12 @@ function generateSortedMonthArray(
 
     current.setMonth(current.getMonth() + 1);
   }
-  ////////debugger;
+  //////////debugger;
   return monthArray;
 }
 
 function getMonthYear(date: string | Date | null | undefined): string {
-  ////////debugger;
+  //////////debugger;
   if (!date) return "Invalid Date";
 
   const parsedDate = typeof date === "string" ? new Date(date) : date;
@@ -153,7 +153,7 @@ function getMonthValueByLabel(
   label: string,
   monthArray: MonthEntry[]
 ): number | null {
-  ////////debugger;
+  //////////debugger;
   const monthEntry = monthArray.find((entry) => entry.f === label);
 
   return monthEntry ? monthEntry.v : null;
@@ -316,7 +316,7 @@ const BubbleChartCustom: React.FC<ChartProps> = ({
     () => transformChartData(data, worker),
     [data, worker]
   );
-  // //////debugger;
+  // ////////debugger;
   useEffect(() => {
     setProjectMap(transformedProjectMap);
   }, [transformedProjectMap]);
@@ -399,7 +399,7 @@ const BubbleChartCustom: React.FC<ChartProps> = ({
 
           //   // Mapping Y (0-maxYValue) to chart height (inverted because top 0 is top of screen)
           //   const top = ((maxYValue - yValue) / maxYValue) * (chartHeight - 30);
-          // //////debugger;
+          // ////////debugger;
           return (
             <>
               <div
@@ -497,13 +497,13 @@ const BubbleChartCustom: React.FC<ChartProps> = ({
 
           const raid_count = item[4];
           const color = item[5];
-          // ////debugger;
+          // //////debugger;
           //   // Mapping X (0-100) to chart width (after 40px left offset)
           //   const left = 40 + (xValue / 100) * (chartWidth - 40);
 
           //   // Mapping Y (0-maxYValue) to chart height (inverted because top 0 is top of screen)
           //   const top = ((maxYValue - yValue) / maxYValue) * (chartHeight - 30);
-          // //////debugger;
+          // ////////debugger;
           return (
             <>
               {visibleTooltipId === idx + 1 + "tool" && (

@@ -218,13 +218,13 @@ const BudgetPlannerNew : React.FC = ({}) => {
     //console.log('Get Projects Response:', parsedRes);
 
     const project = parsedRes.data.projects[0]; // Assuming the first project in the list
-    //debugger;
-    setprojectObj(project);
     ////debugger;
+    setprojectObj(project);
+    //////debugger;
   };
   const DeleteBudget = async (budgetId: string) => {
     setLoading(true);
-    ////debugger;
+    //////debugger;
     const response = await deleteBudgetDetails(parseInt(budgetId));
     //const parsedResponse = JSON.parse(response);
     //console.log(parsedResponse);
@@ -255,7 +255,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
   };
  const fetcharraybudgets = async () => {
     try {
-      debugger;
+      //debugger;
       const response = await GetBudgetArray(projectId);
       
       const result = JSON.parse(response);
@@ -361,7 +361,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => {
-                        debugger;
+                        //debugger;
                         console.log("View", item);
                        setTotalBudget(item.total);
           setRate(item.value);
@@ -466,7 +466,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
                 const bdgObj: any = newBudget.find(
                   m => m.budget_detail_id === budget_detail_id,
                 );
-                ////debugger;
+                //////debugger;
                 setBudget_detail_id(bdgObj?.budget_detail_id);
                 setActiveTabBudget(parseInt(bdgObj?.category_id));
                 setProjectMonthlyBudgets(bdgObj?.monthwise_budget);
@@ -478,7 +478,7 @@ const BudgetPlannerNew : React.FC = ({}) => {
               }
               subCategoryName={subCategoryName}
               onClose={() => {
-                debugger;
+                //debugger;
                 setActiveTabBudget(0);
               }}
             />}

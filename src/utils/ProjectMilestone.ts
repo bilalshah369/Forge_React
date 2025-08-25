@@ -59,7 +59,7 @@ export class History {
 
 export const GetfetchMilestones = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectInProgress/get_milestone_with_history?project_id=${query}`;
@@ -68,7 +68,7 @@ export const GetfetchMilestones = async (query:string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -77,7 +77,7 @@ export const GetfetchMilestones = async (query:string): Promise<string> => {
 };
 export const GetMilestoneStatus = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectInProgress//get_milestone_statuses`;
@@ -86,7 +86,7 @@ export const GetMilestoneStatus = async (query:string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -95,7 +95,7 @@ export const GetMilestoneStatus = async (query:string): Promise<string> => {
 };
 export const GetMilestones = async (query1:string,query2:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectInProgress/get_milestone_with_history?project_id=${query1}&milestone_id=${query2}`;
@@ -104,7 +104,7 @@ export const GetMilestones = async (query1:string,query2:string): Promise<string
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -114,7 +114,7 @@ export const GetMilestones = async (query1:string,query2:string): Promise<string
 
 export const GetInprogressProject = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     let customerId = await getCustomerId();
     var uri = `${BASE_URL}/projectInProgress/get_inProgress_project?customer_id=${customerId}&project_id=${query}`;
@@ -123,7 +123,7 @@ export const GetInprogressProject = async (query:string): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -133,14 +133,14 @@ export const GetInprogressProject = async (query:string): Promise<string> => {
 
   export const GetResourceType = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/get_resource_types`;
     const token = localStorage.getItem('Token');
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -193,7 +193,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 
 // export const GetUsers = async (query:string): Promise<string> => {
 //   try {
-//     ////////debugger
+//     //////////debugger
 //     //const UserID = localStorage.getItem('UserID');
 //     var uri = 'https://underbuiltapi.aadhidigital.com/master/get_users';
 //     //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -201,7 +201,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 //     //console.log(uri);
 //     var jsonResult = await GetAsync_with_token(uri, token);
 //     //console.log(jsonResult);
-//     ////////debugger
+//     //////////debugger
 //     return JSON.stringify(jsonResult ?? '');
 //   } catch (error) {
 //     console.error(error);
@@ -211,7 +211,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 
   export const GetAdIntegration = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/integration/get_users`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -219,7 +219,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -228,7 +228,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
 };
   export const GetUserDept = async (query:string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/master/get_department`;
     //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -236,7 +236,7 @@ export const DeleteResource = async (values: object): Promise<string> => {
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -308,7 +308,7 @@ export const DeleteMultipleUsers  = async (values: object): Promise<string> => {
 };
 export const ConfirmMultipleUsers  = async (values: object): Promise<string> => {
   try {
-    //////debugger
+    ////////debugger
     //
     //const UserID = localStorage.getItem('UserID');
     var uri = `${BASE_URL}/customeradmin/insert_resource_to_user`;

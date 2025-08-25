@@ -11,7 +11,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   export const GetDepartments = async (query:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = localStorage.getItem('UserID');
       var uri = `${BASE_URL}/master/get_department${query === '' ? '' : '?parent_department_id=' + query}`;
       //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -19,7 +19,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);
@@ -37,7 +37,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);
@@ -47,7 +47,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   export const GetUsers = async (query:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = localStorage.getItem('UserID');
       var uri = `${BASE_URL}/master/get_users`;
       //var uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -55,7 +55,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);
@@ -106,7 +106,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
   
   export const GetPMOUsers = async (query:string): Promise<string> => {
     try {
-      ////////debugger
+      //////////debugger
       //const UserID = localStorage.getItem('UserID');
       var uri = `${BASE_URL}/utils/get_pmo_users`;
       //var uri = 'https://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -114,7 +114,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
       //console.log(uri);
       var jsonResult = await GetAsync_with_token(uri, token);
       //console.log(jsonResult);
-      ////////debugger
+      //////////debugger
       return JSON.stringify(jsonResult ?? '');
     } catch (error) {
       console.error(error);

@@ -35,7 +35,7 @@ export const GetRaids = async (
   dept?: string,
 ): Promise<string> => {
   try {
-    //////debugger;
+    ////////debugger;
     let baseUri = `${BASE_URL}/approvedProjects/get_raid?project_id=${
       projectId === 0 ? '' : projectId
     }&priority=${priority === undefined ? '' : priority}`;
@@ -52,7 +52,7 @@ export const GetRaids = async (
     if (endDate) baseUri += `&project_end_date=${encodeURIComponent(endDate)}`;
 
     const token = localStorage.getItem('Token');
-    ////////debugger;
+    //////////debugger;
     const jsonResult = await GetAsync_with_token(baseUri, token);
 
     return JSON.stringify(jsonResult ?? '');
@@ -74,7 +74,7 @@ export const GetRaidTable = async (
   dept?: string,
 ) => {
   try {
-    //////debugger;
+    ////////debugger;
     let baseUri = `${BASE_URL}/chartsApis/get_raid_table?project_id=${
       projectId === 0 ? '' : projectId
     }&priority=${priority === undefined ? '' : priority}`;
@@ -102,7 +102,7 @@ export const GetRaidTable = async (
 
 export const InsertRaid = async (values: any): Promise<string> => {
   try {
-    debugger;
+    //debugger;
     const uri = `${BASE_URL}/approvedProjects/insert_raid`;
     const token = localStorage.getItem('Token');
     //console.log(uri);

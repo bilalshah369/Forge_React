@@ -668,7 +668,7 @@ const ManageGoalsPrograms: React.FC = () => {
   };
 
   const HandleDeleteGoal = async (goal_id_ref) => {
-    ////////debugger
+    //////////debugger
     const GoalDel = {
       goal_id: goal_id_ref,
       //is_active: false,

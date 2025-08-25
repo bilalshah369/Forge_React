@@ -413,7 +413,7 @@ const NewIntake = () => {
 
   const fetchDependentProjects = async () => {
     try {
-      //debugger;
+      ////debugger;
       const response = await GetDependentProjects();
       const result = JSON.parse(response);
 
@@ -610,7 +610,7 @@ const NewIntake = () => {
   const handleDraft = async (values: any) => {
     try {
       let currentProjectId = await handleSaveAsDraft(values);
-      ////debugger;
+      //////debugger;
       //console.log('currentProjectId ' + currentProjectId)
       //resetForm();
       if (currentProjectId) {
@@ -1259,7 +1259,7 @@ const NewIntake = () => {
               originalFileName: originalFileName,
               dependentProjects: selectedDependentProjects,
             };
-            ////debugger;
+            //////debugger;
             if (mode === "draft") {
               handleDraft(values);
               //showAlert('Intake draft saved successfully');
@@ -2399,7 +2399,7 @@ const NewIntake = () => {
                                   user.user_id === Number(e.target.value)
                               );
                               const newSteps = [...steps];
-                              //debugger;
+                              ////debugger;
                               newSteps[index].forwardTo = e.target.value;
                               newSteps[index].department_name =
                                 selectedUser?.department_name ||

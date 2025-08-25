@@ -133,7 +133,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
     //   .digest('hex');
 
     const hash = CryptoJS.SHA256(password).toString();
-    //////debugger;
+    ////////debugger;
     const payload = JSON.stringify({ email: email, password: password });
 
     try {
@@ -253,7 +253,7 @@ const LoginScreen: React.FC<LoginProps> = ({ str }) => {
     );
     getLabelInfo("", "Bearer " + accessToken);
     await fetchAndStoreLabels("");
-    debugger;
+    //debugger;
     localStorage.setItem("UserType", encodeBase64(userrole.toString()));
     localStorage.setItem("file_name", file_name || "");
 

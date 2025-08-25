@@ -27,7 +27,7 @@ export const GetPMProjects = async (params?: {
   ProjectId?: string;
 }): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     // Extract PageNo and PageSize from params, defaulting to undefined if not provided
     const PageNo = params?.PageNo;
     const PageSize = params?.PageSize === 0 ? '' : params?.PageSize;
@@ -105,7 +105,7 @@ export const GetDashProjectsWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/projectDetails/get_dashboard_project`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -120,7 +120,7 @@ export const GetDashProjectsWithFilters = async (filters: {
     if (filters.status) {
       queryParams.append('status', filters.status);
     }
-    //////////debugger;
+    ////////////debugger;
     if (filters.PageNo) {
       queryParams.append('PageNo', filters.PageNo.toString());
     }
@@ -191,7 +191,7 @@ export const GetDashProjectsWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -230,7 +230,7 @@ export const GetDashResourceWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/chartsApis/get_resources_by_availability_range_table`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -245,7 +245,7 @@ export const GetDashResourceWithFilters = async (filters: {
     if (filters.status) {
       queryParams.append('status', filters.status);
     }
-    //////////debugger;
+    ////////////debugger;
     if (filters.PageNo) {
       queryParams.append('PageNo', filters.PageNo.toString());
     }
@@ -313,7 +313,7 @@ export const GetDashResourceWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -352,7 +352,7 @@ export const GetPMProjectsWithFilters = async (filters: {
 }): Promise<string> => {
   try {
     let uri = `${BASE_URL}/projectDetails/get_pm_project`;
-    //////////////debugger;
+    ////////////////debugger;
     // Build the query string dynamically from the filters object
     const queryParams = new URLSearchParams();
     if (filters.project_id) {
@@ -431,7 +431,7 @@ export const GetPMProjectsWithFilters = async (filters: {
     }
     // Append the query string to the base URL
     uri += `?${queryParams.toString()}`;
-    ////////////debugger;
+    //////////////debugger;
     const token = await localStorage.getItem('Token');
     //console.log('Making API call to:', uri);
 
@@ -471,7 +471,7 @@ export const GetPlanChangeProjects = async (params?: {
   PageSize?: number;
   ProjectId?: string;
 }): Promise<string> => {
-  //////////////////debugger;
+  ////////////////////debugger;
   try {
     // Extract PageNo and PageSize from params, defaulting to undefined if not provided
     const PageNo = params?.PageNo;
@@ -736,7 +736,7 @@ export const get_project_counts_by_status = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_project_counts_by_status`;
@@ -769,7 +769,7 @@ export const get_project_counts_by_status = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -785,7 +785,7 @@ export const get_project_Budget = async (
   budget_impact: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_departments_budget`;
@@ -821,7 +821,7 @@ export const get_project_Budget = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -834,7 +834,7 @@ export const get_project_Budget = async (
 //   project_end_date: string,
 // ): Promise<string> => {
 //   try {
-//     ////////debugger
+//     //////////debugger
 //     //const UserID = await localStorage.getItem('UserID');
 
 //     let uri = `${BASE_URL}/projectInProgress/get_resources_availability_breakdown`;
@@ -865,7 +865,7 @@ export const get_project_Budget = async (
 //     //console.log(uri);
 //     const jsonResult = await GetAsync_with_token(uri, token);
 //     //console.log(jsonResult);
-//     ////////debugger
+//     //////////debugger
 //     return JSON.stringify(jsonResult ?? '');
 //   } catch (error) {
 //     console.error(error);
@@ -882,7 +882,7 @@ export const get_project_Budget_Impact = async (
   budget_impact: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_departments_budget_impact`;
@@ -919,7 +919,7 @@ export const get_project_Budget_Impact = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -936,7 +936,7 @@ export const get_project_Budget_Impact_BO = async (
   budget_impact: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_departments_budget_impact_business_owner`;
@@ -972,7 +972,7 @@ export const get_project_Budget_Impact_BO = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -988,7 +988,7 @@ export const get_departments_projects_Resource = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     let uri = `${BASE_URL}/chartsApis/get_resource_projects_map`;
     const queryParams = new URLSearchParams();
@@ -1015,7 +1015,7 @@ export const get_departments_projects_Resource = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1032,7 +1032,7 @@ export const get_departments_projects_Budget = async (
   budget_impact?: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     let uri = `${BASE_URL}/chartsApis/get_departments_budget_monthwise_breakdown`;
     const queryParams = new URLSearchParams();
@@ -1062,7 +1062,7 @@ export const get_departments_projects_Budget = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1078,7 +1078,7 @@ export const get_departments_projects = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     let uri = `${BASE_URL}/chartsApis/get_departments_projects`;
     const queryParams = new URLSearchParams();
@@ -1105,7 +1105,7 @@ export const get_departments_projects = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1121,7 +1121,7 @@ export const get_project_ResurceAvailability = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_resources_availability_breakdown`;
@@ -1154,7 +1154,7 @@ export const get_project_ResurceAvailability = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1170,7 +1170,7 @@ export const get_project_ResurceAvailability_MonthWise = async (
   project_end_date: string,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
 
     let uri = `${BASE_URL}/chartsApis/get_resources_availability_monthwise_breakdown`;
@@ -1203,7 +1203,7 @@ export const get_project_ResurceAvailability_MonthWise = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1216,7 +1216,7 @@ export const getDecision = async (
   issue_id?: number,
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/projectInProgress/get_milestone_issues?is_active=true&project_id=${query}&milestone_issue_id=${
       issue_id ?? ''
@@ -1226,7 +1226,7 @@ export const getDecision = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1238,7 +1238,7 @@ export const get_projects_autocomplete = async (
   status_type: string = 'all',
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/projectFlow/get_projects_autocomplete?status_type=${status_type}&search_common=${query}`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1246,7 +1246,7 @@ export const get_projects_autocomplete = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1259,7 +1259,7 @@ export const get_resources_autocomplete = async (
   status_type: string = 'all',
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/projectFlow/get_resources_autocomplete?status_type=${status_type}&search_common=${query}`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1267,7 +1267,7 @@ export const get_resources_autocomplete = async (
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1310,7 +1310,7 @@ export const InsertIssueDecision = async (
 };
 export const AddCustomerUser = async (values: any): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/${
       values.customer_id ? 'master/insert_customer' : 'auth/Register'
     }`;
@@ -1329,7 +1329,7 @@ export const AddCustomerUser = async (values: any): Promise<string> => {
 };
 export const UpdateTerms = async (): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/master/common_task`;
     const uri = url;
     const token = await localStorage.getItem('Token');
@@ -1346,7 +1346,7 @@ export const UpdateTerms = async (): Promise<string> => {
 };
 export const UpdateRole = async (role: any): Promise<string> => {
   try {
-    ////////////debugger;
+    //////////////debugger;
     const url = `${BASE_URL}/master/common_task`;
     const uri = url;
     const token = await localStorage.getItem('Token');
@@ -1383,7 +1383,7 @@ export const InsertColumnVisibility = async (values: any): Promise<string> => {
 
 export const GetColumnVisibility = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/customeradmin/get_column_visibility?url=${query}`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1391,7 +1391,7 @@ export const GetColumnVisibility = async (query: string): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1422,7 +1422,7 @@ export const GetProjectAudit = async (
 };
 export const FetchallProj = async (query: any): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await AsyncStorage.getItem('UserID');
     //let customerId = await getCustomerId();
     const uri = `${BASE_URL}/projectFlow/get_all_project_details?project_id=${query}`;
@@ -1431,7 +1431,7 @@ export const FetchallProj = async (query: any): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1440,7 +1440,7 @@ export const FetchallProj = async (query: any): Promise<string> => {
 };
 export const GetMasterData = async (): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/customeradmin/get_master_data`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1448,7 +1448,7 @@ export const GetMasterData = async (): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1457,7 +1457,7 @@ export const GetMasterData = async (): Promise<string> => {
 };
 export const GetApprovers = async (projectID: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/utils/get_project_approvers?project_id=${projectID}`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1465,7 +1465,7 @@ export const GetApprovers = async (projectID: string): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);
@@ -1474,7 +1474,7 @@ export const GetApprovers = async (projectID: string): Promise<string> => {
 };
 export const GetMasterDataPM = async (query: string): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     const uri = `${BASE_URL}/customeradmin/get_user_master_data?url=${query}`;
     //const uri = 'http://qms.digital.logicsoft.online:8081/gateway/dilip/upload-samplecollectionimages';
@@ -1482,7 +1482,7 @@ export const GetMasterDataPM = async (query: string): Promise<string> => {
     //console.log(uri);
     const jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? '');
   } catch (error) {
     console.error(error);

@@ -62,7 +62,7 @@ export const GetProgramsByGoalId = async (
   isActive: string
 ): Promise<string> => {
   try {
-    ////////debugger
+    //////////debugger
     //const UserID = await localStorage.getItem('UserID');
     // if(!isActive){
     //   isActive = '';
@@ -73,7 +73,7 @@ export const GetProgramsByGoalId = async (
     //console.log(uri);
     var jsonResult = await GetAsync_with_token(uri, token);
     //console.log(jsonResult);
-    ////////debugger
+    //////////debugger
     return JSON.stringify(jsonResult ?? "");
   } catch (error) {
     console.error(error);

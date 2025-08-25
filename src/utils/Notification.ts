@@ -66,7 +66,7 @@ export const GetUserNotifications = async (params?: { PageNo?: number; PageSize?
 
     // Base URL for the API
     const baseUri = `${BASE_URL}/alerts/get_notifications`;
-//debugger
+////debugger
     // Append pagination parameters only if they are provided
     const uri = `${baseUri}?notification_id=${NotificationId}${PageNo ? `&PageNo=${PageNo}` : ''}${PageSize ? `&PageSize=${PageSize}` : ''}`;
 

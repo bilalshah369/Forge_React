@@ -131,7 +131,7 @@ const Dashboard3 = () => {
   const justSelected = useRef(false);
   const [selectedProject_id, setSelectedProject_id] = useState<string>("");
   const handleChange = async (value: any) => {
-    //////////////debugger;
+    ////////////////debugger;
     setRange(value);
     const std = selectedStatus.replace("55", "1,2,3,4,10");
     if (value) {
@@ -190,7 +190,7 @@ const Dashboard3 = () => {
         page: 1,
         pageSize: rowsPerPage,
       });
-      // //////////////debugger;
+      // ////////////////debugger;
       await fetch_departments_projects(
         selectedProject_id,
         selectedStatus,
@@ -297,7 +297,7 @@ const Dashboard3 = () => {
   const [isColumnVisibility, setIsColumnVisibility] = useState<boolean>(true);
   const [userPermissions, setUserPermissions] = useState<any[]>([]);
   const handleSearch = async (value: any) => {
-    ////debugger;
+    //////debugger;
     setSearchQuery(value);
     if (!value.trim()) {
       setSearchList([]);
@@ -330,7 +330,7 @@ const Dashboard3 = () => {
 
       if (result.status === "success") {
         //permissions
-        ////////////debugger;
+        //////////////debugger;
         setDepartments(result.data.departments);
         //Column Visibility
         if (result.data.column_visibility.length > 0) {
@@ -389,7 +389,7 @@ const Dashboard3 = () => {
     // Extract pagination info from filters or set defaults
     const page = filters.page || currentPage;
     const pageSize = filters.pageSize || rowsPerPage;
-    ////////////////debugger;
+    //////////////////debugger;
     try {
       //setdataLoading(true);
 
@@ -399,7 +399,7 @@ const Dashboard3 = () => {
 
       const response = await GetDashResourceWithFilters(requestPayload);
       //console.log('Get Projects Response:', response);
-      //////////////////debugger;
+      ////////////////////debugger;
       const result = JSON.parse(response);
       //console.log('Parsed Get Projects Response:', result);
 
@@ -467,7 +467,7 @@ const Dashboard3 = () => {
         project_start_date,
         project_end_date
       );
-      ////debugger;
+      //////debugger;
       console.log(response);
       const result = JSON.parse(response);
 
@@ -498,7 +498,7 @@ const Dashboard3 = () => {
       );
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      // ////debugger;
+      // //////debugger;
       //setpieDataChart(result);
       setBudgetDataCount(result.data);
     } catch (error) {
@@ -524,7 +524,7 @@ const Dashboard3 = () => {
       );
       //console.log('unparsed Department Response:', response);
       const result = JSON.parse(response);
-      // ////debugger;
+      // //////debugger;
       //setpieDataChart(result);
       setResourceAvailability(result.data);
       setResourceCount(result.total_resources || 0);
@@ -549,7 +549,7 @@ const Dashboard3 = () => {
         project_end_date
       );
       const result = JSON.parse(response);
-      ////debugger;
+      //////debugger;
       //setResourceUtilized(result.data);
       setEChart3dData(result);
       // const parsedRes =
@@ -821,7 +821,7 @@ const Dashboard3 = () => {
             selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
           }
           onChange={async function (selected: string[]): Promise<void> {
-            ////debugger;
+            //////debugger;
             const worker: any = selected?.join(",");
             setSelectedStatus(worker ?? "");
             setSearchQuery("");
@@ -886,7 +886,7 @@ const Dashboard3 = () => {
               page: 1,
               pageSize: rowsPerPage,
             });
-            // //////////////debugger;
+            // ////////////////debugger;
             await fetch_departments_projects(
               selectedProject_id,
               selectedStatus,
@@ -964,9 +964,9 @@ const Dashboard3 = () => {
               ) : (
                 <>
                   {(() => {
-                    ////////////debugger;
+                    //////////////debugger;
                     if (BudgetDataCount?.length === 0) {
-                      //////////debugger; // Breakpoint hits here
+                      ////////////debugger; // Breakpoint hits here
                       return (
                         <div style={styles.card}>
                           <label style={styles.message}>No records</label>

@@ -60,6 +60,11 @@ import TitleWrapper from "@/layouts/TitleWrapper";
 import { TitleProvider } from "./layouts/PageTitleContext";
 import { ThemeProvider } from "./themes/ThemeProvider";
 import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
+import IntakeApprovalPage from "./pages/workspace/IntakeApprovalPage";
+import PlanApprovalPage from "./pages/workspace/PlanApprovalPage";
+import MilestoneDateApproval from "./pages/workspace/MilestoneDateApproval";
+import CustomerList from "./pages/forge-admin/CustomerList";
+import Notifications from "./pages/forge-admin/Notifications";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const Dashboard1 = lazy(() => import("./pages/reports/Dashboard1"));
@@ -221,11 +226,11 @@ const routesWithTitles = [
     title: "Intake/Backlog List",
     element: <IntakeList />,
   },
-  // {
-  //   path: "/CustomerList",
-  //   title: "Customer List",
-  //   element: <CustomerList />,
-  // },
+  {
+    path: "/CustomerList",
+    title: "Customer List",
+    element: <CustomerList />,
+  },
   // {
   //   path: "/PendingCustomers",
   //   title: "Pending Customers",
@@ -254,11 +259,11 @@ const routesWithTitles = [
     title: "Project Details",
     element: <ProjectView />,
   },
-  // {
-  //   path: "/IntakeApproval",
-  //   title: "Intake Review/Approval",
-  //   element: <IntakeApproval />,
-  // },
+  {
+    path: "/IntakeList/IntakeApproval",
+    title: "Intake Review/Approval",
+    element: <IntakeApprovalPage />,
+  },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
     { path: "RoleMaster", title: "Roles", element: <Roles /> },
   { path: "/Adminpanel/roles", title: "Roles", element: <Roles /> },
@@ -325,11 +330,11 @@ const routesWithTitles = [
   //   element: <BudgetForecast />,
   // },
   // { path: "/ResetPass", title: "", element: <ResetPass /> },
-  // {
-  //   path: "/PlanApproval",
-  //   title: "Pending Approvals - Project Plan",
-  //   element: <PlanApproval />,
-  // },
+  {
+    path: "/ApprovedProjectList/PlanApproval",
+    title: "Pending Approvals - Project Plan",
+    element: <PlanApprovalPage />,
+  },
   // { path: "/ResetPassword", title: "", element: <ResetPassword /> },
   {
     path: "/Adminpanel/CompanyDetailPage",
@@ -413,11 +418,11 @@ const routesWithTitles = [
     title: "Approve Project Change",
     element: <ChangeRequestWizard _isApproval={true}/>,
   },
-  // {
-  //   path: "/MilestoneDateApproval",
-  //   title: "Milestone Date Change",
-  //   element: <MilestoneDateApproval />,
-  // },
+  {
+    path: "/ApprovedProjectList/MilestoneDateApproval",
+    title: "Milestone Date Change",
+    element: <MilestoneDateApproval />,
+  },
   // { path: "/ROIDetails", title: "ROI Details", element: <ROIDetails /> },
   // { path: "/Summary", title: "Project Details", element: <Summary /> },
   // { path: "/UserProfile", title: "User Profile", element: <UserProfile /> },
@@ -437,11 +442,11 @@ const routesWithTitles = [
   //   title: "Intake Labels",
   //   element: <IntakeLabels />,
   // },
-  // {
-  //   path: "/Notifications",
-  //   title: "Notifications",
-  //   element: <Notifications />,
-  // },
+  {
+    path: "/Notifications",
+    title: "Notifications",
+    element: <Notifications />,
+  },
   // {
   //   path: "/IntegrationLinkForm",
   //   title: "IntegrationLinkForm",

@@ -155,7 +155,7 @@ const [budgetRow, setBudgetRow] = useState<BudgetData>(BudgetRow);
   };
   const validateFields = () => {
     const validationErrors: { [key: string]: string } = {};
-    ////////////debugger;
+    //////////////debugger;
     if (!budgetRow.category_id)
       validationErrors.category = "Category is required.";
     if (!budgetRow.sub_category_id)
@@ -229,7 +229,7 @@ const [budgetRow, setBudgetRow] = useState<BudgetData>(BudgetRow);
 
   const handleDelete = async (recordId: number) => {
     //console.log(subCategoryId);
-    ////////////debugger;
+    //////////////debugger;
     const updatedRows = rows.filter((row) => row.id !== recordId);
     console.log(updatedRows.length);
     setRows(updatedRows);
@@ -280,7 +280,7 @@ const [budgetRow, setBudgetRow] = useState<BudgetData>(BudgetRow);
   };
   const handleCategoryChange = async (categoryId: number) => {
     ////console.log(category)
-    debugger;
+    //debugger;
     // const categorySelected = categories.find(
     //   (categ) => categ.category_id == categoryId
     // );
@@ -441,7 +441,7 @@ const validateForm = () => {
   //   if (onSubmit) handleAddRow();
   // };
   // const handleSubmit = () => {
-  //   debugger;
+  //   //debugger;
   //   if (newRow.total) {
   //     showAlert("Please add details by clicking on Add button.");
   //   } else if (rows.length == 0) {
@@ -460,7 +460,7 @@ const validateForm = () => {
   //   }
   // };
     const handleSubmit = async () => {
-      debugger;
+      //debugger;
 
     if (!validateForm()) {
       /* showAlert('Please correct the highlighted errors.'); */
@@ -468,10 +468,10 @@ const validateForm = () => {
     }
 
     try {
-      //////////debugger;
+      ////////////debugger;
       budgetRow.project_id = prj_id;
       console.log(budgetRow);
-      //debugger;
+      ////debugger;
 
       const response = await InsertBudgetDetailsSingle(budgetRow);
       const result = JSON.parse(response);
@@ -518,7 +518,7 @@ const validateForm = () => {
           1000
         )
       );
-      ////debugger;
+      //////debugger;
       setUnits(fetchedUnits);
       setDefaultRates(fetchedDefaultRates);
       //setCategories(result.data?.category);
@@ -593,7 +593,7 @@ const validateForm = () => {
       fetchCategoriesAndDetails();
     fetchDepartments();
       loadBudgetData(prj_id);
-      debugger;
+      //debugger;
       if (BudgetRow.category_id) {
            handleCategoryChange(BudgetRow.category_id);
         }
@@ -801,7 +801,7 @@ const validateForm = () => {
                     required
                     //onChange={handleChange}
                     onChange={(e) => {
-                      //debugger;
+                      ////debugger;
 
                       setBudgetRow({
                         ...budgetRow,
@@ -864,7 +864,7 @@ const validateForm = () => {
                   setSubmitted(true);
                 }}
                   // onClick={() => {
-                  //   debugger;
+                  //   //debugger;
                   //   const form = document.getElementById(
                   //     "budget-form-pm"
                   //   ) as HTMLFormElement;

@@ -25,6 +25,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { AppImages } from "@/assets";
@@ -149,7 +150,7 @@ export function AppSidebar() {
     }
   }, []);
   useEffect(() => {
-    //debugger;
+    ////debugger;
     //setSelectedScreen(localStorage.getItem("UserState"));
     fetchRoleModules();
   }, []);
@@ -158,10 +159,12 @@ export function AppSidebar() {
       className={`${
         collapsed ? "!w-[2.5rem]" : "w-[13rem]"
       } transition-all duration-300 `}
-      collapsible="icon" style={{backgroundColor:theme.colors.drawerBackgroundColor}}
+      collapsible="icon" 
+      style={{backgroundColor:theme.colors.drawerBackgroundColor}}
     >
+      
       {/* Logo/Brand */}
-      <div >
+      <div style={{backgroundColor:theme.colors.drawerBackgroundColor}} >
         <div className="flex items-center justify-center gap-3 space-y-4">
           {/* <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">F</span>
@@ -188,7 +191,7 @@ export function AppSidebar() {
         </div>
       </div>
       <SidebarContent className="scrollbar-hide">
-        <SidebarGroup className="pl-2 pr-0 ">
+        <SidebarGroup className="pl-2 pr-0 pb-0 pt-2 ">
           <SidebarGroupContent
             style={{
               backgroundImage:
@@ -200,7 +203,7 @@ export function AppSidebar() {
             }}
           >
             <SidebarMenu
-              className="gap-0"
+              className="gap-0 mb-0"
               // style={{
               //   backgroundImage:
               //     "linear-gradient(90deg, " +
@@ -211,11 +214,11 @@ export function AppSidebar() {
               // }}
             >
               {dynamicModules.map((item, index) => {
-                //////debugger;
+                ////////debugger;
                 console.log(dynamicModules);
                 const selectedScreen = localStorage.getItem("UserState");
                 const active = isActive(item.url);
-                //debugger;
+                ////debugger;
                 var rdb1: number =
                   dynamicModules[index + 1]?.url === selectedScreen ||
                   dynamicModules[index]?.sub_modules[0]?.url === selectedScreen
@@ -225,7 +228,7 @@ export function AppSidebar() {
                   dynamicModules[index - 1]?.url === selectedScreen ? 25 : 0;
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild className="" style={{backgroundColor:active?'white':theme.colors.drawerBackgroundColor}}>
+                    <SidebarMenuButton asChild  style={{backgroundColor:active?'white':theme.colors.drawerBackgroundColor}}>
                       {active ? (
                         <NavLink
                           to={item.url}
@@ -519,10 +522,11 @@ export function AppSidebar() {
                     </SidebarMenuButton>
                     {/* 🔽 Submenus */}
                     {/* <div  className="" style={{backgroundColor:active?'white':theme.colors.drawerBackgroundColor}}> */}
-  {item.sub_modules.length > 0 && (
+
+                    {!collapsed && item.sub_modules.length > 0 && (
     <div className="ml-6 flex flex-col gap-0">
       {item.sub_modules.map((submodule: Submodule, indexSub: number) => {
-        debugger;
+        //debugger;
         const subActive = isActive(submodule.url);
         var rdbSub2: number =
                         item?.sub_modules[indexSub - 1]?.url ===
@@ -606,6 +610,7 @@ export function AppSidebar() {
       })}
     </div>
   )}
+ 
   {/* </div> */}
                   </SidebarMenuItem>
                 );

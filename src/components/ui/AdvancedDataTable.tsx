@@ -262,7 +262,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
 
   const renderCellContent = (item: any, column: TableColumn, index: any) => {
     const value = item?.[column.key];
-    //debugger;
+    ////debugger;
     switch (column.type) {
       // case "status_click":
       //   return (
@@ -328,7 +328,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                   }
 
                   // setEstimatedDate(iso ?? "");
-                  // ////////debugger;
+                  // //////////debugger;
                   onEstimatedChangeAction?.(
                     item["milestone_id"]?.toString(),
                     iso,
@@ -432,7 +432,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
               <a
                 href="#"
                 onClick={() => {
-                  //debugger;
+                  ////debugger;
                   const isSelected = allSelectedIDs.includes(parseInt(value));
 
                   if (isSelected) {
@@ -579,7 +579,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                   item["status"]?.length > 0 ? item["status"]?.split(",") : []
                 }
                 onChange={async function (selected: string[]): Promise<void> {
-                  ////debugger;
+                  //////debugger;
                   const worker: any = selected?.join(",");
 
                   onStatusChangeAction(item["milestone_id"], worker);
@@ -658,7 +658,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
     );
   };
   const HandleSentTo = () => {
-    ////debugger;
+    //////debugger;
     if (milestone_id === "") {
       onEstimatedChangeAction?.(
         allSelectedIDs?.join(","),
@@ -728,7 +728,7 @@ const AdvancedDataTable: React.FC<AdvancedDataTableProps> = ({
                     selectedStatus?.length > 0 ? selectedStatus?.split(",") : []
                   }
                   onChange={async function (selected: string[]): Promise<void> {
-                    ////debugger;
+                    //////debugger;
                     const worker: any = selected?.join(",");
                     setSelectedStatus(worker);
                     onStatusFilterAction(worker);
