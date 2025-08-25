@@ -54,8 +54,6 @@ import MasterLayout from "./layouts/MasterLayout";
 // import EditFieldLabels from "./pages/edit-field-labels/EditFieldLabels";
 // import { LabelProvider } from "./pages/edit-field-labels/LabelContext";
 
-
-
 import TitleWrapper from "@/layouts/TitleWrapper";
 import { TitleProvider } from "./layouts/PageTitleContext";
 import { ThemeProvider } from "./themes/ThemeProvider";
@@ -65,6 +63,7 @@ import PlanApprovalPage from "./pages/workspace/PlanApprovalPage";
 import MilestoneDateApproval from "./pages/workspace/MilestoneDateApproval";
 import CustomerList from "./pages/forge-admin/CustomerList";
 import Notifications from "./pages/forge-admin/Notifications";
+import ResetPassword from "./pages/profiles/ResetPassword";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const Dashboard1 = lazy(() => import("./pages/reports/Dashboard1"));
@@ -73,38 +72,70 @@ const Dashboard3 = lazy(() => import("./pages/reports/Dashboard3"));
 const Dashboard4 = lazy(() => import("./pages/reports/Dashboard4"));
 const PMView = lazy(() => import("./pages/workspace/PMView"));
 const IntakeList = lazy(() => import("./pages/workspace/IntakeList"));
-const ApprovedProjectList = lazy(() => import("./pages/workspace/ApprovedProjectList"));
+const ApprovedProjectList = lazy(
+  () => import("./pages/workspace/ApprovedProjectList")
+);
 const ClosedProjects = lazy(() => import("./pages/workspace/ClosedProjects"));
 const AdminPanel = lazy(() => import("./pages/workspace/AdminPanel"));
 const RaidTracker = lazy(() => import("./pages/raid/RaidTracker"));
 const RoadmapOverview = lazy(() => import("./pages/roadmaps/RoadmapOverview"));
-const ManageGoalsPrograms = lazy(() => import("./pages/goals/ManageGoalsPrograms"));
+const ManageGoalsPrograms = lazy(
+  () => import("./pages/goals/ManageGoalsPrograms")
+);
 const Timesheet = lazy(() => import("./pages/Timesheet/Timesheet"));
-const TimesheetReportPage = lazy(() => import("./pages/Timesheet/TimesheetReportPage"));
+const TimesheetReportPage = lazy(
+  () => import("./pages/Timesheet/TimesheetReportPage")
+);
 const NewIntake = lazy(() => import("./pages/projects/NewIntake"));
 const ProjectAudit = lazy(() => import("./pages/workspace/ProjectAudit"));
-const RegistrationWizard = lazy(() => import("./pages/project_plan/RegistrationWizard"));
+const RegistrationWizard = lazy(
+  () => import("./pages/project_plan/RegistrationWizard")
+);
 const ProjectView = lazy(() => import("./pages/projects/ProjectView"));
-const ProjectDashboard = lazy(() => import("./pages/projects/ProjectDashboard"));
-const ChangeRequestWizard = lazy(() => import("./pages/project_plan/ChangeRequestWizard"));
+const ProjectDashboard = lazy(
+  () => import("./pages/projects/ProjectDashboard")
+);
+const ChangeRequestWizard = lazy(
+  () => import("./pages/project_plan/ChangeRequestWizard")
+);
 const BudgetPlannerNew = lazy(() => import("./pages/budget/BudgetPlannerNew"));
-const CompanyDetailPage = lazy(() => import("./pages/profiles/CompanyDetailPage"));
+const CompanyDetailPage = lazy(
+  () => import("./pages/profiles/CompanyDetailPage")
+);
 const DepartmentList = lazy(() => import("./pages/masters/DepartmentList"));
 const DesignationChart = lazy(() => import("./pages/TeamMap/DesignationChart"));
-const Classifications = lazy(() => import("./pages/classifications/Classifications"));
+const Classifications = lazy(
+  () => import("./pages/classifications/Classifications")
+);
 const ImpactedApps = lazy(() => import("./pages/impacted-apps/ImpactedApps"));
 const Designations = lazy(() => import("./pages/designation/Designations"));
 const Roles = lazy(() => import("./pages/roles/Roles"));
-const ADIntegrationList = lazy(() => import("./pages/masters/ADIntegrationList"));
-const SubscriptionModel = lazy(() => import("./pages/Subscription/SubscriptionModel"));
-const AlertsConfiguration = lazy(() => import("./pages/masters/AlertsConfiguration"));
-const BudgetCategories = lazy(() => import("./pages/budget-categories/BudgetCategories"));
+const ADIntegrationList = lazy(
+  () => import("./pages/masters/ADIntegrationList")
+);
+const SubscriptionModel = lazy(
+  () => import("./pages/Subscription/SubscriptionModel")
+);
+const AlertsConfiguration = lazy(
+  () => import("./pages/masters/AlertsConfiguration")
+);
+const BudgetCategories = lazy(
+  () => import("./pages/budget-categories/BudgetCategories")
+);
 const Resources = lazy(() => import("./pages/profiles/Resources"));
 const IntakeUpload = lazy(() => import("./pages/upload-pages/IntakeUpload"));
-const ResourceUpload = lazy(() => import("./pages/upload-pages/ResourceUpload"));
-const ProjectProgressUpload = lazy(() => import("./pages/upload-pages/ProjectProgressUpload"));
-const ProjectPlanUpload = lazy(() => import("./pages/upload-pages/ProjectPlanUpload"));
-const EditFieldLabels = lazy(() => import("./pages/edit-field-labels/EditFieldLabels"));
+const ResourceUpload = lazy(
+  () => import("./pages/upload-pages/ResourceUpload")
+);
+const ProjectProgressUpload = lazy(
+  () => import("./pages/upload-pages/ProjectProgressUpload")
+);
+const ProjectPlanUpload = lazy(
+  () => import("./pages/upload-pages/ProjectPlanUpload")
+);
+const EditFieldLabels = lazy(
+  () => import("./pages/edit-field-labels/EditFieldLabels")
+);
 
 const queryClient = new QueryClient();
 const routesWithTitles = [
@@ -140,7 +171,7 @@ const routesWithTitles = [
     title: "Departments",
     element: <DepartmentList />,
   },
-   {
+  {
     path: "/Adminpanel/DepartmentList",
     title: "Departments",
     element: <DepartmentList />,
@@ -220,7 +251,7 @@ const routesWithTitles = [
   //   element: <MilestoneViewGantt />,
   // },
   { path: "/Adminpanel/Resources", title: "Resources", element: <Resources /> },
-    { path: "Resources", title: "Resources", element: <Resources /> },
+  { path: "Resources", title: "Resources", element: <Resources /> },
   {
     path: "/IntakeList",
     title: "Intake/Backlog List",
@@ -265,7 +296,7 @@ const routesWithTitles = [
     element: <IntakeApprovalPage />,
   },
   // { path: "/IntakeView", title: "Intake View", element: <IntakeView /> },
-    { path: "RoleMaster", title: "Roles", element: <Roles /> },
+  { path: "RoleMaster", title: "Roles", element: <Roles /> },
   { path: "/Adminpanel/roles", title: "Roles", element: <Roles /> },
   {
     path: "/Adminpanel/impacted-applications",
@@ -282,7 +313,7 @@ const routesWithTitles = [
     title: "Classifications",
     element: <Classifications />,
   },
-   {
+  {
     path: "/Classification",
     title: "Classifications",
     element: <Classifications />,
@@ -329,7 +360,11 @@ const routesWithTitles = [
   //   title: "Budget Forecast",
   //   element: <BudgetForecast />,
   // },
-  // { path: "/ResetPass", title: "", element: <ResetPass /> },
+  {
+    path: "/ResetPassword",
+    title: "Reset Password",
+    element: <ResetPassword />,
+  },
   {
     path: "/ApprovedProjectList/PlanApproval",
     title: "Pending Approvals - Project Plan",
@@ -416,7 +451,7 @@ const routesWithTitles = [
   {
     path: "/ApprovedProjectList/ApproveChangeRequest",
     title: "Approve Project Change",
-    element: <ChangeRequestWizard _isApproval={true}/>,
+    element: <ChangeRequestWizard _isApproval={true} />,
   },
   {
     path: "/ApprovedProjectList/MilestoneDateApproval",
@@ -491,55 +526,57 @@ const App = () => {
         <BrowserRouter>
           <TitleProvider>
             <ThemeProvider>
-              <Suspense fallback={
-                <div className="flex flex-col items-center justify-center h-screen space-y-4">
-      <div className="h-6 w-40 bg-gray-200 rounded animate-pulse"></div>
-      <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
-      <div className="h-4 w-52 bg-gray-200 rounded animate-pulse"></div>
-    </div>}>
-  <Routes>
-              <Route
-                element={
-                  <LabelProvider customerId="">
-                    <MasterLayout />
-                  </LabelProvider>
+              <Suspense
+                fallback={
+                  <div className="flex flex-col items-center justify-center h-screen space-y-4">
+                    <div className="h-6 w-40 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-4 w-64 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-4 w-52 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
                 }
               >
-                <Route
-                  path="/home"
-                  //element={<HomePage />}
-                  element={
-                    <TitleWrapper title={"Home Page"}>
-                      {<HomePage />}
-                    </TitleWrapper>
-                  }
-                />
-                <Route path="/about" element={<AboutPage />} />
-                {routesWithTitles.map(({ path, title, element }) => (
+                <Routes>
                   <Route
-                    key={path}
-                    path={path}
                     element={
-                      <TitleWrapper title={title}>{element}</TitleWrapper>
+                      <LabelProvider customerId="">
+                        <MasterLayout />
+                      </LabelProvider>
                     }
-                  />
-                ))}
+                  >
+                    <Route
+                      path="/home"
+                      //element={<HomePage />}
+                      element={
+                        <TitleWrapper title={"Home Page"}>
+                          {<HomePage />}
+                        </TitleWrapper>
+                      }
+                    />
+                    <Route path="/about" element={<AboutPage />} />
+                    {routesWithTitles.map(({ path, title, element }) => (
+                      <Route
+                        key={path}
+                        path={path}
+                        element={
+                          <TitleWrapper title={title}>{element}</TitleWrapper>
+                        }
+                      />
+                    ))}
 
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Route>
-              <Route path="/" element={<Index />} />
-              <Route path="/create-account" element={<CreateAccount />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              {/* <Route path="/" element={<Index />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/create-account" element={<CreateAccount />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  {/* <Route path="/" element={<Index />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         
           <Route path="*" element={<NotFound />} /> */}
-            </Routes>
-            </Suspense>
+                </Routes>
+              </Suspense>
             </ThemeProvider>
-          
           </TitleProvider>
         </BrowserRouter>
       </TooltipProvider>
